@@ -1235,7 +1235,7 @@ header.transparent .topbar{
     cursor: pointer;
     display: inline-block;
     line-height: initial;
-    padding: 3px 10px 3px 4px;
+    padding: 10px 10px 10px 10px;
     vertical-align: middle;
 }
 .web-elements .user-dp:hover {
