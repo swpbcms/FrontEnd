@@ -1235,7 +1235,7 @@ header.transparent .topbar{
     cursor: pointer;
     display: inline-block;
     line-height: initial;
-    padding: 10px 10px 10px 10px;
+    padding: 3px 10px 3px 4px;
     vertical-align: middle;
 }
 .web-elements .user-dp:hover {
@@ -7839,7 +7839,7 @@ a.main-btn2:hover, button.main-btn2:hover {
 /*--- profile introl ---*/
 .widget .short-profile > li::before {
     color: rgba(8, 141, 205, 0.2);
-    content: "î²Ž";
+    content: "";
     font-family: icofont;
     font-size: 50px;
     position: absolute;

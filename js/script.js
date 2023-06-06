@@ -912,7 +912,9 @@ if ($(this).find('#my_camera').length) {
 	  );
 	});
 	
-
+// audio video player post	
+new Plyr(".video-player"),
+new Plyr(".audio-player")
 	
 //image with comment sidebar of fancy box
 	  $('[data-fancybox="cl-group"]').fancybox({
@@ -932,10 +934,6 @@ if ($(this).find('#my_camera').length) {
 		  return '<h3>home</h3><p>interiors, exteriors, and the humans that inhabit them.</p><p><a href="https://unsplash.com/collections/curated/162" target="_blank">unsplash.com</a></p>';
 		}
 	  });
-	  
-// audio video player post	
-new Plyr(".video-player"),
-new Plyr(".audio-player")	  
 	
 });//document ready end
 
