@@ -1,1 +1,1 @@
-Front End Project Bird Club Managerment System
+Front End Project Bird Club Management System
