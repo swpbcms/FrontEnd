@@ -1235,7 +1235,7 @@ header.transparent .topbar{
     cursor: pointer;
     display: inline-block;
     line-height: initial;
-    padding: 3px 10px 3px 4px;
+    padding: 10px 10px 10px 10px;
     vertical-align: middle;
 }
 .web-elements .user-dp:hover {
@@ -1253,7 +1253,7 @@ header.transparent .topbar{
 .user-dp .name > h4 {
     color: #3e3f5e;
     display: inline-block;
-    font-size: 13px;
+    font-size: 15px;
     margin-top: 0;
     width: auto;
 }
