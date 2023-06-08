@@ -1,6 +1,6 @@
 var memberUserName = document.querySelector('#memberUserName')
 var memberPassword = document.querySelector('#memberPassword')
-var form = document.querySelector('form')
+var form = document.querySelector('.c-form')
 
 
 
@@ -39,23 +39,22 @@ form.addEventListener('submit', function (e) {
 
     let isEmptyError = [memberUserName, memberPassword]
     isEmptyError.forEach(checkEmpty)
-    var xhttp = new XMLHttpRequest();
+
 
     if (isEmptyError) {
 
     } else {
-        xhttp.open('POST', 'https://localhost:7206/api/Member/login-Member', true)
+        var fromData = new FormData(form);
+        var data = Object.fromEntries(fromData);
 
-        xhttp.send(memberUserName, memberPassword);
-        
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4) {
-                window.location.href = 'feed.html'
-                this.responseText;
-            }
-        }
-    }
-
+        fetch('https://localhost:7206/api/Member/login-Member',{
+            method: 'POST',
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+    };
 })
 
 
