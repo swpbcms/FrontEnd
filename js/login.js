@@ -33,29 +33,48 @@ function checkEmpty(listInput) {
     return isEmptyError
 }
 
+const login = "https://localhost:7206/api/Member/login-Member";
 
 form.addEventListener('submit', function (e) {
     e.preventDefault()
 
-    let isEmptyError = [memberUserName, memberPassword]
+    var isEmptyError = [memberUserName, memberPassword]
     isEmptyError.forEach(checkEmpty)
 
 
     if (isEmptyError) {
-
+        
     } else {
-        var fromData = new FormData(form);
-        var data = Object.fromEntries(fromData);
-
-        fetch('https://localhost:7206/api/Member/login-Member',{
+        fetch(login, {
             method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json'
+            headers: {
+                Accept: "application/json, */*",
+                "Content-Type": "application/json"
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify({
+                memberUserName: memberUserName.value,
+                memberPassword: memberPassword.value
+            })
         })
-    };
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (data.success) { 
+                    window.open(
+                        "index.html"
+                    );
+                } else {
+                    alert("Error UserName or Password");
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+            });
+    }
+
 })
+
+
 
 
 
