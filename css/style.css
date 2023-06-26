@@ -16440,7 +16440,8 @@ a.classic-btn:hover {
 
 .adminpage-style {
     display: inline-block;
-    font-size: small;
+    font-size: medium;
+    font-weight: bold;
     padding: 150px 50px;
     position: relative;
     width: 100%;
