@@ -39,6 +39,7 @@ $(document).ready(function() {
           }
         },
         error: function(error) {
+          
           // Xử lý khi có lỗi xảy ra trong quá trình gửi yêu cầu đăng nhập thành viên
           console.log("Đã xảy ra lỗi khi đăng nhập thành viên: " + error);
         }
