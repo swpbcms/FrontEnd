@@ -29,6 +29,8 @@ $(document).ready(function() {
           if (response.data) {
             // Xử lý đăng nhập thành viên thành công
             var member = response.data;
+            // Xử lý dữ liệu thành viên ở đây
+            // Ví dụ: chuyển trang và lưu session đăng nhập
             window.location.href = "index.html";
             sessionStorage.setItem("loggedInMember", JSON.stringify(member));
           } else {
