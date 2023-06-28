@@ -1,365 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-	<title>Bird Club Management System</title>
-    <link rel="icon" href="images/logo.png" type="image/png" sizes="16x16"> 
-    
+    <title>Bird Club Management System</title>
+    <link rel="icon" href="images/logo.png" type="image/png" sizes="16x16">
+
     <link rel="stylesheet" href="css/main.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/responsive.css">
 
 </head>
+
 <body>
-<div class="page-loader" id="page-loader">
+    <div class="page-loader" id="page-loader">
 
-  <div class="loader"><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span></div>
+        <div class="loader"><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span>
+            <span class="loader-item"></span><span class="loader-item"></span></div>
 
-</div><!-- page loader -->
-<div class="theme-layout">
+    </div>
+    <!-- page loader -->
+    <div class="theme-layout">
 
-	<div class="responsive-header">
-		<div class="logo res"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
-		<div class="user-avatar mobile">
-			<a href="profile.html" title="View Profile"><img alt="" src="images/resources/user.jpg"></a>
-			<div class="name">
-				<h4>Danial Cardos</h4>
-				<span>Ontario, Canada</span>
-			</div>
-		</div>
-		<div class="right-compact">
-			<div class="sidemenu">
-				<i>
+        <div class="responsive-header">
+            <div class="logo res"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
+            <div class="user-avatar mobile">
+                <a href="profile.html" title="View Profile"><img alt="" src="images/resources/user.jpg"></a>
+                <div class="name">
+                    <h4>Danial Cardos</h4>
+                    <span>Ontario, Canada</span>
+                </div>
+            </div>
+            <div class="right-compact">
+                <div class="sidemenu">
+                    <i>
 <svg id="side-menu2" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></i>
-			</div>
-			<div class="res-search">
-				<span>
+                </div>
+                <div class="res-search">
+                    <span>
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
-			</div>
-			
-		</div>
-		<div class="restop-search">
-			<span class="hide-search"><i class="icofont-close-circled"></i></span>
-			<form method="post">
-				<input type="text" placeholder="Search...">
-			</form>
-		</div>
-	</div><!-- responsive header -->
-	
-	<header class="">
-		<div class="topbar stick">
-			<div class="logo"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
-			<div class="searches">
-				<form method="post">
-					<input type="text" placeholder="Search...">
-					<button type="submit"><i class="icofont-search"></i></button>
-					<span class="cancel-search"><i class="icofont-close"></i></span>
-					<div class="recent-search">
-						<h4 class="recent-searches">Your's Recent Search</h4>
-						<ul class="so-history">
-							<li>
-								<div class="searched-user">
-									<figure><img src="images/resources/user1.jpg" alt=""></figure>
-									<span>Danial Carabal</span>
-								</div>
-								<span class="trash"><i class="icofont-close-circled"></i></span>
-							</li>
-							<li>
-								<div class="searched-user">
-									<figure><img src="images/resources/user2.jpg" alt=""></figure>
-									<span>Maria K</span>
-								</div>
-								<span class="trash"><i class="icofont-close-circled"></i></span>
-							</li>
-							<li>
-								<div class="searched-user">
-									<figure><img src="images/resources/user3.jpg" alt=""></figure>
-									<span>Fawad Khan</span>
-								</div>
-								<span class="trash"><i class="icofont-close-circled"></i></span>
-							</li>
-							<li>
-								<div class="searched-user">
-									<figure><img src="images/resources/user4.jpg" alt=""></figure>
-									<span>Danial Sandos</span>
-								</div>
-								<span class="trash"><i class="icofont-close-circled"></i></span>
-							</li>
-							<li>
-								<div class="searched-user">
-									<figure><img src="images/resources/user5.jpg" alt=""></figure>
-									<span>Jack Carter</span>
-								</div>
-								<span class="trash"><i class="icofont-close-circled"></i></span>
-							</li>
-						</ul>
-					</div>
-				</form>
-			</div>
-			
-			<ul class="web-elements">
-				<li>
-					<div class="user-dp">
-						<a href="profile-page2.html" title="">
-							<img alt="" src="images/resources/user.jpg">
-							<div class="name">
-								<h4>Danial Cardos</h4>
-							</div>
-						</a>	
-					</div>
-				</li>
-				<li>
-					<a href="index.html" title="Home" data-toggle="tooltip">
-						<i>
+                </div>
+
+            </div>
+            <div class="restop-search">
+                <span class="hide-search"><i class="icofont-close-circled"></i></span>
+                <form method="post">
+                    <input type="text" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+        <!-- responsive header -->
+
+        <header class="">
+            <div class="topbar stick">
+                <div class="logo"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
+                <div class="searches">
+                    <form method="post">
+                        <input type="text" placeholder="Search...">
+                        <button type="submit"><i class="icofont-search"></i></button>
+                        <span class="cancel-search"><i class="icofont-close"></i></span>
+                        <div class="recent-search">
+                            <h4 class="recent-searches">Your's Recent Search</h4>
+                            <ul class="so-history">
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user1.jpg" alt=""></figure>
+                                        <span>Danial Carabal</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user2.jpg" alt=""></figure>
+                                        <span>Maria K</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user3.jpg" alt=""></figure>
+                                        <span>Fawad Khan</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user4.jpg" alt=""></figure>
+                                        <span>Danial Sandos</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user5.jpg" alt=""></figure>
+                                        <span>Jack Carter</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
+                <ul class="web-elements">
+                    <li>
+                        <div class="user-dp">
+                            <a href="profile-page2.html" title="">
+                                <img alt="" src="images/resources/user.jpg">
+                                <div class="name">
+                                    <h4>Danial Cardos</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="index.html" title="Home" data-toggle="tooltip">
+                            <i>
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></i>
-					</a>
-				</li>
-				<li>
-					<a class="mesg-notif" href="#" title="Notifications" data-toggle="tooltip">
-						<i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="mesg-notif" href="#" title="Notifications" data-toggle="tooltip">
+                            <i>
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></i>
-					</a>
-					<span></span>
-				</li>
-				<!-- <li>
+                        </a>
+                        <span></span>
+                    </li>
+                    <!-- <li>
 					<a class="create" href="#" title="Add New" data-toggle="tooltip">
 						<i>
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></i>
 					</a>
 				</li> -->
-				<li>
-					<a href="#" title="">
-						<i>
+                    <li>
+                        <a href="#" title="">
+                            <i>
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-grid"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
 						</i>
-					</a>
-					<ul class="dropdown">
-						<li><a href="profile.html" title=""><i class="icofont-user-alt-3"></i> Your Profile</a></li>
-						<li><a href="add-new-course.html" title=""><i class="icofont-plus"></i> New Course</a></li>
-						<li><a class="invite-new" href="#" title=""><i class="icofont-brand-slideshare"></i> Invite Collegue</a></li>
-						<li><a href="pay-out.html" title=""><i class="icofont-price"></i> Payout</a></li>
-						<li><a href="price-plan.html" title=""><i class="icofont-flash"></i> Upgrade</a></li>
-						<li><a href="help-faq.html" title=""><i class="icofont-question-circle"></i> Help</a></li>
-						<li><a href="settings.html" title=""><i class="icofont-gear"></i> Setting</a></li>
-						<li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li>
-						<li><a class="dark-mod" href="#" title=""><i class="icofont-moon"></i> Dark Mode</a></li>
-						<li class="logout"><a href="sign-in.html" title=""><i class="icofont-power"></i> Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		
-	</header><!-- header -->
-	
-	<section>
-		<div class="white-bg">
-			<div class="container-fluid">
-				<div class="menu-caro">
-					<div class="row">
-						<div class="col-lg-4">
-						</div>
-						<div class="col-lg-8">
-							<div class="page-caro">
-								<div class="link-item">
-									<a class="active" href="feed.html" title="">
-										<i class="">
+                        </a>
+                        <ul class="dropdown">
+                            <li><a href="profile.html" title=""><i class="icofont-user-alt-3"></i> Your Profile</a></li>
+                            <li><a href="help-faq.html" title=""><i class="icofont-question-circle"></i> Help</a></li>
+                            <li><a href="settings.html" title=""><i class="icofont-gear"></i> Setting</a></li>
+                            <li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li>
+                            <li><a class="dark-mod" href="#" title=""><i class="icofont-moon"></i> Dark Mode</a></li>
+                            <li class="logout"><a href="sign-in.html" title=""><i class="icofont-power"></i> Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+        </header>
+        <!-- header -->
+
+        <section>
+            <div class="white-bg">
+                <div class="container-fluid">
+                    <div class="menu-caro">
+                        <div class="row">
+                            <div class="col-lg-4">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="page-caro">
+                                    <div class="link-item">
+                                        <a class="active" href="feed.html" title="">
+                                            <i class="">
 											<svg class="feather feather-zap" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
 										</i>
-										<p>Newsfeed</p>
-									</a>
-								</div>
-								<div class="link-item">
-									<a href="event-page.html" title="">
-										<i class="">
+                                            <p>Newsfeed</p>
+                                        </a>
+                                    </div>
+                                    <div class="link-item">
+                                        <a href="event-page.html" title="">
+                                            <i class="">
 											<svg class="feather feather-airplay" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/><polygon points="12 15 17 21 7 21 12 15"/></svg></i>
-										<p>Events</p>
-									</a>
-								</div>
-								<div class="link-item">
-									<a href="blog.html" title="">
-										<i class=""><svg class="feather feather-layout" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><rect ry="2" rx="2" height="18" width="18" y="3" x="3"/><line y2="9" x2="21" y1="9" x1="3"/><line y2="9" x2="9" y1="21" x1="9"/></svg></i>
-										<p>Blog</p>
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-2">
-						</div>
-					</div>
-				</div>	
-			</div>
-		</div>	
-	</section><!-- carousel menu -->
-	
-	<section>
-		<div class="gap">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<div id="page-contents" class="row merged20">
-							<div class="col-lg-9">
-								<div class="main-wraper">
-									<div class="main-title">Blog Posts</div>
-									<div class="blog-posts">
-										<figure><img src="images/resources/blog-list-1.jpg" alt=""></figure>
-										<div class="blog-post-meta">
-											<ul>
-												<li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
-												<li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
-											</ul>
-											
-											<h4>Love is always the happiness of a heart.</h4>
-											<p>
-												Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
-											</p>
-											<span><i class="icofont-clock-time"></i> january 23, 2021</span>
-											<a href="blog-detail.html" title="" class="button primary circle">read more</a>
-										</div>
-									</div>
-									<div class="blog-posts">
-										<figure><img src="images/resources/blog-list-2.jpg" alt=""></figure>
-										<div class="blog-post-meta">
-											<ul>
-												<li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
-												<li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
-											</ul>
-											
-											<h4>Love is always the happiness of a heart.</h4>
-											<p>
-												Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
-											</p>
-											<span><i class="icofont-clock-time"></i> january 23, 2021</span>
-											<a href="blog-detail.html" title="" class="button primary circle">read more</a>
-										</div>
-									</div>
-									<div class="blog-posts">
-										<figure><img src="images/resources/blog-list-3.jpg" alt=""></figure>
-										<div class="blog-post-meta">
-											<ul>
-												<li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
-												<li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
-											</ul>
-											
-											<h4>Compare Prices Find The Best Computer Accessory</h4>
-											<p>
-												Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
-											</p>
-											<span><i class="icofont-clock-time"></i> january 23, 2021</span>
-											<a href="blog-detail.html" title="" class="button primary circle">read more</a>
-										</div>
-									</div>
-									<div class="blog-posts">
-										<figure><img src="images/resources/blog-list-4.jpg" alt=""></figure>
-										<div class="blog-post-meta">
-											<ul>
-												<li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
-												<li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
-											</ul>
-											
-											<h4>Will The Democrats Be Able To Reverse The Online Gambling Ban</h4>
-											<p>
-												Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
-											</p>
-											<span><i class="icofont-clock-time"></i> january 23, 2021</span>
-											<a href="blog-detail.html" title="" class="button primary circle">read more</a>
-										</div>
-									</div>
-									<div class="blog-posts">
-										<figure><img src="images/resources/blog-list-5.jpg" alt=""></figure>
-										<div class="blog-post-meta">
-											<ul>
-												<li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
-												<li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
-											</ul>
-											
-											<h4>Love is always the happiness of a heart.</h4>
-											<p>
-												Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
-											</p>
-											<span><i class="icofont-clock-time"></i> january 23, 2021</span>
-											<a href="blog-detail.html" title="" class="button primary circle">read more</a>
-										</div>
-									</div>
-									<div class="load mt-5 mb-4">
-										<ul class="pagination">
-											<li><a href="#" title=""><i class="icofont-arrow-left"></i></a></li>
-											<li><a class="active" href="#" title="">1</a></li>
-											<li><a href="#" title="">2</a></li>
-											<li><a href="#" title="">3</a></li>
-											<li><a href="#" title="">4</a></li>
-											<li><a href="#" title="">5</a></li>
-											<li>....</li>
-											<li><a href="#" title="">10</a></li>
-											<li><a href="#" title=""><i class="icofont-arrow-right"></i></a></li>
-										</ul>
-									</div>
-								</div>	
-							</div>
-							<div class="col-lg-3">
-								<aside class="sidebar static right">
-									<div class="widget">
-										<h4 class="widget-title">Ask Research Question?</h4>
-										<div class="ask-question">
-											<i class="icofont-question-circle"></i>
-											<h6>Ask questions in Q&A to get help from experts in your field.</h6>
-											<a class="ask-qst" href="#" title="">Ask a question</a>
-										</div>
-									</div>
-									<div class="widget">
-										<h4 class="widget-title">Explor Events <a class="see-all" href="#" title="">See All</a></h4>
-										<div class="rec-events bg-purple">
-											<i class="icofont-gift"></i>
-											<h6><a title="" href="">BZ University good night event in columbia</a></h6>
-											<img alt="" src="images/clock.png">
-										</div>
-										<div class="rec-events bg-blue">
-											<i class="icofont-microphone"></i>
-											<h6><a title="" href="">The 3rd International Conference 2020</a></h6>
-											<img alt="" src="images/clock.png">
-										</div>
-									</div>
-								</aside>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	
-	<figure class="bottom-mockup"><img src="images/footer.png" alt=""></figure>
-	<div class="bottombar">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<span class="">&copy; copyright All rights reserved by Bird Club</span>
-				</div>
-			</div>
-		</div>
-	</div><!-- bottombar -->
+                                            <p>Events</p>
+                                        </a>
+                                    </div>
+                                    <div class="link-item">
+                                        <a href="blog.html" title="">
+                                            <i class=""><svg class="feather feather-layout" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><rect ry="2" rx="2" height="18" width="18" y="3" x="3"/><line y2="9" x2="21" y1="9" x1="3"/><line y2="9" x2="9" y1="21" x1="9"/></svg></i>
+                                            <p>Blog</p>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- carousel menu -->
 
-	
-	
-	
-	<div class="new-question-popup">
-		<div class="popup">
-			<span class="popup-closed"><i class="icofont-close"></i></span>
-			<div class="popup-meta">
-				<div class="popup-head">
-					<h5><i>
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></i> Ask Question</h5>
-				</div>
-				<div class="post-new">
-					<form method="post" class="c-form">
-						
-						<input type="text" placeholder="Question Title">
-						<textarea placeholder="Write Question"></textarea>
-						
-						<select>
+        <section>
+            <div class="gap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="page-contents" class="row merged20">
+                                <div class="col-lg-9">
+                                    <div class="main-wraper">
+                                        <div class="main-title">Blog Posts</div>
+                                        <div class="blog-posts">
+                                            <figure><img src="images/resources/blog-list-1.jpg" alt=""></figure>
+                                            <div class="blog-post-meta">
+                                                <ul>
+                                                    <li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
+                                                    <li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
+                                                </ul>
+
+                                                <h4>Love is always the happiness of a heart.</h4>
+                                                <p>
+                                                    Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <span><i class="icofont-clock-time"></i> january 23, 2021</span>
+                                                <a href="blog-detail.html" title="" class="button primary circle">read more</a>
+                                            </div>
+                                        </div>
+                                        <div class="blog-posts">
+                                            <figure><img src="images/resources/blog-list-2.jpg" alt=""></figure>
+                                            <div class="blog-post-meta">
+                                                <ul>
+                                                    <li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
+                                                    <li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
+                                                </ul>
+
+                                                <h4>Love is always the happiness of a heart.</h4>
+                                                <p>
+                                                    Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <span><i class="icofont-clock-time"></i> january 23, 2021</span>
+                                                <a href="blog-detail.html" title="" class="button primary circle">read more</a>
+                                            </div>
+                                        </div>
+                                        <div class="blog-posts">
+                                            <figure><img src="images/resources/blog-list-3.jpg" alt=""></figure>
+                                            <div class="blog-post-meta">
+                                                <ul>
+                                                    <li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
+                                                    <li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
+                                                </ul>
+
+                                                <h4>Compare Prices Find The Best Computer Accessory</h4>
+                                                <p>
+                                                    Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <span><i class="icofont-clock-time"></i> january 23, 2021</span>
+                                                <a href="blog-detail.html" title="" class="button primary circle">read more</a>
+                                            </div>
+                                        </div>
+                                        <div class="blog-posts">
+                                            <figure><img src="images/resources/blog-list-4.jpg" alt=""></figure>
+                                            <div class="blog-post-meta">
+                                                <ul>
+                                                    <li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
+                                                    <li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
+                                                </ul>
+
+                                                <h4>Will The Democrats Be Able To Reverse The Online Gambling Ban</h4>
+                                                <p>
+                                                    Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <span><i class="icofont-clock-time"></i> january 23, 2021</span>
+                                                <a href="blog-detail.html" title="" class="button primary circle">read more</a>
+                                            </div>
+                                        </div>
+                                        <div class="blog-posts">
+                                            <figure><img src="images/resources/blog-list-5.jpg" alt=""></figure>
+                                            <div class="blog-post-meta">
+                                                <ul>
+                                                    <li><i class="icofont-read-book"></i><a title="Reads" href="#">93k</a></li>
+                                                    <li><i class="icofont-comment"></i><a title="comments" href="#">33</a></li>
+                                                </ul>
+
+                                                <h4>Love is always the happiness of a heart.</h4>
+                                                <p>
+                                                    Our online class is an affordable alternative to private therapy and coaching, and teaches day Lorem ipsum dolor sit amet.
+                                                </p>
+                                                <span><i class="icofont-clock-time"></i> january 23, 2021</span>
+                                                <a href="blog-detail.html" title="" class="button primary circle">read more</a>
+                                            </div>
+                                        </div>
+                                        <div class="load mt-5 mb-4">
+                                            <ul class="pagination">
+                                                <li><a href="#" title=""><i class="icofont-arrow-left"></i></a></li>
+                                                <li><a class="active" href="#" title="">1</a></li>
+                                                <li><a href="#" title="">2</a></li>
+                                                <li><a href="#" title="">3</a></li>
+                                                <li><a href="#" title="">4</a></li>
+                                                <li><a href="#" title="">5</a></li>
+                                                <li>....</li>
+                                                <li><a href="#" title="">10</a></li>
+                                                <li><a href="#" title=""><i class="icofont-arrow-right"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <aside class="sidebar static right">
+                                        <div class="widget">
+                                            <h4 class="widget-title">Ask Research Question?</h4>
+                                            <div class="ask-question">
+                                                <i class="icofont-question-circle"></i>
+                                                <h6>Ask questions in Q&A to get help from experts in your field.</h6>
+                                                <a class="ask-qst" href="#" title="">Ask a question</a>
+                                            </div>
+                                        </div>
+                                        <div class="widget">
+                                            <h4 class="widget-title">Explor Events <a class="see-all" href="#" title="">See All</a></h4>
+                                            <div class="rec-events bg-purple">
+                                                <i class="icofont-gift"></i>
+                                                <h6><a title="" href="">BZ University good night event in columbia</a></h6>
+                                                <img alt="" src="images/clock.png">
+                                            </div>
+                                            <div class="rec-events bg-blue">
+                                                <i class="icofont-microphone"></i>
+                                                <h6><a title="" href="">The 3rd International Conference 2020</a></h6>
+                                                <img alt="" src="images/clock.png">
+                                            </div>
+                                        </div>
+                                    </aside>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <figure class="bottom-mockup"><img src="images/footer.png" alt=""></figure>
+        <div class="bottombar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span class="">&copy; copyright All rights reserved by Bird Club</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- bottombar -->
+
+
+
+
+        <div class="new-question-popup">
+            <div class="popup">
+                <span class="popup-closed"><i class="icofont-close"></i></span>
+                <div class="popup-meta">
+                    <div class="popup-head">
+                        <h5><i>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-help-circle"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></i>                            Ask Question</h5>
+                    </div>
+                    <div class="post-new">
+                        <form method="post" class="c-form">
+
+                            <input type="text" placeholder="Question Title">
+                            <textarea placeholder="Write Question"></textarea>
+
+                            <select>
 							<option>Select Your Question Type</option>
 							<option>Article</option>
 							<option>Book</option>
@@ -376,24 +380,26 @@
 							<option>Thesis</option>
 							<option>Research</option>
 						</select>
-						<div class="uploadimage">
-							<i class="icofont-eye-alt-alt"></i>
-							<label class="fileContainer">
+                            <div class="uploadimage">
+                                <i class="icofont-eye-alt-alt"></i>
+                                <label class="fileContainer">
 								<input type="file">Upload File
 							</label>
-						</div>
-						
-						<button type="submit" class="main-btn">Post</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div><!-- ask question -->	
-</div>
-	
-	<script src="js/main.min.js"></script>
-	<script src="js/script.js"></script>
-	
+                            </div>
 
-</body>	
+                            <button type="submit" class="main-btn">Post</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ask question -->
+    </div>
+
+    <script src="js/main.min.js"></script>
+    <script src="js/script.js"></script>
+
+
+</body>
+
 </html>
