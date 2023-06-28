@@ -4,10 +4,14 @@ $(document).ready(function(){
     if(loggedInMember){
         var mem = JSON.parse(loggedInMember);
 
-        var result = mem.memberFullName;
-        $('#fullname').html(result);
+        var memberFullName = mem.memberFullName;
+        var memberImage = mem.memberImage;
+
+        $('#fullname').html(memberFullName);
+        $('#member-image').attr('src', memberImage);
     }
-})
+});
+
 
 $(document).ready(function(){
     $("#logoutButton").click(function() {
@@ -17,5 +21,23 @@ $(document).ready(function(){
         window.location.href = "sign-in.html";
     });
 })
+
+$(document).ready(function(){
+    $.ajax({
+        url: 'đường_dẫn_đến_endpoint_api',
+        method: 'GET',
+        success: function(response) {
+          // Xử lý kết quả trả về ở đây
+        },
+        error: function(xhr, status, error) {
+          // Xử lý lỗi ở đây (nếu có)
+        }
+      });
+      
+
+
+
+})
+
 
   
