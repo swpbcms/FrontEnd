@@ -64,7 +64,7 @@
 							<li>
 								<div class="searched-user">
 									<figure><img src="images/resources/user1.jpg" alt=""></figure>
-									<span>Danial Carabal</span>
+									<span></span>
 								</div>
 								<span class="trash"><i class="icofont-close-circled"></i></span>
 							</li>
@@ -104,10 +104,10 @@
 			<ul class="web-elements">
 				<li>
 					<div class="user-dp">
-						<a href="profile-page2.html" title="">
+						<a href="profile.html" title="">
 							<img alt="" src="images/resources/user.jpg">
 							<div class="name">
-								<h4>Danial Cardos</h4>
+								<h4 id="fullname"></h4>
 							</div>
 						</a>	
 					</div>
@@ -139,15 +139,10 @@
 					</a>
 					<ul class="dropdown">
 						<li><a href="profile.html" title=""><i class="icofont-user-alt-3"></i> Your Profile</a></li>
-						<li><a href="add-new-course.html" title=""><i class="icofont-plus"></i> New Course</a></li>
-						<li><a class="invite-new" href="#" title=""><i class="icofont-brand-slideshare"></i> Invite Collegue</a></li>
-						<li><a href="pay-out.html" title=""><i class="icofont-price"></i> Payout</a></li>
-						<li><a href="price-plan.html" title=""><i class="icofont-flash"></i> Upgrade</a></li>
 						<li><a href="help-faq.html" title=""><i class="icofont-question-circle"></i> Help</a></li>
 						<li><a href="settings.html" title=""><i class="icofont-gear"></i> Setting</a></li>
-						<li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li>
 						<li><a class="dark-mod" href="#" title=""><i class="icofont-moon"></i> Dark Mode</a></li>
-						<li class="logout"><a href="sign-in.html" title=""><i class="icofont-power"></i> Logout</a></li>
+						<li class="logout"><a id="logoutButton" title=""><i class="icofont-power"></i> Logout</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -166,7 +161,7 @@
 						<div class="col-lg-8">
 							<div class="page-caro">
 								<div class="link-item">
-									<a class="active" href="feed.html" title="">
+									<a class="active" href="index.html" title="">
 										<i class="">
 											<svg class="feather feather-zap" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
 										</i>
@@ -259,7 +254,7 @@
 								<ul class="filtr-tabs">
 									<li><a class="active" href="#" title="">Home</a></li>
 									<li><a href="#" title="">Recent</a></li>
-									<li><a href="#" title="">Favourit</a></li>
+									<li><a href="#" title="">Favourite</a></li>
 								</ul><!-- tab buttons -->
 								<div class="main-wraper">
 									<span class="new-title">Create New Post</span>
@@ -2839,6 +2834,7 @@
 	<script src="js/main.min.js"></script><!-- vendors merged files -->
 	<script src="js/date-time.js"></script>
 	<script src="js/script.js"></script><!-- custom scripts -->
-
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="js/list-index.js"></script>
 </body>	
 </html>
