@@ -36,13 +36,22 @@ $(document).ready(function() {
         success: function(response) {
           // Xử lý phản hồi từ API
           if (response.data) {
-            console.log("Cập nhật thông tin thành công");
+            // Hiển thị thông báo cập nhật thành công
+            Swal.fire({
+              icon: "success",
+              title: "Cập nhật thành công",
+              showConfirmButton: false,
+              timer: 1500
+            }).then(function() {
+              location.reload(); // Load lại trang
+            });
           } else {
             console.log("Thay đổi không thành công");
           }
         },
         error: function(error) {
           console.log("Đã xảy ra lỗi khi cập nhật thông tin thành viên: " + error);
+          console.log(error);
         }
       });
     }
