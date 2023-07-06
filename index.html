@@ -72,8 +72,8 @@
             <div class="topbar stick">
                 <div class="logo"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
                 <div class="searches">
-                    <form method="post">
-                        <input type="text" placeholder="Search...">
+                    <form method="post" id="searchform">
+                        <input type="text" placeholder="Search..." id="searchInput">
                         <button type="submit"><i class="icofont-search"></i></button>
                         <span class="cancel-search"><i class="icofont-close"></i></span>
                         <div class="recent-search">
@@ -82,35 +82,35 @@
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user1.jpg" alt=""></figure>
-                                        <span>Danial Carabal</span>
+                                        <span>Chim cảnh</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user2.jpg" alt=""></figure>
-                                        <span>Maria K</span>
+                                        <span>bồ câu</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user3.jpg" alt=""></figure>
-                                        <span>Fawad Khan</span>
+                                        <span>chim nhỏ</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user4.jpg" alt=""></figure>
-                                        <span>Danial Sandos</span>
+                                        <span>sẻ</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user5.jpg" alt=""></figure>
-                                        <span>Jack Carter</span>
+                                        <span>chim sẻ</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
@@ -310,7 +310,38 @@
 
                                     </aside>
                                 </div>
+                                
                                 <div class="col-lg-6">
+                                    <div class="main-wraper">
+                                        <span class="new-title">Create New Post</span>
+                                        <div class="new-post">
+                                            <form method="post">
+                                                <i class="icofont-pen-alt-1"></i>
+                                                <input type="text" placeholder="Create New Post">
+                                            </form>
+                                            <ul class="upload-media">
+                                                <li>
+                                                    <a href="#" title="">
+                                                        <i><img src="images/image.png" alt=""></i>
+                                                        <span>Photo/Video</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="">
+                                                        <i><img src="images/activity.png" alt=""></i>
+                                                        <span>Feeling/Activity</span>
+                                                    </a>
+                                                </li>
+                                                <!-- <li>
+                                                    <a href="live-stream.html" title="">
+                                                        <i><img src="images/live-stream.png" alt=""></i>
+                                                        <span>Live Stream</span>
+                                                    </a>
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+
                                     <div class="user-post" id="userpost">
 
                                     </div>
@@ -1344,10 +1375,6 @@
         </div>
         <!-- bottombar -->
 
-
-
-
-
         <div class="post-new-popup">
             <div class="popup" style="width: 800px;">
                 <span class="popup-closed"><i class="icofont-close"></i></span>
@@ -1359,19 +1386,19 @@
                                     stroke-linejoin="round" class="feather feather-plus">
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg></i>Create
-                            New Post</h5>
+                                </svg></i>Create New Post
+                            </h5>
                     </div>
                     <div class="post-new">
                         <div class="post-newmeta">
-                            <ul class="post-categoroes">
+                            <!-- <ul class="post-categoroes">
                                 <li><i class="icofont-camera"></i> Photo / Video</li>
                                 <li><i class="icofont-google-map"></i> Post Location</li>
                                 <li><i class="icofont-file-gif"></i> Post Gif</li>
                                 <li><i class="icofont-ui-tag"></i> Tag to Friend</li>
                                 <li><i class="icofont-users"></i> Share in Group</li>
                                 <li><i class="icofont-link"></i> Share Link</li>
-                            </ul>
+                            </ul> -->
                             <form method="post" class="dropzone" action="/upload-target">
                                 <div class="fallback">
                                     <input name="file" type="file" multiple />
@@ -1387,7 +1414,7 @@
                                 </div>
                                 <div class="checkbox">
                                     <input type="checkbox" id="checkbox2" checked>
-                                    <label for="checkbox2"><span>My Story</span></label>
+                                    <label for="checkbox2"><span>Event Feed</span></label>
                                 </div>
                             </div>
                             <div class="select-box">
@@ -1431,7 +1458,7 @@
                                 </ul>
                             </div>
                             <input class="schedule-btn" type="text" id="datetimepicker" readonly>
-                            <input type="text" placeholder="https://www.youtube.com/watch?v=vgvsuiFlA-Y&t=56s">
+                            <input type="text" placeholder="">
                             <button type="submit" class="main-btn">Publish</button>
                         </form>
                     </div>
@@ -1884,7 +1911,8 @@
     <script src="js/date-time.js"></script>
     <script src="js/script.js"></script><!-- custom scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/list-index.js"></script>
+    <script src="js/index-page.js"></script>
+    <!-- <script src="js/search-post.js"></script> -->
 
 </body>
 
