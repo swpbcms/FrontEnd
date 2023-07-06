@@ -56,10 +56,7 @@ $(document).ready(function() {
       });
     }
   });
-});
 
-
-$(document).ready(function() {
   // Xử lý sự kiện click nút xóa tài khoản
   $("#deleteAccountButton").click(function(event) {
     event.preventDefault(); // Ngăn chặn hành vi mặc định của nút submit
