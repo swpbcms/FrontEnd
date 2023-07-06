@@ -5,7 +5,7 @@ $(document).ready(function() {
 
     // Lấy giá trị từ các trường nhập liệu
     var gender = $("input[name='gender']:checked").val();
-    var image = ""; // Set the member image value here
+    var image = $("#ImageFileInput").val();
     var fullName = $("#FullNameInput input").val();
     var email = $("#EmailInput input").val();
     var password = $("#PasswordInput input").val();
@@ -49,13 +49,17 @@ $(document).ready(function() {
             console.log("Thay đổi không thành công");
           }
         },
-        error: function(error) {
-          console.log("Đã xảy ra lỗi khi cập nhật thông tin thành viên: " + error);
+        error: function(xhr, status, error) {
+          console.log("Đã xảy ra lỗi khi cập nhật thông tin thành viên:");
+          console.log(xhr.responseText);
+          console.log(status);
           console.log(error);
-        }
+        }       
       });
     }
   });
+});
+
 
   // Xử lý sự kiện click nút xóa tài khoản
   $("#deleteAccountButton").click(function(event) {
@@ -84,7 +88,7 @@ $(document).ready(function() {
         }
       }
     });
-  });
+  
 
   // Hàm xóa tài khoản
   function deleteAccount(memberId) {
