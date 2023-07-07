@@ -200,8 +200,8 @@ function displayData(data) {
         postHTML += '</div>';
         postHTML += '</div>';
 
-    }
-  
+      }
+
       // Thêm HTML vào phần tử hiển thị
       outputElement.append(postHTML);
 
@@ -210,7 +210,7 @@ function displayData(data) {
 }
 
 
-$('#searchInput').on('keydown', function(event) {
+$('#searchInput').on('keydown', function (event) {
   if (event.which === 13) { // Kiểm tra nếu phím Enter được nhấn
     event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter (chuyển trang)
 
@@ -228,6 +228,74 @@ function searchAndNavigate(query) {
   window.location.href = 'search-result.html';
   // window.location.href = 'path/to/search/results?query=' + encodeURIComponent(query);
 }
+
+
+// Create new Post
+$(document).ready(function() {
+  $('#myForm').submit(function(event) {
+      event.preventDefault();
+
+      // Lấy giá trị của memberId từ session
+      var memberId = sessionStorage.getItem('loggedInMember');
+      if (memberId) {
+        var mem = JSON.parse(memberId);
+    
+        var memberID = mem.memberId;
+      }
+      // Lấy giá trị của các trường
+      var title = $('#title').val();
+      var description = $('#description').val();
+      var checkbox2 = $('#checkbox2').is(':checked');
+      // var datetimepicker = $('#datetimepicker').val();
+      var eventLocation = $('#eventLocation').val();
+
+      var postData = {
+          postTitle: title,
+          postDescription: description,
+          postIsEvent: checkbox2 ? true : false,
+          eventLocation: eventLocation,
+          memberId: memberID
+      };
+
+      // Gửi yêu cầu AJAX
+      $.ajax({
+          url: 'https://localhost:7206/api/Post/create-post',
+          type: 'POST',
+          contentType: "application/json",
+          data: JSON.stringify(postData),
+          success: function(response) {
+              // Xử lý phản hồi từ máy chủ (nếu cần)
+              alert('Bài post đã được publish');
+              location.reload(); // Load lại trang
+          },
+          error: function(xhr, status, error) {
+              // Xử lý lỗi (nếu có)
+              alert('Không thể publish bài post');
+          }
+      });
+  });
+});
+
+
+//Validate popup create new post
+$(document).ready(function () {
+  $('#checkbox1').change(function () {
+    if ($(this).is(':checked')) {
+      $('#checkbox2').prop('checked', false);
+      $('#eventLocation').prop('readonly', 'readonly');
+    }
+  });
+
+  $('#checkbox2').change(function () {
+    if ($(this).is(':checked')) {
+      $('#checkbox1').prop('checked', false);
+      $('#eventLocation').removeAttr('readonly');
+    } else {
+      $('#eventLocation').prop('readonly', 'readonly');
+      $('#eventLocation').val('');
+    }
+  });
+});
 
 
 

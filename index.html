@@ -1405,19 +1405,22 @@
                                 </div>
                             </form>
                         </div>
-                        <form method="post" class="c-form">
-                            <textarea id="emojionearea1" placeholder="What's On Your Mind?"></textarea>
+                        <form method="post" class="c-form" id="myForm">
+                            <input type="text" placeholder="Title" id="title">
+                            <textarea type="text" id="description" placeholder="Describe your post"></textarea>
                             <div class="activity-post">
-                                <div class="checkbox">
-                                    <input type="checkbox" id="checkbox" checked>
+                                <!-- <div class="checkbox">
+                                    <input type="checkbox" id="checkbox">
                                     <label for="checkbox"><span>Activity Feed</span></label>
-                                </div>
+                                </div> -->
                                 <div class="checkbox">
-                                    <input type="checkbox" id="checkbox2" checked>
+                                    <input type="checkbox" id="checkbox2">
                                     <label for="checkbox2"><span>Event Feed</span></label>
+                                    <input type="text" placeholder="Event Location" id="eventLocation">
                                 </div>
                             </div>
-                            <div class="select-box">
+                    
+                            <!-- <div class="select-box">
                                 <div class="select-box__current" tabindex="1">
                                     <div class="select-box__value"><input class="select-box__input" type="radio" id="0"
                                             value="1" name="Ben" checked="checked" />
@@ -1456,9 +1459,9 @@
                                     <li><label class="select-box__option" for="4"><i class="icofont-users-alt-3"></i>
                                             Joined Groups</label></li>
                                 </ul>
-                            </div>
+                            </div> -->
+
                             <input class="schedule-btn" type="text" id="datetimepicker" readonly>
-                            <input type="text" placeholder="">
                             <button type="submit" class="main-btn">Publish</button>
                         </form>
                     </div>
