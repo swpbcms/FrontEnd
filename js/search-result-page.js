@@ -21,7 +21,7 @@ $(document).ready(function () {
   })
 
 $.ajax({
-    url: 'https://localhost:7206/api/Post/search-postuser?search=chim',
+    url: 'https://localhost:7206/api/Post/search-postuser?search=query',
     method: 'GET',
     success: function (response) {
         // Kiểm tra dữ liệu trả về từ API

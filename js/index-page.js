@@ -225,8 +225,8 @@ $('#searchInput').on('keydown', function (event) {
 function searchAndNavigate(query) {
   // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
   // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
-  window.location.href = 'search-result.html';
-  // window.location.href = 'path/to/search/results?query=' + encodeURIComponent(query);
+  // window.location.href = 'search-result.html';
+  window.location.href = 'https://localhost:7206/api/Post/search-postuser?search=' + encodeURIComponent(query);
 }
 
 
@@ -248,6 +248,7 @@ $(document).ready(function() {
       var checkbox2 = $('#checkbox2').is(':checked');
       // var datetimepicker = $('#datetimepicker').val();
       var eventLocation = $('#eventLocation').val();
+      var memberid = mem.memberId;
 
       var postData = {
           postTitle: title,
