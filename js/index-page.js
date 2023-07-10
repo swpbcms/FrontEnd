@@ -227,6 +227,7 @@ function searchAndNavigate(query) {
   // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
   // window.location.href = 'search-result.html';
   window.location.href = 'https://localhost:7206/api/Post/search-postuser?search=' + encodeURIComponent(query);
+  
 }
 
 
