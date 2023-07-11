@@ -61,13 +61,13 @@ function displayData(data) {
     var postCreateAt = item.postCreateAt;
     var postId = item.postId;
 
-    $.each(comments, function (commentIndex, comment) {
-      var commentPostId = comment.postId;
-      if (commentPostId === postId) { // Kiểm tra comment thuộc postId hiện tại
-        var memberId = comment.memberId;
-        var commentContent = comment.commentContent;
-        var dateComment = comment.dateTime;
-        var inverseComment = comment.inverseReply;
+    // $.each(comments, function (commentIndex, comment) {
+    //   var commentPostId = comment.postId;
+    //   if (commentPostId === postId) { // Kiểm tra comment thuộc postId hiện tại
+    //     var memberId = comment.memberId;
+    //     var commentContent = comment.commentContent;
+    //     var dateComment = comment.dateTime;
+    //     var inverseComment = comment.inverseReply;
 
         // Tạo HTML để hiển thị thông tin bài viết
         var postHTML = '<div class="main-wraper">';
@@ -146,32 +146,32 @@ function displayData(data) {
         postHTML += '</div>';
         postHTML += '</div>';
 
-        postHTML += '    <div class="comments-area">';
-        postHTML += '        <ul>';
-        postHTML += '            <li>';
-        postHTML += '                <figure><img alt="" src="' + memberImage + '">';
-        postHTML += '                 </figure>';
-        postHTML += '                <div class="commenter">';
-        postHTML += '                    <h5><a title="" href="#">' + memberId + '</a></h5>';
-        postHTML += '                    <span>' + dateComment + '</span>';
-        postHTML += '                    <p>' + commentContent + '</p>';
-        postHTML += '                </div>';
-        postHTML += '                <a title="Like" href="#"><i class="icofont-heart"></i></a>';
-        postHTML += '                <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>';
-        postHTML += '                <div class="comment-reply">';
-        postHTML += '                            <figure>';
-        postHTML += '                                <img src="" alt="">';
-        postHTML += '                            </figure>';
-        postHTML += '                               <div class="commenter">';
-        postHTML += '                                <h5><a title="" href="#">' + memberId + '</a></h5>';
-        postHTML += '                                <span class="comment-date"></span>';
-        postHTML += '                                <p class="comment-content">' + inverseComment + '</p>';
-        postHTML += '                            </div>';
-        postHTML += '                            </div>';
+        // postHTML += '    <div class="comments-area">';
+        // postHTML += '        <ul>';
+        // postHTML += '            <li>';
+        // postHTML += '                <figure><img alt="" src="' + memberImage + '">';
+        // postHTML += '                 </figure>';
+        // postHTML += '                <div class="commenter">';
+        // postHTML += '                    <h5><a title="" href="#">' + memberId + '</a></h5>';
+        // postHTML += '                    <span>' + dateComment + '</span>';
+        // postHTML += '                    <p>' + commentContent + '</p>';
+        // postHTML += '                </div>';
+        // postHTML += '                <a title="Like" href="#"><i class="icofont-heart"></i></a>';
+        // postHTML += '                <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>';
+        // postHTML += '                <div class="comment-reply">';
+        // postHTML += '                            <figure>';
+        // postHTML += '                                <img src="" alt="">';
+        // postHTML += '                            </figure>';
+        // postHTML += '                               <div class="commenter">';
+        // postHTML += '                                <h5><a title="" href="#">' + memberId + '</a></h5>';
+        // postHTML += '                                <span class="comment-date"></span>';
+        // postHTML += '                                <p class="comment-content">' + inverseComment + '</p>';
+        // postHTML += '                            </div>';
+        // postHTML += '                            </div>';
+        // postHTML += '            </li>';
+        // postHTML += '        </ul>';
+        // postHTML += '    </div>';
 
-        postHTML += '            </li>';
-        postHTML += '        </ul>';
-        postHTML += '    </div>';
         postHTML += '</div>';
         postHTML += '</div>';
         postHTML += '</div>';
@@ -180,12 +180,11 @@ function displayData(data) {
         postHTML += '</div>';
         postHTML += '</div>';
 
-      }
+      // }
 
       // Thêm HTML vào phần tử hiển thị
       outputElement.append(postHTML);
 
-    })
   });
 }
 
@@ -205,9 +204,15 @@ $('#searchInput').on('keydown', function (event) {
 function searchAndNavigate(query) {
   // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
   // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
+  var url = 'https://localhost:7206/api/Post/search-postuser?search=' + encodeURIComponent(query);
+  var variable = query;
+  localStorage.setItem('myVariable', url);
+  localStorage.setItem('query', variable);
   window.location.href = 'search-result.html';
-  // window.location.href = 'path/to/search/results?query=' + encodeURIComponent(query);
+
 }
+
+
 
 
 // Create new Post
@@ -228,6 +233,7 @@ $(document).ready(function() {
       var checkbox2 = $('#checkbox2').is(':checked');
       // var datetimepicker = $('#datetimepicker').val();
       var eventLocation = $('#eventLocation').val();
+      var memberid = mem.memberId;
 
       var postData = {
           postTitle: title,
