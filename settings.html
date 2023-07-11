@@ -37,10 +37,6 @@
                 </div>
             </div>
             <div class="right-compact">
-                <div class="sidemenu">
-                    <i>
-<svg id="side-menu2" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></i>
-                </div>
                 <div class="res-search">
                     <span>
 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
@@ -335,14 +331,18 @@
                                                     <div class="mb-4 col-lg-7" id="DateOfBirthInput">
                                                     <input class="uk-input" type="date" placeholder="Date of Birth">
                                                     </div>
+                                                    <div class="mb-4 col-lg-7" id="ImageInput">
+                                                        <label for="ImageFileInput">Thay đổi ảnh đại diện</label>
+                                                        <input class="uk-input" type="file" id="ImageFileInput" accept="image/*">
+                                                    </div>                                                                                                                                                       
                                                     <div class="col-lg-12" id="gender">
-                                                    <div class="gender">
-                                                        <input type="radio" id="male" name="gender" value="true">
-                                                        <label for="male">Male</label>
-                                                        <input type="radio" id="female" name="gender" value="false">
-                                                        <label for="female">Female</label>
-                                                    </div>
-                                                    </div>
+                                                        <div class="gender">
+                                                            <input type="radio" id="male" name="gender" value="true">
+                                                            <label for="male">Male</label>
+                                                            <input type="radio" id="female" name="gender" value="false">
+                                                            <label for="female">Female</label>
+                                                        </div>                                                  
+                                                    </div>                                                                                                    
                                                     <div class="mb-0 col-lg-12">
                                                     <button type="submit" class="button primary circle">Save Changes</button>
                                                     </div>
@@ -413,23 +413,20 @@
                                             </div>
                                         </div>
                                     </div>                                  
-                                    <!-- Close Account  -->
+                                    <!-- Close Account -->
                                     <div class="tab-pane fade" id="close">
                                         <div class="del-account">
-                                            <h2>Close Account</h2>
-                                            <p class="mb-4"><b>Warning:</b> If you close your account, you will be unsubscribed from all your followers, and will lose access forever.</p>
-                                            <form method="post">
-                                                <div class="row">
-                                                    <div class="mb-4 col-lg-6">
-                                                        <input class="uk-input" type="text" placeholder="Enter Your Password">
-                                                    </div>
-                                                    <div class="mb-0 col-lg-6">
-                                                        <a href="#" class="button danger icon-label circle"><i class="icofont-trash"></i> Delete Account</a>
-                                                    </div>
-                                                </div>
-                                            </form>
+                                        <h2>Close Account</h2>
+                                        <p class="mb-4"><b>Warning:</b> If you close your account, you will be unsubscribed from all your followers, and will lose access forever.</p>
+                                        <form method="post">
+                                            <div class="row">
+                                            <div class="mb-0 col-lg-6">
+                                                <a href="#" class="button danger icon-label circle" id="deleteAccountButton"><i class="icofont-trash"></i> Delete Account</a>
+                                            </div>
+                                            </div>
+                                        </form>
                                         </div>
-                                    </div>
+                                    </div>  
                                 </div>
                             </div>
                         </div>
@@ -780,7 +777,7 @@
     <script src="js/main.min.js"></script>
     <script src="js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/update.js"></script>
+    <script src="js/settings.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
 
     

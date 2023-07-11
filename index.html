@@ -39,16 +39,7 @@
                 </div>
             </div>
             <div class="right-compact">
-                <div class="sidemenu">
-                    <i>
-                        <svg id="side-menu2" xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg></i>
-                </div>
+                
                 <div class="res-search">
                     <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -72,8 +63,8 @@
             <div class="topbar stick">
                 <div class="logo"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
                 <div class="searches">
-                    <form method="post">
-                        <input type="text" placeholder="Search...">
+                    <form method="post" id="searchform">
+                        <input type="text" placeholder="Search..." id="searchInput">
                         <button type="submit"><i class="icofont-search"></i></button>
                         <span class="cancel-search"><i class="icofont-close"></i></span>
                         <div class="recent-search">
@@ -82,35 +73,35 @@
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user1.jpg" alt=""></figure>
-                                        <span>Danial Carabal</span>
+                                        <span>Chim cảnh</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user2.jpg" alt=""></figure>
-                                        <span>Maria K</span>
+                                        <span>bồ câu</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user3.jpg" alt=""></figure>
-                                        <span>Fawad Khan</span>
+                                        <span>chim nhỏ</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user4.jpg" alt=""></figure>
-                                        <span>Danial Sandos</span>
+                                        <span>sẻ</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="images/resources/user5.jpg" alt=""></figure>
-                                        <span>Jack Carter</span>
+                                        <span>chim sẻ</span>
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
@@ -310,7 +301,38 @@
 
                                     </aside>
                                 </div>
+                                
                                 <div class="col-lg-6">
+                                    <div class="main-wraper">
+                                        <span class="new-title">Create New Post</span>
+                                        <div class="new-post">
+                                            <form method="post">
+                                                <i class="icofont-pen-alt-1"></i>
+                                                <input type="text" placeholder="Create New Post">
+                                            </form>
+                                            <ul class="upload-media">
+                                                <li>
+                                                    <a href="#" title="">
+                                                        <i><img src="images/image.png" alt=""></i>
+                                                        <span>Photo/Video</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" title="">
+                                                        <i><img src="images/activity.png" alt=""></i>
+                                                        <span>Feeling/Activity</span>
+                                                    </a>
+                                                </li>
+                                                <!-- <li>
+                                                    <a href="live-stream.html" title="">
+                                                        <i><img src="images/live-stream.png" alt=""></i>
+                                                        <span>Live Stream</span>
+                                                    </a>
+                                                </li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+
                                     <div class="user-post" id="userpost">
 
                                     </div>
@@ -1344,10 +1366,6 @@
         </div>
         <!-- bottombar -->
 
-
-
-
-
         <div class="post-new-popup">
             <div class="popup" style="width: 800px;">
                 <span class="popup-closed"><i class="icofont-close"></i></span>
@@ -1359,38 +1377,41 @@
                                     stroke-linejoin="round" class="feather feather-plus">
                                     <line x1="12" y1="5" x2="12" y2="19"></line>
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
-                                </svg></i>Create
-                            New Post</h5>
+                                </svg></i>Create New Post
+                            </h5>
                     </div>
                     <div class="post-new">
                         <div class="post-newmeta">
-                            <ul class="post-categoroes">
+                            <!-- <ul class="post-categoroes">
                                 <li><i class="icofont-camera"></i> Photo / Video</li>
                                 <li><i class="icofont-google-map"></i> Post Location</li>
                                 <li><i class="icofont-file-gif"></i> Post Gif</li>
                                 <li><i class="icofont-ui-tag"></i> Tag to Friend</li>
                                 <li><i class="icofont-users"></i> Share in Group</li>
                                 <li><i class="icofont-link"></i> Share Link</li>
-                            </ul>
+                            </ul> -->
                             <form method="post" class="dropzone" action="/upload-target">
                                 <div class="fallback">
                                     <input name="file" type="file" multiple />
                                 </div>
                             </form>
                         </div>
-                        <form method="post" class="c-form">
-                            <textarea id="emojionearea1" placeholder="What's On Your Mind?"></textarea>
+                        <form method="post" class="c-form" id="myForm">
+                            <input type="text" placeholder="Title" id="title">
+                            <textarea type="text" id="description" placeholder="Describe your post"></textarea>
                             <div class="activity-post">
-                                <div class="checkbox">
-                                    <input type="checkbox" id="checkbox" checked>
+                                <!-- <div class="checkbox">
+                                    <input type="checkbox" id="checkbox">
                                     <label for="checkbox"><span>Activity Feed</span></label>
-                                </div>
+                                </div> -->
                                 <div class="checkbox">
-                                    <input type="checkbox" id="checkbox2" checked>
-                                    <label for="checkbox2"><span>My Story</span></label>
+                                    <input type="checkbox" id="checkbox2">
+                                    <label for="checkbox2"><span>Event Feed</span></label>
+                                    <input type="text" placeholder="Event Location" id="eventLocation">
                                 </div>
                             </div>
-                            <div class="select-box">
+                    
+                            <!-- <div class="select-box">
                                 <div class="select-box__current" tabindex="1">
                                     <div class="select-box__value"><input class="select-box__input" type="radio" id="0"
                                             value="1" name="Ben" checked="checked" />
@@ -1429,9 +1450,9 @@
                                     <li><label class="select-box__option" for="4"><i class="icofont-users-alt-3"></i>
                                             Joined Groups</label></li>
                                 </ul>
-                            </div>
+                            </div> -->
+
                             <input class="schedule-btn" type="text" id="datetimepicker" readonly>
-                            <input type="text" placeholder="https://www.youtube.com/watch?v=vgvsuiFlA-Y&t=56s">
                             <button type="submit" class="main-btn">Publish</button>
                         </form>
                     </div>
@@ -1615,9 +1636,11 @@
                                         <figure><img src="images/resources/blog-detail.jpg" alt=""></figure>
                                         <div class="stat-tools">
                                             <div class="box">
-                                                <div class="Like"><a class="Like__link"><i class="icofont-like"></i>
-                                                        Like</a>
-                                                    <div class="Emojis">
+                                                <div class="Like">
+                                                    <a class="Like__link" data-post-id="POST_ID">
+                                                      <i class="icofont-like"></i> Like
+                                                    </a>
+                                                    <div class="Emojis" >
                                                         <div class="Emoji Emoji--like">
                                                             <div class="icon icon--like"></div>
                                                         </div>
@@ -1884,8 +1907,8 @@
     <script src="js/date-time.js"></script>
     <script src="js/script.js"></script><!-- custom scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/list-index.js"></script>
-
+    <script src="js/index-page.js"></script>
+    <!-- <script src="js/search-post.js"></script> -->
 </body>
 
 </html>
