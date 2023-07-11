@@ -1,73 +1,49 @@
-
-$(document).ready(function () {
-  var loggedInMember = sessionStorage.getItem("loggedInMember");
-  if (loggedInMember) {
-    var mem = JSON.parse(loggedInMember);
-
-    var memberFullName = mem.memberFullName;
-    var memberImage = mem.memberImage;
-    $('#fullname').html(memberFullName);
-    $('#image').attr('src', memberImage);
-  }
-});
-
-
-$(document).ready(function () {
-  $("#logoutButton").click(function () {
-    // Clear the session storage
-    sessionStorage.removeItem("loggedInMember");
-    // Redirect to the login page or perform any other desired action
-    window.location.href = "feed.html";
-  });
-})
-
-
 $.ajax({
-  url: 'https://localhost:7206/api/Post/get-post',
-  method: 'GET',
-  success: function (response) {
-    // Kiểm tra dữ liệu trả về từ API
-    if (response && response.data) {
-      // Hiển thị dữ liệu
-      displayData(response.data);
-    } else {
-      console.log('Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.');
+    url: 'https://localhost:7206/api/Post/get-post',
+    method: 'GET',
+    success: function (response) {
+        // Kiểm tra dữ liệu trả về từ API
+        if (response && response.data) {
+            // Hiển thị dữ liệu
+            displayData(response.data);
+        } else {
+            console.log('Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.');
+        }
+    },
+    error: function () {
+        console.log('Lỗi khi gọi API.');
     }
-  },
-  error: function () {
-    console.log('Lỗi khi gọi API.');
-  }
 });
 
 // Hàm để hiển thị dữ liệu lên trang web
 function displayData(data) {
-  // Truy cập phần tử HTML để hiển thị dữ liệu
-  var outputElement = $('#userpost');
+    // Truy cập phần tử HTML để hiển thị dữ liệu
+    var outputElement = $('#postfeed');
 
-  // Kiểm tra nếu dữ liệu rỗng
-  if (data.length === 0) {
-    outputElement.text('Không có dữ liệu để hiển thị.');
-    return;
-  }
+    // Kiểm tra nếu dữ liệu rỗng
+    if (data.length === 0) {
+        outputElement.text('Không có dữ liệu để hiển thị.');
+        return;
+    }
 
-  // Duyệt qua từng đối tượng dữ liệu và hiển thị lên trang web 
-  $.each(data, function (index, item) {
-    var postTitle = item.postTitle;
-    var postDescription = item.postDescription;
-    var memberFullName = item.member.memberFullName;
-    var memberImage = item.member.memberImage;
-    var comments = item.member.comment;
-    var likePost = item.postNumberLike;
-    var postCreateAt = item.postCreateAt;
-    var postId = item.postId;
+    // Duyệt qua từng đối tượng dữ liệu và hiển thị lên trang web 
+    $.each(data, function (index, item) {
+        var postTitle = item.postTitle;
+        var postDescription = item.postDescription;
+        var memberFullName = item.member.memberFullName;
+        var memberImage = item.member.memberImage;
+        var comments = item.member.comment;
+        var likePost = item.postNumberLike;
+        var postCreateAt = item.postCreateAt;
+        var postId = item.postId;
 
-    // $.each(comments, function (commentIndex, comment) {
-    //   var commentPostId = comment.postId;
-    //   if (commentPostId === postId) { // Kiểm tra comment thuộc postId hiện tại
-    //     var memberId = comment.memberId;
-    //     var commentContent = comment.commentContent;
-    //     var dateComment = comment.dateTime;
-    //     var inverseComment = comment.inverseReply;
+        //   $.each(comments, function (commentIndex, comment) {
+        //     var commentPostId = comment.postId;
+        //     if (commentPostId === postId) { // Kiểm tra comment thuộc postId hiện tại
+        //       var memberId = comment.memberId;
+        //       var commentContent = comment.commentContent;
+        //       var dateComment = comment.dateTime;
+        //       var inverseComment = comment.inverseReply;
 
         // Tạo HTML để hiển thị thông tin bài viết
         var postHTML = '<div class="main-wraper">';
@@ -166,31 +142,31 @@ function displayData(data) {
         postHTML += '</div>';
         postHTML += '</div>';
 
-        // postHTML += '    <div class="comments-area">';
-        // postHTML += '        <ul>';
-        // postHTML += '            <li>';
-        // postHTML += '                <figure><img alt="" src="' + memberImage + '">';
-        // postHTML += '                 </figure>';
-        // postHTML += '                <div class="commenter">';
-        // postHTML += '                    <h5><a title="" href="#">' + memberId + '</a></h5>';
-        // postHTML += '                    <span>' + dateComment + '</span>';
-        // postHTML += '                    <p>' + commentContent + '</p>';
-        // postHTML += '                </div>';
-        // postHTML += '                <a title="Like" href="#"><i class="icofont-heart"></i></a>';
-        // postHTML += '                <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>';
-        // postHTML += '                <div class="comment-reply">';
-        // postHTML += '                            <figure>';
-        // postHTML += '                                <img src="" alt="">';
-        // postHTML += '                            </figure>';
-        // postHTML += '                               <div class="commenter">';
-        // postHTML += '                                <h5><a title="" href="#">' + memberId + '</a></h5>';
-        // postHTML += '                                <span class="comment-date"></span>';
-        // postHTML += '                                <p class="comment-content">' + inverseComment + '</p>';
-        // postHTML += '                            </div>';
-        // postHTML += '                            </div>';
-        // postHTML += '            </li>';
-        // postHTML += '        </ul>';
-        // postHTML += '    </div>';
+        //   postHTML += '    <div class="comments-area">';
+        //   postHTML += '        <ul>';
+        //   postHTML += '            <li>';
+        //   postHTML += '                <figure><img alt="" src="' + memberImage + '">';
+        //   postHTML += '                 </figure>';
+        //   postHTML += '                <div class="commenter">';
+        //   postHTML += '                    <h5><a title="" href="#">' + memberId + '</a></h5>';
+        //   postHTML += '                    <span>' + dateComment + '</span>';
+        //   postHTML += '                    <p>' + commentContent + '</p>';
+        //   postHTML += '                </div>';
+        //   postHTML += '                <a title="Like" href="#"><i class="icofont-heart"></i></a>';
+        //   postHTML += '                <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>';
+        //   postHTML += '                <div class="comment-reply">';
+        //   postHTML += '                            <figure>';
+        //   postHTML += '                                <img src="" alt="">';
+        //   postHTML += '                            </figure>';
+        //   postHTML += '                               <div class="commenter">';
+        //   postHTML += '                                <h5><a title="" href="#">' + memberId + '</a></h5>';
+        //   postHTML += '                                <span class="comment-date"></span>';
+        //   postHTML += '                                <p class="comment-content">' + inverseComment + '</p>';
+        //   postHTML += '                            </div>';
+        //   postHTML += '                            </div>';
+        //   postHTML += '            </li>';
+        //   postHTML += '        </ul>';
+        //   postHTML += '    </div>';
 
         postHTML += '</div>';
         postHTML += '</div>';
@@ -200,116 +176,35 @@ function displayData(data) {
         postHTML += '</div>';
         postHTML += '</div>';
 
-      // }
+        // }
 
-      // Thêm HTML vào phần tử hiển thị
-      outputElement.append(postHTML);
+        // Thêm HTML vào phần tử hiển thị
+        outputElement.append(postHTML);
 
-  });
+    });
 }
 
 
 $('#searchInput').on('keydown', function (event) {
-  if (event.which === 13) { // Kiểm tra nếu phím Enter được nhấn
-    event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter (chuyển trang)
+    if (event.which === 13) { // Kiểm tra nếu phím Enter được nhấn
+        event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter (chuyển trang)
 
-    var searchQuery = $(this).val(); // Lấy giá trị tìm kiếm từ ô input
+        var searchQuery = $(this).val(); // Lấy giá trị tìm kiếm từ ô input
 
-    if (searchQuery.trim() !== '') { // Kiểm tra nếu ô tìm kiếm không trống
-      searchAndNavigate(searchQuery);
+        if (searchQuery.trim() !== '') { // Kiểm tra nếu ô tìm kiếm không trống
+            searchAndNavigate(searchQuery);
+        }
     }
-  }
 });
 
 function searchAndNavigate(query) {
-  // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
-  // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
-  var url = 'https://localhost:7206/api/Post/search-postuser?search=' + encodeURIComponent(query);
-  var variable = query;
-  localStorage.setItem('myVariable', url);
-  localStorage.setItem('query', variable);
-  window.location.href = 'search-result.html';
+    // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
+    // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
+    var url = 'https://localhost:7206/api/Post/search-postuser?search=' + encodeURIComponent(query);
+    var variable = query;
+    localStorage.setItem('myVariable', url);
+    localStorage.setItem('query', variable);
+    window.location.href = 'search-result.html';
 
 }
-
-
-
-
-// Create new Post
-$(document).ready(function() {
-  $('#myForm').submit(function(event) {
-      event.preventDefault();
-
-      // Lấy giá trị của memberId từ session
-      var memberId = sessionStorage.getItem('loggedInMember');
-      if (memberId) {
-        var mem = JSON.parse(memberId);
-    
-        var memberID = mem.memberId;
-      }
-      // Lấy giá trị của các trường
-      var title = $('#title').val();
-      var description = $('#description').val();
-      var checkbox2 = $('#checkbox2').is(':checked');
-      // var datetimepicker = $('#datetimepicker').val();
-      var eventLocation = $('#eventLocation').val();
-      var memberid = mem.memberId;
-
-      var postData = {
-          postTitle: title,
-          postDescription: description,
-          postIsEvent: checkbox2 ? true : false,
-          eventLocation: eventLocation,
-          memberId: memberID
-      };
-
-      // Gửi yêu cầu AJAX
-      $.ajax({
-          url: 'https://localhost:7206/api/Post/create-post',
-          type: 'POST',
-          contentType: "application/json",
-          data: JSON.stringify(postData),
-          success: function(response) {
-              // Xử lý phản hồi từ máy chủ (nếu cần)
-              alert('Bài post đã được publish');
-              location.reload(); // Load lại trang
-          },
-          error: function(xhr, status, error) {
-              // Xử lý lỗi (nếu có)
-              alert('Không thể publish bài post');
-          }
-      });
-  });
-});
-
-
-//Validate popup create new post
-$(document).ready(function () {
-  $('#checkbox1').change(function () {
-    if ($(this).is(':checked')) {
-      $('#checkbox2').prop('checked', false);
-      $('#eventLocation').prop('readonly', 'readonly');
-    }
-  });
-
-  $('#checkbox2').change(function () {
-    if ($(this).is(':checked')) {
-      $('#checkbox1').prop('checked', false);
-      $('#eventLocation').removeAttr('readonly');
-    } else {
-      $('#eventLocation').prop('readonly', 'readonly');
-      $('#eventLocation').val('');
-    }
-  });
-});
-
-
-
-
-
-
-
-
-
-
 
