@@ -1,3 +1,26 @@
+$(document).ready(function () {
+  var loggedInMember = sessionStorage.getItem("loggedInMember");
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+
+    var memberFullName = mem.memberFullName;
+    var memberImage = mem.memberImage;
+    $('#fullname').html(memberFullName);
+    $('#image').attr('src', memberImage);
+  }
+});
+
+
+$(document).ready(function () {
+  $("#logoutButton").click(function () {
+    // Clear the session storage
+    sessionStorage.removeItem("loggedInMember");
+    // Redirect to the login page or perform any other desired action
+    window.location.href = "feed.html";
+  });
+})
+
+
 $(document).ready(function() {
   // Xử lý sự kiện submit của biểu mẫu
   $("#signup").submit(function(event) {
