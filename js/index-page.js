@@ -22,9 +22,6 @@ $(document).ready(function () {
 })
 
 
-
-
-
 // Event listener for the "Like" action
 $(document).on('click', '.like-button', function () {
   // Get the postId from the data attribute of the button
@@ -174,26 +171,6 @@ function displayData(data) {
         postHTML += '<div class="stat-tools">';
         postHTML += '    <div class="box">';
         postHTML += '        <div class="Like"><a class="Like__link"><i class="icofont-like"></i> Like</a>';
-        postHTML += '            <div class="Emojis">';
-        postHTML += '                <div class="Emoji Emoji--like">';
-        postHTML += '                    <div class="icon icon--like"></div>';
-        postHTML += '                </div>';
-        postHTML += '                <div class="Emoji Emoji--love">';
-        postHTML += '                    <div class="icon icon--heart"></div>';
-        postHTML += '                </div>';
-        postHTML += '                <div class="Emoji Emoji--haha">';
-        postHTML += '                    <div class="icon icon--haha"></div>';
-        postHTML += '                </div>';
-        postHTML += '                <div class="Emoji Emoji--wow">';
-        postHTML += '                    <div class="icon icon--wow"></div>';
-        postHTML += '                </div>';
-        postHTML += '                <div class="Emoji Emoji--sad">';
-        postHTML += '                    <div class="icon icon--sad"></div>';
-        postHTML += '                </div>';
-        postHTML += '                <div class="Emoji Emoji--angry">';
-        postHTML += '                    <div class="icon icon--angry"></div>';
-        postHTML += '                </div>';
-        postHTML += '            </div>';
         postHTML += '        </div>';
         postHTML += '    <a title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</a>';
         postHTML += '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Share</a>';
@@ -344,12 +321,39 @@ $(document).ready(function () {
 });
 
 
+$(document).ready(function () {
+  // Event listener for the "Like" action
+  $(document).on('click', '.like-button', function () {
+    // Get the postId from the data attribute of the button
+    var postId = $(this).data('post-id');
+    
+    // Get the memberId from the session storage
+    var loggedInMember = sessionStorage.getItem('loggedInMember');
+    if (loggedInMember) {
+      var mem = JSON.parse(loggedInMember);
+      var memberId = mem.memberId;
 
+      // Create the data object for the "Like" API request
+      var likeData = {
+        memberId: memberId,
+        postId: postId,
+        dateTime: new Date().toISOString()
+      };
 
-
-
-
-
-
-
-
+      // Send the AJAX request to the PHP script
+      $.ajax({
+        url: 'like.php',
+        type: 'POST',
+        data: likeData,
+        success: function (response) {
+          // Handle the success response (if needed)
+          console.log(response);
+        },
+        error: function (xhr, status, error) {
+          // Handle the error (if needed)
+          console.log('Error liking post');
+        }
+      });
+    }
+  });
+});
