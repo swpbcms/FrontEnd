@@ -22,6 +22,43 @@ $(document).ready(function () {
 })
 
 
+// Event listener for the "Like" action
+$(document).on('click', '.like-button', function () {
+  // Get the postId from the data attribute of the button
+  var postId = $(this).data('post-id');
+
+  // Get the memberId from the session storage
+  var loggedInMember = sessionStorage.getItem('loggedInMember');
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+    var memberId = mem.memberId;
+
+    // Create the data object for the "Like" API request
+    var likeData = {
+      memberId: memberId,
+      postId: postId,
+      dateTime: new Date().toISOString()
+    };
+
+    // Send the AJAX request to the "Like" API
+    $.ajax({
+      url: 'https://localhost:7206/api/Like/Like',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(likeData),
+      success: function (response) {
+        // Handle the success response (if needed)
+        console.log('Like successful');
+      },
+      error: function (xhr, status, error) {
+        // Handle the error (if needed)
+        console.log('Error liking post');
+      }
+    });
+  }
+});
+
+
 $.ajax({
   url: 'https://localhost:7206/api/Post/get-post',
   method: 'GET',
