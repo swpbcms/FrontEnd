@@ -22,6 +22,9 @@ $(document).ready(function () {
 })
 
 
+
+
+
 // Event listener for the "Like" action
 $(document).on('click', '.like-button', function () {
   // Get the postId from the data attribute of the button
