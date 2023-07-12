@@ -303,15 +303,14 @@ $(document).ready(function () {
         dateTime: new Date().toISOString()
       };
 
-      // Send the AJAX request to the "Like" API
+      // Send the AJAX request to the PHP script
       $.ajax({
-        url: 'https://localhost:7206/api/Like/Like',
+        url: 'like.php',
         type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(likeData),
+        data: likeData,
         success: function (response) {
           // Handle the success response (if needed)
-          console.log('Like successful');
+          console.log(response);
         },
         error: function (xhr, status, error) {
           // Handle the error (if needed)
@@ -321,13 +320,3 @@ $(document).ready(function () {
     }
   });
 });
-
-
-
-
-
-
-
-
-
-
