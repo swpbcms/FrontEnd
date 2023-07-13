@@ -49,7 +49,7 @@ $(document).ready(function() {
         memberPassword: password,
         memberDob: dob
       };
-
+      console.log(data);
       // Gửi yêu cầu AJAX PUT đến API
       $.ajax({
         url: "https://localhost:7206/api/Member/Update-member",
