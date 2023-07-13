@@ -83,8 +83,9 @@ $(document).ready(function() {
   }
 
   function displayEventList(eventPosts) {
-    var eventListHTML = "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider uk-table-middle'>";
-    eventListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th></tr></thead><tbody>";
+    var eventListHTML = "<h2>Quản lý sự kiện</h2>";
+    eventListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
+    eventListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Sự kiện/Bài viết</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th></tr></thead><tbody>";
   
     for (var i = 0; i < eventPosts.length; i++) {
       var post = eventPosts[i];
@@ -106,8 +107,9 @@ $(document).ready(function() {
   
     eventListHTML += "</tbody></table></div>";
   
-    $("#event-list").html(eventListHTML);
+    $("#components-nav li:nth-child(4)").html(eventListHTML);
   }
+  
   
   
   function formatDate(dateString) {
