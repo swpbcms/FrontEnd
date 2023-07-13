@@ -83,31 +83,32 @@ $(document).ready(function() {
   }
 
   function displayEventList(eventPosts) {
-    var eventListHTML = "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
+    var eventListHTML = "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider uk-table-middle'>";
     eventListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th></tr></thead><tbody>";
-
+  
     for (var i = 0; i < eventPosts.length; i++) {
-        var post = eventPosts[i];
-      
-        eventListHTML += "<tr>";
-        eventListHTML += "<td>" + post.postId + "</td>";
-        eventListHTML += "<td>" + post.postTitle + "</td>";
-        eventListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
-        eventListHTML += "<td>" + post.postDescription + "</td>";
-        eventListHTML += "<td>" + post.postStatus + "</td>";
-        eventListHTML += "<td>" + post.postNumberLike + "</td>";
-        eventListHTML += "<td>" + post.postNumberJoin + "</td>";
-        eventListHTML += "<td>" + post.eventLocation + "</td>";
-        eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
-        eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
-        eventListHTML += "<td>" + post.member.memberId + "</td>";
-        eventListHTML += "</tr>";
+      var post = eventPosts[i];
+  
+      eventListHTML += "<tr>";
+      eventListHTML += "<td>" + post.postId + "</td>";
+      eventListHTML += "<td>" + post.postTitle + "</td>";
+      eventListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
+      eventListHTML += "<td>" + post.postDescription + "</td>";
+      eventListHTML += "<td>" + post.postStatus + "</td>";
+      eventListHTML += "<td>" + post.postNumberLike + "</td>";
+      eventListHTML += "<td>" + post.postNumberJoin + "</td>";
+      eventListHTML += "<td>" + post.eventLocation + "</td>";
+      eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
+      eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
+      eventListHTML += "<td>" + post.member.memberId + "</td>";
+      eventListHTML += "</tr>";
     }
-
+  
     eventListHTML += "</tbody></table></div>";
-
+  
     $("#event-list").html(eventListHTML);
-}
+  }
+  
   
   function formatDate(dateString) {
     var date = new Date(dateString);
