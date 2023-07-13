@@ -3,6 +3,10 @@ $(document).ready(function() {
   $("#loginForm").submit(function(event) {
     event.preventDefault(); // Ngăn chặn việc gửi yêu cầu mặc định của biểu mẫu
 
+    // Xóa thông tin đăng nhập cũ trong sessionStorage
+    sessionStorage.removeItem("loggedInMember");
+    sessionStorage.removeItem("loggedInManager");
+
     // Lấy tên đăng nhập và mật khẩu từ người dùng
     var username = $("#userNameInput").val();
     var password = $("#passwordInput").val();
@@ -19,8 +23,6 @@ $(document).ready(function() {
       managerPassword: password
     };
 
-    var memberLoginSuccess = false; // Biến cờ cho trạng thái đăng nhập thành viên
-
     // Gửi yêu cầu AJAX POST đến API đăng nhập cho thành viên
     $.ajax({
       url: "https://localhost:7206/api/Member/login-Member",
@@ -35,7 +37,6 @@ $(document).ready(function() {
           // Ví dụ: chuyển trang và lưu session đăng nhập
           window.location.href = "index.html";
           sessionStorage.setItem("loggedInMember", JSON.stringify(member));
-          memberLoginSuccess = true; // Đánh dấu trạng thái đăng nhập thành viên thành công
         } else {
           // Xử lý khi tên đăng nhập hoặc mật khẩu thành viên không đúng
           Swal.fire({
@@ -58,12 +59,12 @@ $(document).ready(function() {
       contentType: "application/json",
       data: JSON.stringify(managerData),
       success: function(response) {
-        if (response.data && !memberLoginSuccess) { // Kiểm tra nếu chưa đăng nhập thành viên thành công
+        if (response.data) {
           // Xử lý đăng nhập quản lý thành công
           var manager = response.data;
           window.location.href = "manager.html";
           sessionStorage.setItem("loggedInManager", JSON.stringify(manager));
-        } else if (!memberLoginSuccess) { // Kiểm tra nếu chưa đăng nhập thành viên thành công
+        } else {
           // Xử lý khi tên đăng nhập hoặc mật khẩu quản lý không đúng
           Swal.fire({
             icon: 'error',
