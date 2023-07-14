@@ -34,8 +34,6 @@ $(document).ready(function() {
       var status = member.memberrStatus ? "Hoạt động" : "Không hoạt động";
       
       memberListHTML += "<tr>";
-      memberListHTML += "<td><button class='btn-update' data-member-id='" + member.memberId + "'>Update</button></td>";
-      memberListHTML += "<td><button class='btn-delete' data-member-id='" + member.memberId + "'>Delete</button></td>";
       memberListHTML += "<td>" + member.memberId + "</td>";
       memberListHTML += "<td>" + member.memberCreateAt + "</td>";
       memberListHTML += "<td>" + gender + "</td>";
@@ -54,58 +52,6 @@ $(document).ready(function() {
     $("#components-nav li:first-child").html(memberListHTML);
   }
   
-  // Add event listener for update buttons
-$(document).on("click", ".btn-update", function() {
-  var memberId = $(this).data("member-id");
-
-  // Perform the update action for the selected member
-  updateMember(memberId);
-});
-
-// Add event listener for delete buttons
-$(document).on("click", ".btn-delete", function() {
-  var memberId = $(this).data("member-id");
-
-  // Perform the delete action for the selected member
-  deleteMember(memberId);
-});
   
-function updateMember(memberId) {
-  // Perform the update action for the selected member with the given memberId
-  // You can use AJAX to send a request to the server to update the member data
-  // Example AJAX request:
-  $.ajax({
-    url: "https://localhost:7206/api/Member/Update-Member/" + memberId,
-    type: "PUT",
-    dataType: "json",
-    success: function(response) {
-      // Handle the update success
-      console.log("Member updated successfully");
-    },
-    error: function(error) {
-      // Handle the update error
-      console.log("An error occurred while updating member: " + error);
-    }
-  });
-}
-
-function deleteMember(memberId) {
-  // Perform the delete action for the selected member with the given memberId
-  // You can use AJAX to send a request to the server to delete the member
-  // Example AJAX request:
-  $.ajax({
-    url: "https://localhost:7206/api/Member/Delete-Member/" + memberId,
-    type: "DELETE",
-    dataType: "json",
-    success: function(response) {
-      // Handle the delete success
-      console.log("Member deleted successfully");
-    },
-    error: function(error) {
-      // Handle the delete error
-      console.log("An error occurred while deleting member: " + error);
-    }
-  });
-}
-
+  
 });
