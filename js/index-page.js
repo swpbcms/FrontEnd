@@ -285,13 +285,37 @@ $(document).ready(function () {
     // var datetimepicker = $('#datetimepicker').val();
     var eventLocation = $('#eventLocation').val();
     var memberid = mem.memberId;
+    var category = "Cate721a1d";
+
+    // var postData = {
+    //   category = 
+    //   postTitle: title,
+    //   postDescription: description,
+    //   postIsEvent: checkbox2 ? true : false,
+    //   eventLocation: eventLocation,
+    //   memberId: memberID
+    // };
 
     var postData = {
-      postTitle: title,
-      postDescription: description,
-      postIsEvent: checkbox2 ? true : false,
-      eventLocation: eventLocation,
-      memberId: memberID
+      
+      "postTitle": title,
+      "postDescription": description,
+      "postIsEvent": checkbox2 ? true : false,
+      "eventLocation": eventLocation,
+      "eventStartDate": "2023-07-14T03:32:27.258Z",
+      "eventEndDate": "2023-07-14T03:32:27.258Z",
+      "memberId": memberID,
+      "categories": [
+        {
+          "categoryID": "Cate721a1d"
+        }
+      ],
+      
+      "media": [
+        {
+          "linkMedia": "Example Media Link"
+        }
+      ]
     };
 
     // Gửi yêu cầu AJAX
@@ -312,6 +336,7 @@ $(document).ready(function () {
     });
   });
 });
+
 
 
 //Validate popup create new post

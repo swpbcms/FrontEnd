@@ -5,7 +5,6 @@ $(document).ready(function() {
 
     // Xóa thông tin đăng nhập cũ trong sessionStorage
     sessionStorage.removeItem("loggedInMember");
-    sessionStorage.removeItem("loggedInManager");
 
     // Lấy tên đăng nhập và mật khẩu từ người dùng
     var username = $("#userNameInput").val();

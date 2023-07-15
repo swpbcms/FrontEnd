@@ -1,3 +1,25 @@
+$(document).ready(function () {
+  var loggedInManager = sessionStorage.getItem("loggedInManager");
+  if (loggedInManager) {
+    var manager = JSON.parse(loggedInManager);
+
+    var managerFullName = manager.managerFullName;
+    var managerImage = manager.managerImage;
+    $('#fullname').html(managerFullName);
+    $('#image').attr('src', managerImage);
+  }
+});
+
+
+$(document).ready(function () {
+  $("#logoutButton").click(function () {
+    // Clear the session storage
+    sessionStorage.removeItem("loggedInMember");
+    // Redirect to the login page or perform any other desired action
+    window.location.href = "feed.html";
+  });
+});
+
 $(document).ready(function() {
   // Fetch member list using AJAX
   $.ajax({
