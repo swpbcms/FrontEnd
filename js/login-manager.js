@@ -4,7 +4,6 @@ $(document).ready(function() {
       event.preventDefault(); // Ngăn chặn việc gửi yêu cầu mặc định của biểu mẫu
   
       // Xóa thông tin đăng nhập cũ trong sessionStorage
-      sessionStorage.removeItem("loggedInMember");
       sessionStorage.removeItem("loggedInManager");
   
       // Lấy tên đăng nhập và mật khẩu từ người dùng

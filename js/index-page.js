@@ -368,13 +368,23 @@ $(document).ready(function () {
     // var datetimepicker = $('#datetimepicker').val();
     var eventLocation = $("#eventLocation").val();
     var memberid = mem.memberId;
+    var category = "Cate721a1d";
+
+    // var postData = {
+    //   category = 
+    //   postTitle: title,
+    //   postDescription: description,
+    //   postIsEvent: checkbox2 ? true : false,
+    //   eventLocation: eventLocation,
+    //   memberId: memberID
+    // };
 
     var postData = {
       postTitle: title,
       postDescription: description,
       postIsEvent: checkbox2 ? true : false,
       eventLocation: eventLocation,
-      memberId: memberID,
+      memberId: memberID
     };
 
     // Gửi yêu cầu AJAX
@@ -395,6 +405,7 @@ $(document).ready(function () {
     });
   });
 });
+
 
 //Validate popup create new post
 $(document).ready(function () {

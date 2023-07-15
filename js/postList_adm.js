@@ -78,7 +78,7 @@ $(document).ready(function() {
   
     postListHTML += "</tbody></table></div>";
   
-    $("#components-nav li:nth-child(3)").html(postListHTML);
+    $("#components-nav li:nth-child(4)").html(postListHTML);
   }
   
 
@@ -107,7 +107,7 @@ $(document).ready(function() {
   
     eventListHTML += "</tbody></table></div>";
   
-    $("#components-nav li:nth-child(4)").html(eventListHTML);
+    $("#components-nav li:nth-child(5)").html(eventListHTML);
   }
   
   
