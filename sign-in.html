@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Description goes here" />
+    <meta name="keywords" content="keywords, go, here" />
+    <title>Bird Club Management System</title>
+    <link rel="icon" href="images/logo.png" type="image/png" sizes="16x16">
+
+    <link rel="stylesheet" href="css/main.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/color.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css">
+
+</head>
+
+<body>
+    <div class="page-loader" id="page-loader">
+        <div class="loader">
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+            <span class="loader-item"></span>
+        </div>
+    </div>
+    <!-- page loader -->
+    <div class="theme-layout">
+        <div class="authtication bluesh high-opacity">
+            <div class="bg-image" style="background-image: url(images/resources/logo-background.png)"></div>
+            <ul class="welcome-caro">
+                <li class="welcome-box">
+                    <figure><img src="images/resources/bird1.png" alt=""></figure>
+                    <h4>Ask questions with senior researchers</h4>
+                    <p>
+                        Ask questions and get experienced answers from researchers and other fellows.
+                    </p>
+                </li>
+                <li class="welcome-box">
+                    <figure><img src="images/resources/bird2.png" alt=""></figure>
+                    <h4>Find new researchers or friends</h4>
+                    <p>
+                        Join Socimo and expand your network of university or college fellows.
+                    </p>
+                </li>
+                <li class="welcome-box">
+                    <figure><img src="images/resources/bird3.png" alt=""></figure>
+                    <h4>Sell your online paid content</h4>
+                    <p>
+                        Sell your online lectures, videos, books, and more with Socimo.
+                    </p>
+                </li>
+            </ul>
+        </div>
+        <div class="auth-login">
+            <div class="logo"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
+            <div class="mockup left-bottom"><img src="images/mockup.png" alt=""></div>
+            <div class="verticle-center">
+                <div class="login-form">
+                    <h4><i class="icofont-key-hole"></i> Login</h4>
+                    <form method="post" class="c-form" id="loginForm">
+                        <div>
+                            <input type="text" placeholder="User Name @" id="userNameInput">
+                            <small></small>
+                            <span></span>
+                        </div>
+                        <div>
+                            <input type="password" placeholder="********" id="passwordInput">
+                            <small></small>
+                            <span></span>
+                        </div>
+                        <div class="checkbox">
+                            <input type="checkbox" id="checkbox" checked>
+                            <label for="checkbox"><span>Remember Me</span></label>
+                        </div>
+                        <button class="main-btn" type="submit"><i class="icofont-key"></i> Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.min.js"></script>
+    <script src="js/script.js"></script>
+    <script type="module" src="js/login-member.js"></script>
+    <script type="module" src="js/login-manager.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+</body>
+
+</html>

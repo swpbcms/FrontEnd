@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>Bird Club Management System</title>
+    <link rel="icon" href="images/logo.png" type="image/png" sizes="16x16">
+
+    <link rel="stylesheet" href="css/main.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/color.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+    <div class="page-loader" id="page-loader">
+
+        <div class="loader"><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span><span class="loader-item"></span>
+            <span
+                class="loader-item"></span><span class="loader-item"></span></div>
+
+    </div>
+    <!-- page loader -->
+    <div class="theme-layout">
+
+        <div class="responsive-header">
+            <div class="logo res"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
+
+            <div class="right-compact">
+                <div class="sidemenu">
+                    <i>
+<svg id="side-menu2" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></i>
+                </div>
+                <div class="res-search">
+                    <span>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+                </div>
+
+            </div>
+            <div class="restop-search">
+                <span class="hide-search"><i class="icofont-close-circled"></i></span>
+                <form method="post">
+                    <input type="text" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+        <!-- responsive header -->
+
+        <header class="">
+            <div class="topbar stick">
+                <div class="logo"><img src="images/logo.png" alt=""><span>Bird Club</span></div>
+                <div class="searches">
+                    <form method="post">
+                        <input type="text" placeholder="Search..." id="searchInput">
+                        <button type="submit"><i class="icofont-search"></i></button>
+                        <span class="cancel-search"><i class="icofont-close"></i></span>
+                        <div class="recent-search">
+                            <h4 class="recent-searches">Your's Recent Search</h4>
+                            <ul class="so-history">
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user1.jpg" alt=""></figure>
+                                        <span>Danial Carabal</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user2.jpg" alt=""></figure>
+                                        <span>Maria K</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user3.jpg" alt=""></figure>
+                                        <span>Fawad Khan</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user4.jpg" alt=""></figure>
+                                        <span>Danial Sandos</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                                <li>
+                                    <div class="searched-user">
+                                        <figure><img src="images/resources/user5.jpg" alt=""></figure>
+                                        <span>Jack Carter</span>
+                                    </div>
+                                    <span class="trash"><i class="icofont-close-circled"></i></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+
+                <ul class="web-elements">
+                    <li>
+                        <div class="user-dp">
+                            <a href="sign-in.html" title="">
+                                <div class="name">
+                                    <h4>Login</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li>
+                        <div class="user-dp">
+                            <a href="signup.html" title="">
+                                <div class="name">
+                                    <h4>Register</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+        </header>
+        <!-- header -->
+
+
+        <section>
+            <div class="gap">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="page-contents" class="row merged20">
+                                <div class="col-lg-3">
+                                    <aside class="sidebar static left">
+                                        <div class="widget whitish low-opacity">
+                                            <img src="images/time-clock.png" alt="">
+                                            <div class="bg-image" style="background-image: url(images/resources/time-bg.jpg)"></div>
+                                            <div class="date-time">
+                                                <div class="realtime">
+                                                    <span id="hours">00</span>
+                                                    <span id="point">:</span>
+                                                    <span id="min">00</span>
+                                                </div>
+                                                <span id="date"></span>
+                                            </div>
+                                        </div>
+                                        <div class="widget">
+                                            <h4 class="widget-title">Recent Blogs <a class="see-all" href="#" title="">See All</a></h4>
+                                            <ul class="recent-links">
+                                                <li>
+                                                    <figure><img alt="" src="images/resources/recentlink-1.jpg"></figure>
+                                                    <div class="re-links-meta">
+                                                        <h6><a title="" href="#">Moira's fade reach much farther...</a></h6>
+                                                        <span>2 weeks ago </span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <figure><img alt="" src="images/resources/recentlink-2.jpg"></figure>
+                                                    <div class="re-links-meta">
+                                                        <h6><a title="" href="#">Daniel asks The voice of doomfist...</a></h6>
+                                                        <span>3 months ago </span>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <figure><img alt="" src="images/resources/recentlink-3.jpg"></figure>
+                                                    <div class="re-links-meta">
+                                                        <h6><a title="" href="#">The socimo over watch scandals.</a></h6>
+                                                        <span>1 day before</span>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- recent blog -->
+
+                                    </aside>
+                                </div>
+                                <div class="col-lg-6">
+
+                                    <div class="user-post" id="postfeed">
+                                    </div>
+
+                                    <div class="loadmore">
+                                        <div class="sp sp-bars"></div>
+                                        <a href="#" title="" data-ripple="">Load More..</a>
+                                    </div>
+                                    <!-- loadmore buttons -->
+                                </div>
+                                <div class="col-lg-3">
+                                    <aside class="sidebar static right">
+                                        <div class="widget">
+                                            <h4 class="widget-title">Suggested Group</h4>
+                                            <div class="sug-caro">
+                                                <div class="friend-box">
+                                                    <figure>
+                                                        <img alt="" src="images/resources/sidebar-info.jpg">
+                                                        <span>Members: 505K</span>
+                                                    </figure>
+                                                    <div class="frnd-meta">
+                                                        <img alt="" src="images/resources/frnd-figure2.jpg">
+                                                        <div class="frnd-name">
+                                                            <a title="" href="#">Social Research</a>
+                                                            <span>@biolabest</span>
+
+                                                        </div>
+                                                        <a class="main-btn2" href="#" title="">Join Community</a>
+                                                    </div>
+                                                </div>
+                                                <div class="friend-box">
+                                                    <figure>
+                                                        <img alt="" src="images/resources/sidebar-info2.jpg">
+                                                        <span>Members: 505K</span>
+                                                    </figure>
+                                                    <div class="frnd-meta">
+                                                        <img alt="" src="images/resources/frnd-figure3.jpg">
+                                                        <div class="frnd-name">
+                                                            <a title="" href="#">Bio Labest Group</a>
+                                                            <span>@biolabest</span>
+
+                                                        </div>
+                                                        <a class="main-btn2" href="#" title="">Join Community</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- suggested group -->
+
+                                    </aside>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- content -->
+
+        <figure class="bottom-mockup"><img src="images/footer.png" alt=""></figure>
+        <div class="bottombar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <span class="">&copy; copyright All rights reserved by Bird Club</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- bottombar -->
+
+
+        <div class="share-wraper">
+            <div class="share-options">
+                <span class="close-btn"><i class="icofont-close-circled"></i></span>
+                <h5><i>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg></i>Share
+                    To!</h5>
+                <form method="post">
+                    <textarea placeholder="Write Something"></textarea>
+                </form>
+                <ul>
+                    <li><a title="" href="#">Your Timeline</a></li>
+                    <li class="friends"><a title="" href="#">To Friends</a></li>
+                    <li class="socialz"><a class="active" title="" href="#">Social Media</a></li>
+                </ul>
+                <div style="display: block;" class="social-media">
+                    <ul>
+                        <li><a title="" href="#" class="facebook"><i class="icofont-facebook"></i></a></li>
+                        <li><a title="" href="#" class="twitter"><i class="icofont-twitter"></i></a></li>
+                        <li><a title="" href="#" class="instagram"><i class="icofont-instagram"></i></a></li>
+                        <li><a title="" href="#" class="pinterest"><i class="icofont-pinterest"></i></a></li>
+                        <li><a title="" href="#" class="youtube"><i class="icofont-youtube"></i></a></li>
+                        <li><a title="" href="#" class="dribble"><i class="icofont-dribbble"></i></a></li>
+                        <li><a title="" href="#" class="behance"><i class="icofont-behance-original"></i></a></li>
+                    </ul>
+                </div>
+                <div style="display: none;" class="friends-to">
+                    <div class="follow-men">
+                        <figure><img class="mCS_img_loaded" src="images/resources/user1.jpg" alt=""></figure>
+                        <div class="follow-meta">
+                            <h5><a href="#" title="">Jack Carter</a></h5>
+                            <span>family member</span>
+                        </div>
+                        <a href="#" title="">Share</a>
+                    </div>
+                    <div class="follow-men">
+                        <figure><img class="mCS_img_loaded" src="images/resources/user2.jpg" alt=""></figure>
+                        <div class="follow-meta">
+                            <h5><a href="#" title="">Xang Ching</a></h5>
+                            <span>Close Friend</span>
+                        </div>
+                        <a href="#" title="">Share</a>
+                    </div>
+                    <div class="follow-men">
+                        <figure><img class="mCS_img_loaded" src="images/resources/user3.jpg" alt=""></figure>
+                        <div class="follow-meta">
+                            <h5><a href="#" title="">Emma Watson</a></h5>
+                            <span>Matul Friend</span>
+                        </div>
+                        <a href="#" title="">Share</a>
+                    </div>
+                </div>
+                <button type="submit" class="main-btn">Publish</button>
+            </div>
+        </div>
+        <!-- share post -->
+
+
+    </div>
+
+    <script src="js/main.min.js"></script>
+    <!-- vendors merged files -->
+    <script type="module" src="js/date-time.js"></script>
+    <script src="js/script.js"></script>
+    <script type="module" src="js/feed-page.js"></script>
+    <!-- custom scripts -->
+
+</body>
+
+</html>
