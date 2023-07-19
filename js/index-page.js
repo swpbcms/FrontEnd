@@ -24,14 +24,15 @@ let comments = [];
 let posts = [];
 let categories = [];
 window.addEventListener("DOMContentLoaded", async () => {
-  // await getComments().then(data => comments = data);
+
+  await getComments().then(data => comments = data);
   // await getPosts().then(data => posts = data);
   // await getCategories().then(data => categories = data);
   // await getCategoryByName("Chim bồ câu").then(data => console.log(data));
   // await getCategoryByID("Cate10d7de").then(data => console.log(data));
   // await createCategory("Chim chích chòe", "this is chim cc").then(data => console.log(data));
   // await updateCategory("Cateaa306a","Chim chích chòe nè", "this is chim cchoe").then(data => console.log(data));
-  await getPostsUser().then((data) => console.log(data));
+  // await getPostsUser().then((data) => displayData(data));
   // await createPost(
   //   "chim chích chòe nè",
   //   "chim cc 2",
@@ -60,9 +61,10 @@ window.addEventListener("DOMContentLoaded", async () => {
   // await deletePost("Postca781f").then((data) => console.log(data));
   // await moderatePost("Post7a4917", true, "MNG91188d0").then((data) => console.log(data));
 
-  await like("Mem40080c3", "Posta05a2c").then((data) => console.log(data));
-  await dislike("Mem40080c3", "Posta05a2c").then((data) => console.log(data));
+  // await like("Mem40080c3", "Posta05a2c").then((data) => console.log(data));
+  // await dislike("Mem40080c3", "Posta05a2c").then((data) => console.log(data));
 });
+
 
 $(document).ready(function () {
   var loggedInMember = sessionStorage.getItem("loggedInMember");
@@ -131,7 +133,8 @@ function displayData(data) {
     var likePost = item.postNumberLike;
     var postCreateAt = item.postCreateAt;
     var postId = item.postId;
-
+    var postStatus = item.postStatus;
+    var mediaItems = item.media;
     // $.each(comments, function (commentIndex, comment) {
     //   var commentPostId = comment.postId;
     //   if (commentPostId === postId) { // Kiểm tra comment thuộc postId hiện tại
@@ -140,149 +143,223 @@ function displayData(data) {
     //     var dateComment = comment.dateTime;
     //     var inverseComment = comment.inverseReply;
 
-    // Tạo HTML để hiển thị thông tin bài viết
-    var postHTML = '<div class="main-wraper">';
-    postHTML += '<div class="user-post">';
-    postHTML += '<div class="friend-info">';
-    postHTML += "    <figure>";
-    postHTML += "        <em>";
-    postHTML +=
-      '            <svg style="vertical-align: middle;" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path fill="#7fba00" stroke="#7fba00" d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"></path></svg>';
-    postHTML += "        </em>";
-    postHTML +=
-      '        <img alt="" src="' + memberImage + '" id="memberImage">';
-    postHTML += "    </figure>";
-    postHTML += '    <div class="friend-name">';
-    postHTML += '        <div class="more">';
-    postHTML += '            <div class="more-post-optns">';
-    postHTML += '                <i class="">';
-    postHTML +=
-      '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
-    postHTML += "                </i>";
-    postHTML += "                <ul>";
-    postHTML += "                    <li>";
-    postHTML +=
-      '                        <i class="icofont-pen-alt-1"></i>Edit Post';
-    postHTML +=
-      "                        <span>Edit This Post within a Hour</span>";
-    postHTML += "                    </li>";
-    postHTML += "                    <li>";
-    postHTML += '                        <i class="icofont-ban"></i>Hide Post';
-    postHTML += "                        <span>Hide This Post</span>";
-    postHTML += "                    </li>";
-    postHTML += "                    <li>";
-    postHTML +=
-      '                        <i class="icofont-ui-delete"></i>Delete Post';
-    postHTML +=
-      "                        <span>If inappropriate Post By Mistake</span>";
-    postHTML += "                    </li>";
-    postHTML += "                    <li>";
-    postHTML += '                        <i class="icofont-flag"></i>Report';
-    postHTML += "                        <span>Inappropriate content</span>";
-    postHTML += "                    </li>";
-    postHTML += "                </ul>";
-    postHTML += "            </div>";
-    postHTML += "        </div>";
-    postHTML +=
-      '        <ins><a title="" href="profile.html">' +
-      memberFullName +
-      "</a></ins>";
-    postHTML +=
-      '        <span><i class="icofont-globe"></i>' + postCreateAt + "</span>";
-    postHTML += "    </div>";
-    postHTML +=
-      '<div class="post-id" id="postId" style="display: none;">' +
-      postId +
-      "</div>";
-    postHTML += '<div class="post-meta">';
-    postHTML += "    <figure>";
-    postHTML +=
-      '        <a data-toggle="modal" data-target="#img-comt" href="images/resources/album1.jpg">';
-    postHTML += '            <img src="images/resources/study.jpg" alt="">';
-    postHTML += "        </a>";
-    postHTML += "    </figure>";
-    postHTML +=
-      '<a href="post-detail.html" class="post-title">' + postTitle + "</a>";
-    postHTML += "<p>" + postDescription + "</p>";
-    postHTML += '    <div class="we-video-info">';
-    postHTML += "        <ul>";
-    postHTML += "            <li>";
-    postHTML += '                <span title="views" class="views">';
-    postHTML += "                    <i>";
-    postHTML +=
-      '                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
-    postHTML += "                    </i>";
-    postHTML += "                    <ins>" + likePost + "</ins>";
-    postHTML += "                </span>";
-    postHTML += "            </li>";
-    postHTML += "            <li>";
-    postHTML += "        </ul>";
-    postHTML +=
-      '        <a href="post-detail.html" title="" class="reply">Reply <i class="icofont-reply"></i></a>';
-    postHTML += "    </div>";
-    postHTML += "</div>";
-    postHTML += '<div class="stat-tools">';
-    postHTML += '<div class="box">';
-    postHTML += '    <div class="Like">';
-    // postHTML += '        <a class="Like__link"><i class="icofont-like"></i> Like</a>';
-    postHTML +=
-      '        <button class="likeButton"> <i class="icofont-like"></i> Like</button>';
-    postHTML += "    </div>";
-    postHTML += "</div>";
-    postHTML +=
-      '    <a title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</a>';
-    postHTML +=
-      '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Share</a>';
-    postHTML += "</div>";
-    postHTML += '<div class="new-comment" style="display: block;">';
-    postHTML += '    <form method="post">';
-    postHTML += '        <input type="text" placeholder="write comment">';
-    postHTML +=
-      '        <button type="submit"><i class="icofont-paper-plane"></i></button>';
-    postHTML += "    </form>";
-    postHTML += "</div>";
-    postHTML += "</div>";
+    if (postStatus === "Thành công") {
+      // Tạo HTML để hiển thị thông tin bài viết
+      var postHTML = '<div class="main-wraper">';
+      postHTML += '<div class="user-post">';
+      postHTML += '<div class="friend-info">';
+      postHTML += "    <figure>";
+      postHTML += "        <em>";
+      postHTML +=
+        '            <svg style="vertical-align: middle;" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path fill="#7fba00" stroke="#7fba00" d="M23,12L20.56,9.22L20.9,5.54L17.29,4.72L15.4,1.54L12,3L8.6,1.54L6.71,4.72L3.1,5.53L3.44,9.21L1,12L3.44,14.78L3.1,18.47L6.71,19.29L8.6,22.47L12,21L15.4,22.46L17.29,19.28L20.9,18.46L20.56,14.78L23,12M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9L10,17Z"></path></svg>';
+      postHTML += "        </em>";
+      postHTML +=
+        '        <img alt="" src="' + memberImage + '" id="memberImage">';
+      postHTML += "    </figure>";
+      postHTML += '    <div class="friend-name">';
+      postHTML += '        <div class="more">';
+      postHTML += '            <div class="more-post-optns">';
+      postHTML += '                <i class="">';
+      postHTML +=
+        '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
+      postHTML += "                </i>";
+      postHTML += "                <ul>";
+      postHTML += "                    <li>";
+      postHTML +=
+        '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
+      postHTML +=
+        "                        <span>Edit This Post within a Hour</span>";
+      postHTML += "                    </li>";
+      // postHTML += "                    <li>";
+      // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
+      // postHTML += "                        <span>Hide This Post</span>";
+      // postHTML += "                    </li>";
+      postHTML += "                    <li>";
+      postHTML +=
+        '                        <i class="icofont-ui-delete"></i>Delete Post';
+      postHTML +=
+        "                        <span>If inappropriate Post By Mistake</span>";
+      postHTML += "                    </li>";
+      postHTML += "                    <li>";
+      postHTML += '                        <i class="icofont-flag"></i>Report';
+      postHTML += "                        <span>Inappropriate content</span>";
+      postHTML += "                    </li>";
+      postHTML += "                </ul>";
+      postHTML += "            </div>";
+      postHTML += "        </div>";
+      postHTML +=
+        '        <ins><a title="" href="profile.html">' +
+        memberFullName +
+        "</a></ins>";
+      postHTML +=
+        '        <span><i class="icofont-globe"></i>' + postCreateAt + "</span>";
+      postHTML += "    </div>";
+      postHTML +=
+        '<div class="post-id" id="postId" style="display: none;">' +
+        postId +
+        "</div>";
+      postHTML += '<div class="post-meta">';
+      // Add the figure for media images if there are any
+      // Check if there are any media items to display
+    if (mediaItems && mediaItems.length > 0) {
+      // If there's only one media item, display it in full
+      if (mediaItems.length === 1) {
+        var linkMedia = mediaItems[0].linkMedia;
+        postHTML += `
+          <figure class="img-full">
+            <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
+              <img src="${linkMedia}" alt="Media">
+            </a>
+          </figure>
+        `;
+      } else {
+        // Otherwise, display the media items in a grid layout with the "more photos" link
+        postHTML += `
+          <figure class="img-bunch">
+            <div class="row">
+        `;
 
-    // postHTML += '    <div class="comments-area">';
-    // postHTML += '        <ul>';
-    // postHTML += '            <li>';
-    // postHTML += '                <figure><img alt="" src="' + memberImage + '">';
-    // postHTML += '                 </figure>';
-    // postHTML += '                <div class="commenter">';
-    // postHTML += '                    <h5><a title="" href="#">' + memberId + '</a></h5>';
-    // postHTML += '                    <span>' + dateComment + '</span>';
-    // postHTML += '                    <p>' + commentContent + '</p>';
-    // postHTML += '                </div>';
-    // postHTML += '                <a title="Like" href="#"><i class="icofont-heart"></i></a>';
-    // postHTML += '                <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>';
-    // postHTML += '                <div class="comment-reply">';
-    // postHTML += '                            <figure>';
-    // postHTML += '                                <img src="" alt="">';
-    // postHTML += '                            </figure>';
-    // postHTML += '                               <div class="commenter">';
-    // postHTML += '                                <h5><a title="" href="#">' + memberId + '</a></h5>';
-    // postHTML += '                                <span class="comment-date"></span>';
-    // postHTML += '                                <p class="comment-content">' + inverseComment + '</p>';
-    // postHTML += '                            </div>';
-    // postHTML += '                            </div>';
-    // postHTML += '            </li>';
-    // postHTML += '        </ul>';
-    // postHTML += '    </div>';
+        // Loop through each media item and add its image link to the figure
+        var displayedMediaCount = Math.min(5, mediaItems.length); // Display up to 5 media items
+        for (var i = 0; i < displayedMediaCount; i++) {
+          var linkMedia = mediaItems[i].linkMedia;
+          postHTML += `
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <figure>
+                <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
+                  <img src="${linkMedia}" alt="Media">
+                </a>
+              </figure>
+            </div>
+          `;
+        }
 
-    postHTML += "</div>";
-    postHTML += "</div>";
-    postHTML += "</div>";
-    postHTML += "</div>";
-    postHTML += "</div>";
-    postHTML += "</div>";
-    postHTML += "</div>";
+        // Add "more photos" if there are additional media items
+        if (mediaItems.length > 5) {
+          var morePhotosCount = mediaItems.length - 5;
+          postHTML += `
+            <div class="col-lg-6 col-md-6 col-sm-6">
+              <figure>
+                <a data-toggle="modal" data-target="#img-comt" href="${mediaItems[5].linkMedia}">
+                  <img src="${mediaItems[5].linkMedia}" alt="More Photos">
+                </a>
+                <div class="more-photos">
+                  <span>+${morePhotosCount}</span>
+                </div>
+              </figure>
+            </div>
+          `;
+        }
+        postHTML += `
+            </div>
+          </figure>
+        `;
+      }
+    }
+      postHTML += "</div>";
+      postHTML +=
+        '<a href="post-detail.html" class="post-title">' + postTitle + "</a>";
+      postHTML += "<p>" + postDescription + "</p>";
+      postHTML += '    <div class="we-video-info">';
+      postHTML += "        <ul>";
+      postHTML += "            <li>";
+      postHTML += '                <span title="views" class="views">';
+      postHTML += "                    <i>";
+      postHTML +=
+        '                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+      postHTML += "                    </i>";
+      postHTML += "                    <ins>" + likePost + "</ins>";
+      postHTML += "                </span>";
+      postHTML += "            </li>";
+      postHTML += "            <li>";
+      postHTML += "        </ul>";
+      postHTML +=
+        '        <a href="post-detail.html" title="" class="reply">Reply <i class="icofont-reply"></i></a>';
+      postHTML += "    </div>";
+      postHTML += "</div>";
+      postHTML += '<div class="stat-tools">';
+      postHTML += '<div class="box">';
+      postHTML += '    <div class="Like">';
+      // postHTML += '        <a class="Like__link"><i class="icofont-like"></i> Like</a>';
+      postHTML +=
+        '        <button class="likeButton"> <i class="icofont-like"></i> Like</button>';
+      postHTML += "    </div>";
+      postHTML += "</div>";
+      postHTML +=
+        '    <a title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</a>';
+      postHTML +=
+        '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Report</a>';
+      postHTML += "</div>";
+      postHTML += '<div class="new-comment" style="display: block;">';
+      postHTML += '    <form method="post">';
+      postHTML += '        <input type="text" placeholder="write comment">';
+      postHTML +=
+        '        <button type="submit"><i class="icofont-paper-plane"></i></button>';
+      postHTML += "    </form>";
+      postHTML += "</div>";
 
-    // }
+      // postHTML += '    <div class="comments-area">';
+      // postHTML += '        <ul>';
+      // postHTML += '            <li>';
+      // postHTML += '                <figure><img alt="" src="' + memberImage + '">';
+      // postHTML += '                 </figure>';
+      // postHTML += '                <div class="commenter">';
+      // postHTML += '                    <h5><a title="" href="#">' + memberId + '</a></h5>';
+      // postHTML += '                    <span>' + dateComment + '</span>';
+      // postHTML += '                    <p>' + commentContent + '</p>';
+      // postHTML += '                </div>';
+      // postHTML += '                <a title="Like" href="#"><i class="icofont-heart"></i></a>';
+      // postHTML += '                <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>';
+      // postHTML += '                <div class="comment-reply">';
+      // postHTML += '                            <figure>';
+      // postHTML += '                                <img src="" alt="">';
+      // postHTML += '                            </figure>';
+      // postHTML += '                               <div class="commenter">';
+      // postHTML += '                                <h5><a title="" href="#">' + memberId + '</a></h5>';
+      // postHTML += '                                <span class="comment-date"></span>';
+      // postHTML += '                                <p class="comment-content">' + inverseComment + '</p>';
+      // postHTML += '                            </div>';
+      // postHTML += '                            </div>';
+      // postHTML += '            </li>';
+      // postHTML += '        </ul>';
+      // postHTML += '    </div>';
 
+      postHTML += "</div>";
+      postHTML += "</div>";
+      postHTML += "</div>";
+      postHTML += "</div>";
+      postHTML += "</div>";
+      postHTML += "</div>";
+      postHTML += "</div>";
+
+      // }
+    }
     // Thêm HTML vào phần tử hiển thị
     outputElement.append(postHTML);
   });
 }
+
+// Add event listener to the Delete Post button
+$(document).on("click", ".icofont-ui-delete", function () {
+  // Show confirmation dialog
+  var confirmDelete = window.confirm("Bạn có chắc chắn xoá bài viết này?");
+
+  // If user clicks OK (confirmed), proceed with deletion
+  if (confirmDelete) {
+    var postId = $(this).closest(".user-post").find(".post-id").text();
+    // Add code here to handle the deletion of the post
+    // For example, you can call the function to delete the post from the server
+    deletePost(postId)
+      .then(() => {
+        // If deletion is successful, remove the post element from the page
+        $(this).closest(".user-post").remove();
+      })
+      .catch((error) => {
+        console.error("Error deleting post:", error);
+      });
+  }
+});
+
 
 // Event listener for the "Like" button
 $(document).on("click", ".likeButton", function () {
@@ -365,7 +442,7 @@ $(document).ready(function () {
     var title = $("#title").val();
     var description = $("#description").val();
     var checkbox2 = $("#checkbox2").is(":checked");
-    // var datetimepicker = $('#datetimepicker').val();
+    var datetimepicker = $('#datetimepicker').val();
     var eventLocation = $("#eventLocation").val();
     var memberid = mem.memberId;
     var category = "Cate721a1d";
@@ -385,6 +462,7 @@ $(document).ready(function () {
       postIsEvent: checkbox2 ? true : false,
       eventLocation: eventLocation,
       memberId: memberID
+
     };
 
     // Gửi yêu cầu AJAX
@@ -423,43 +501,6 @@ $(document).ready(function () {
     } else {
       $("#eventLocation").prop("readonly", "readonly");
       $("#eventLocation").val("");
-    }
-  });
-});
-
-$(document).ready(function () {
-  // Event listener for the "Like" action
-  $(document).on("click", ".like-button", function () {
-    // Get the postId from the data attribute of the button
-    var postId = $(this).data("post-id");
-
-    // Get the memberId from the session storage
-    var loggedInMember = sessionStorage.getItem("loggedInMember");
-    if (loggedInMember) {
-      var mem = JSON.parse(loggedInMember);
-      var memberId = mem.memberId;
-
-      // Create the data object for the "Like" API request
-      var likeData = {
-        memberId: memberId,
-        postId: postId,
-        dateTime: new Date().toISOString(),
-      };
-
-      // Send the AJAX request to the PHP script
-      $.ajax({
-        url: "like.php",
-        type: "POST",
-        data: likeData,
-        success: function (response) {
-          // Handle the success response (if needed)
-          console.log(response);
-        },
-        error: function (xhr, status, error) {
-          // Handle the error (if needed)
-          console.log("Error liking post");
-        },
-      });
     }
   });
 });
