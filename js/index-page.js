@@ -24,7 +24,7 @@ let comments = [];
 let posts = [];
 let categories = [];
 window.addEventListener("DOMContentLoaded", async () => {
-
+  // await getPosts().then((data) => console.log(data));
   await getComments().then(data => comments = data);
   // await getPosts().then(data => posts = data);
   // await getCategories().then(data => categories = data);
@@ -65,7 +65,6 @@ window.addEventListener("DOMContentLoaded", async () => {
   // await dislike("Mem40080c3", "Posta05a2c").then((data) => console.log(data));
 });
 
-
 $(document).ready(function () {
   var loggedInMember = sessionStorage.getItem("loggedInMember");
   if (loggedInMember) {
@@ -103,6 +102,7 @@ $.ajax({
 
       // Hiển thị dữ liệu
       displayData(response.data);
+      displayRecentPost(response.data);
     } else {
       console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
     }
@@ -111,6 +111,43 @@ $.ajax({
     console.log("Lỗi khi gọi API.");
   },
 });
+
+//Hàm hiện thị các bài viết gần nhất
+function displayRecentPost(data) {
+  // Sort the data by postCreateAt in descending order (newest to oldest)
+  data.sort((a, b) => new Date(b.postCreateAt) - new Date(a.postCreateAt));
+
+  // Slice the first three elements to get the three most recent posts
+  const recentPosts = data.slice(0, 3);
+
+  let recentPost = ''; // Initialize the variable to store the generated HTML
+
+  // Use $.each() to iterate through the recentPosts
+  $.each(recentPosts, (index, post) => {
+    const postTitle = post.postTitle;
+    const postCreateAt = post.postCreateAt;
+    const linkMedia = post.media[0].linkMedia;
+
+    // Generate the HTML for the current post
+    const postHTML = `
+      <li>
+        <figure>
+          <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
+        </figure>
+        <div class="re-links-meta">
+          <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
+          <span id="postDate">${postCreateAt}</span>
+        </div>
+      </li>
+    `;
+
+    recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+  });
+
+  // Update the content of the <ul> element with the accumulated HTML
+  const postListElement = $("#postList");
+  postListElement.html(recentPost);
+}
 
 // Hàm để hiển thị dữ liệu lên trang web
 function displayData(data) {
@@ -195,7 +232,7 @@ function displayData(data) {
         '        <span><i class="icofont-globe"></i>' + postCreateAt + "</span>";
       postHTML += "    </div>";
       postHTML +=
-        '<div class="post-id" id="postId" style="display: ;">' +
+        '<div class="post-id" id="postId" style="display: none;">' +
         postId +
         "</div>";
       postHTML += '<div class="post-meta">';
@@ -287,19 +324,19 @@ function displayData(data) {
       postHTML += "</div>";
       postHTML +=
         '    <button title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      // postHTML += `
-      //   <!-- Popup -->
-      //   <div id="commentPopup" class="popup">
-      //       <div class="popupContent">
-      //       <!-- Dữ liệu bình luận sẽ được điền vào các phần tử này -->
-      //       <h2 id="popupTitle"></h2>
-      //       <img id="popupImage" src="" alt="">
-      //       <p id="popupComment"></p>
-      //       <p id="popupDateTime"></p>
-      //   <button id="closePopupButton">Close</button>
-      //   </div>
-      //   </div>
-      //   `;
+      postHTML += `
+        <!-- Popup -->
+        <div id="commentPopup" class="popupComment">
+            <div class="popupContent">
+            <!-- Dữ liệu bình luận sẽ được điền vào các phần tử này -->
+            <h2 id="popupTitle"></h2>
+            <img id="popupImage" src="" alt="">
+            <p id="popupComment"></p>
+            <p id="popupDateTime"></p>
+        <button id="closePopupButton">Close</button>
+        </div>
+        </div>
+        `;
 
       postHTML +=
         '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Report</a>';
@@ -373,7 +410,6 @@ $(document).on("click", ".icofont-ui-delete", function () {
       });
   }
 });
-
 
 // Event listener for the "Like" button
 $(document).on("click", ".likeButton", function () {
@@ -484,5 +520,9 @@ function searchAndNavigate(query) {
 // $("#closePopupButton").click(function() {
 //   $("#commentPopup").hide(); // Ẩn popup
 // });
+
+
+
+
 
 
