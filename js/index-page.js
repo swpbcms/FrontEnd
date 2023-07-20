@@ -195,7 +195,7 @@ function displayData(data) {
         '        <span><i class="icofont-globe"></i>' + postCreateAt + "</span>";
       postHTML += "    </div>";
       postHTML +=
-        '<div class="post-id" id="postId" style="display: none;">' +
+        '<div class="post-id" id="postId" style="display: ;">' +
         postId +
         "</div>";
       postHTML += '<div class="post-meta">';
@@ -287,19 +287,19 @@ function displayData(data) {
       postHTML += "</div>";
       postHTML +=
         '    <button title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      postHTML += `
-        <!-- Popup -->
-        <div id="commentPopup" class="popup">
-            <div class="popupContent">
-            <!-- Dữ liệu bình luận sẽ được điền vào các phần tử này -->
-            <h2 id="popupTitle"></h2>
-            <img id="popupImage" src="" alt="">
-            <p id="popupComment"></p>
-            <p id="popupDateTime"></p>
-        <button id="closePopupButton">Close</button>
-        </div>
-        </div>
-        `;
+      // postHTML += `
+      //   <!-- Popup -->
+      //   <div id="commentPopup" class="popup">
+      //       <div class="popupContent">
+      //       <!-- Dữ liệu bình luận sẽ được điền vào các phần tử này -->
+      //       <h2 id="popupTitle"></h2>
+      //       <img id="popupImage" src="" alt="">
+      //       <p id="popupComment"></p>
+      //       <p id="popupDateTime"></p>
+      //   <button id="closePopupButton">Close</button>
+      //   </div>
+      //   </div>
+      //   `;
 
       postHTML +=
         '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Report</a>';
@@ -441,48 +441,48 @@ function searchAndNavigate(query) {
 }
 
 // Comment 
-$(document).on("click", ".comment-to", function() {
-  // Lấy postId từ thuộc tính data-postid trong nút Comment
-  var postId = $(this).closest(".user-post").find(".post-id").text();
+// $(document).on("click", ".comment-to", function() {
+//   // Lấy postId từ thuộc tính data-postid trong nút Comment
+//   var postId = $(this).closest(".user-post").find(".post-id").text();
 
-  // Gọi hàm getComments từ module ./services/comment.service.js để lấy dữ liệu bình luận
-  getComments(postId)
-    .then((comments) => {
-      // Xử lý dữ liệu bình luận từ API thành công
-      if (comments && comments.length > 0) {
-        // Lấy đối tượng chứa dữ liệu bài viết
-        var postContainer = $(this).closest(".comments-area");
+//   // Gọi hàm getComments từ module ./services/comment.service.js để lấy dữ liệu bình luận
+//   getComments(postId)
+//     .then((comments) => {
+//       // Xử lý dữ liệu bình luận từ API thành công
+//       if (comments && comments.length > 0) {
+//         // Lấy đối tượng chứa dữ liệu bài viết
+//         var postContainer = $(this).closest(".comments-area");
 
-        // Hiển thị popup và điền dữ liệu vào các phần tử trong popup
-        $("#popupTitle").text(comments[0].member.memberFullName);
-        $("#popupImage").attr("src", comments[0].member.memberImage);
-        $("#popupComment").text(comments[0].commentContent);
-        $("#popupDateTime").text(comments[0].dateTime);
-        $("#commentPopup").show(); // Hiển thị popup
+//         // Hiển thị popup và điền dữ liệu vào các phần tử trong popup
+//         $("#popupTitle").text(comments[0].member.memberFullName);
+//         $("#popupImage").attr("src", comments[0].member.memberImage);
+//         $("#popupComment").text(comments[0].commentContent);
+//         $("#popupDateTime").text(comments[0].dateTime);
+//         $("#commentPopup").show(); // Hiển thị popup
 
-        // (Tùy chỉnh) Chèn các bình luận vào đối tượng chứa dữ liệu bài viết (postContainer)
-        for (var i = 1; i < comments.length; i++) {
-          var commentHtml = `
-            <div class="comment">
-              <h3 class="commentTitle">${comments[i].member.memberFullName}</h3>
-              <p class="commentContent">${comments[i].commentContent}</p>
-              <p class="commentDateTime">${comments[i].dateTime}</p>
-            </div>
-          `;
-          postContainer.append(commentHtml);
-        }
-      } else {
-        console.error("Không tìm thấy bình luận cho postId:", postId);
-      }
-    })
-    .catch((error) => {
-      console.error("Lỗi khi lấy dữ liệu bình luận từ API:", error);
-    });
-});
+//         // (Tùy chỉnh) Chèn các bình luận vào đối tượng chứa dữ liệu bài viết (postContainer)
+//         for (var i = 1; i < comments.length; i++) {
+//           var commentHtml = `
+//             <div class="comment">
+//               <h3 class="commentTitle">${comments[i].member.memberFullName}</h3>
+//               <p class="commentContent">${comments[i].commentContent}</p>
+//               <p class="commentDateTime">${comments[i].dateTime}</p>
+//             </div>
+//           `;
+//           postContainer.append(commentHtml);
+//         }
+//       } else {
+//         console.error("Không tìm thấy bình luận cho postId:", postId);
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Lỗi khi lấy dữ liệu bình luận từ API:", error);
+//     });
+// });
 
-// Đóng popup khi người dùng nhấn nút "Close"
-$("#closePopupButton").click(function() {
-  $("#commentPopup").hide(); // Ẩn popup
-});
+// // Đóng popup khi người dùng nhấn nút "Close"
+// $("#closePopupButton").click(function() {
+//   $("#commentPopup").hide(); // Ẩn popup
+// });
 
 
