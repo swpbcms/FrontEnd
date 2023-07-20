@@ -19,7 +19,7 @@ import {
   updateCategory,
 } from "./services/categories.service.js";
 import { dislike, like } from "./services/like.service.js";
-
+import { createMedia } from "./services/media.service.js";
 let comments = [];
 let posts = [];
 let categories = [];
@@ -201,29 +201,29 @@ function displayData(data) {
       postHTML += '<div class="post-meta">';
       // Add the figure for media images if there are any
       // Check if there are any media items to display
-    if (mediaItems && mediaItems.length > 0) {
-      // If there's only one media item, display it in full
-      if (mediaItems.length === 1) {
-        var linkMedia = mediaItems[0].linkMedia;
-        postHTML += `
+      if (mediaItems && mediaItems.length > 0) {
+        // If there's only one media item, display it in full
+        if (mediaItems.length === 1) {
+          var linkMedia = mediaItems[0].linkMedia;
+          postHTML += `
           <figure class="img-full">
             <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
               <img src="${linkMedia}" alt="Media">
             </a>
           </figure>
         `;
-      } else {
-        // Otherwise, display the media items in a grid layout with the "more photos" link
-        postHTML += `
+        } else {
+          // Otherwise, display the media items in a grid layout with the "more photos" link
+          postHTML += `
           <figure class="img-bunch">
             <div class="row">
         `;
 
-        // Loop through each media item and add its image link to the figure
-        var displayedMediaCount = Math.min(5, mediaItems.length); // Display up to 5 media items
-        for (var i = 0; i < displayedMediaCount; i++) {
-          var linkMedia = mediaItems[i].linkMedia;
-          postHTML += `
+          // Loop through each media item and add its image link to the figure
+          var displayedMediaCount = Math.min(5, mediaItems.length); // Display up to 5 media items
+          for (var i = 0; i < displayedMediaCount; i++) {
+            var linkMedia = mediaItems[i].linkMedia;
+            postHTML += `
             <div class="col-lg-6 col-md-6 col-sm-6">
               <figure>
                 <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
@@ -232,12 +232,12 @@ function displayData(data) {
               </figure>
             </div>
           `;
-        }
+          }
 
-        // Add "more photos" if there are additional media items
-        if (mediaItems.length > 5) {
-          var morePhotosCount = mediaItems.length - 5;
-          postHTML += `
+          // Add "more photos" if there are additional media items
+          if (mediaItems.length > 5) {
+            var morePhotosCount = mediaItems.length - 5;
+            postHTML += `
             <div class="col-lg-6 col-md-6 col-sm-6">
               <figure>
                 <a data-toggle="modal" data-target="#img-comt" href="${mediaItems[5].linkMedia}">
@@ -249,13 +249,13 @@ function displayData(data) {
               </figure>
             </div>
           `;
-        }
-        postHTML += `
+          }
+          postHTML += `
             </div>
           </figure>
         `;
+        }
       }
-    }
       postHTML += "</div>";
       postHTML +=
         '<a href="post-detail.html" class="post-title">' + postTitle + "</a>";
@@ -286,7 +286,21 @@ function displayData(data) {
       postHTML += "    </div>";
       postHTML += "</div>";
       postHTML +=
-        '    <a title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</a>';
+        '    <button title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
+      postHTML += `
+        <!-- Popup -->
+        <div id="commentPopup" class="popup">
+            <div class="popupContent">
+            <!-- Dữ liệu bình luận sẽ được điền vào các phần tử này -->
+            <h2 id="popupTitle"></h2>
+            <img id="popupImage" src="" alt="">
+            <p id="popupComment"></p>
+            <p id="popupDateTime"></p>
+        <button id="closePopupButton">Close</button>
+        </div>
+        </div>
+        `;
+
       postHTML +=
         '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Report</a>';
       postHTML += "</div>";
@@ -298,7 +312,7 @@ function displayData(data) {
       postHTML += "    </form>";
       postHTML += "</div>";
 
-      // postHTML += '    <div class="comments-area">';
+      postHTML += '    <div class="comments-area">';
       // postHTML += '        <ul>';
       // postHTML += '            <li>';
       // postHTML += '                <figure><img alt="" src="' + memberImage + '">';
@@ -322,7 +336,7 @@ function displayData(data) {
       // postHTML += '                            </div>';
       // postHTML += '            </li>';
       // postHTML += '        </ul>';
-      // postHTML += '    </div>';
+       postHTML += '    </div>';
 
       postHTML += "</div>";
       postHTML += "</div>";
@@ -426,81 +440,49 @@ function searchAndNavigate(query) {
   window.location.href = "search-result.html";
 }
 
-// Create new Post
-$(document).ready(function () {
-  $("#myForm").submit(function (event) {
-    event.preventDefault();
+// Comment 
+$(document).on("click", ".comment-to", function() {
+  // Lấy postId từ thuộc tính data-postid trong nút Comment
+  var postId = $(this).closest(".user-post").find(".post-id").text();
 
-    // Lấy giá trị của memberId từ session
-    var memberId = sessionStorage.getItem("loggedInMember");
-    if (memberId) {
-      var mem = JSON.parse(memberId);
+  // Gọi hàm getComments từ module ./services/comment.service.js để lấy dữ liệu bình luận
+  getComments(postId)
+    .then((comments) => {
+      // Xử lý dữ liệu bình luận từ API thành công
+      if (comments && comments.length > 0) {
+        // Lấy đối tượng chứa dữ liệu bài viết
+        var postContainer = $(this).closest(".comments-area");
 
-      var memberID = mem.memberId;
-    }
-    // Lấy giá trị của các trường
-    var title = $("#title").val();
-    var description = $("#description").val();
-    var checkbox2 = $("#checkbox2").is(":checked");
-    var datetimepicker = $('#datetimepicker').val();
-    var eventLocation = $("#eventLocation").val();
-    var memberid = mem.memberId;
-    var category = "Cate721a1d";
+        // Hiển thị popup và điền dữ liệu vào các phần tử trong popup
+        $("#popupTitle").text(comments[0].member.memberFullName);
+        $("#popupImage").attr("src", comments[0].member.memberImage);
+        $("#popupComment").text(comments[0].commentContent);
+        $("#popupDateTime").text(comments[0].dateTime);
+        $("#commentPopup").show(); // Hiển thị popup
 
-    // var postData = {
-    //   category = 
-    //   postTitle: title,
-    //   postDescription: description,
-    //   postIsEvent: checkbox2 ? true : false,
-    //   eventLocation: eventLocation,
-    //   memberId: memberID
-    // };
-
-    var postData = {
-      postTitle: title,
-      postDescription: description,
-      postIsEvent: checkbox2 ? true : false,
-      eventLocation: eventLocation,
-      memberId: memberID
-
-    };
-
-    // Gửi yêu cầu AJAX
-    $.ajax({
-      url: "https://localhost:7206/api/Post/create-post",
-      type: "POST",
-      contentType: "application/json",
-      data: JSON.stringify(postData),
-      success: function (response) {
-        // Xử lý phản hồi từ máy chủ (nếu cần)
-        alert("Bài post đã được publish");
-        location.reload(); // Load lại trang
-      },
-      error: function (xhr, status, error) {
-        // Xử lý lỗi (nếu có)
-        alert("Không thể publish bài post");
-      },
+        // (Tùy chỉnh) Chèn các bình luận vào đối tượng chứa dữ liệu bài viết (postContainer)
+        for (var i = 1; i < comments.length; i++) {
+          var commentHtml = `
+            <div class="comment">
+              <h3 class="commentTitle">${comments[i].member.memberFullName}</h3>
+              <p class="commentContent">${comments[i].commentContent}</p>
+              <p class="commentDateTime">${comments[i].dateTime}</p>
+            </div>
+          `;
+          postContainer.append(commentHtml);
+        }
+      } else {
+        console.error("Không tìm thấy bình luận cho postId:", postId);
+      }
+    })
+    .catch((error) => {
+      console.error("Lỗi khi lấy dữ liệu bình luận từ API:", error);
     });
-  });
+});
+
+// Đóng popup khi người dùng nhấn nút "Close"
+$("#closePopupButton").click(function() {
+  $("#commentPopup").hide(); // Ẩn popup
 });
 
 
-//Validate popup create new post
-$(document).ready(function () {
-  $("#checkbox1").change(function () {
-    if ($(this).is(":checked")) {
-      $("#checkbox2").prop("checked", false);
-      $("#eventLocation").prop("readonly", "readonly");
-    }
-  });
-
-  $("#checkbox2").change(function () {
-    if ($(this).is(":checked")) {
-      $("#checkbox1").prop("checked", false);
-      $("#eventLocation").removeAttr("readonly");
-    } else {
-      $("#eventLocation").prop("readonly", "readonly");
-      $("#eventLocation").val("");
-    }
-  });
-});
