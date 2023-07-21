@@ -128,6 +128,7 @@ const updatePost = async (
   }
 };
 
+
 const deletePost = async (id) => {
   const response = await fetch(`${endpoint}/detele-post?id=${id}`, {
     method: "DELETE",
@@ -142,6 +143,7 @@ const deletePost = async (id) => {
     return response.json();
   }
 };
+
 
 const moderatePost = async (id, option, managerID) => {
   const response = await fetch(`${endpoint}/moderate-post?id=${id}&option=${option}&managerID=${managerID}`, {

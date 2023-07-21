@@ -13,6 +13,44 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <style>
+    .post-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap; /* Prevent line breaks within table cells */
+    }
+
+    /* Set the width for each table cell */
+    .post-list-table th,
+    .post-list-table td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    min-width: 250px; /* Set a minimum width for each cell */
+    }
+
+    .post-list-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    }
+
+    /* Set the width for specific columns */
+    .post-list-table th:nth-child(1),
+    .post-list-table td:nth-child(1) {
+    width: 150px; /* ID column width */
+    }
+
+    .post-list-table th:nth-child(2),
+    .post-list-table td:nth-child(2) {
+    width: 240px; /* Created At column width */
+    }
+
+    .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+    }
+      </style>
+      <!-- ... Other CSS links ... -->
 </head>
 
 <body>
@@ -146,6 +184,7 @@
                                             </div>
                                         </div>
                                     </li>
+
                                     <!-- View Report -->
                                     <li>
                                         <div class="mt-4 uk-grid-large" uk-grid>
@@ -154,17 +193,21 @@
                                             </div>
                                         </div>
                                     </li>
-
+                                    
                                     <!-- View Post-->
 
                                     <li>
                                         <div class="mt-4 uk-grid-large" uk-grid>
                                             <div class="uk-width-3-4@s">
                                                 <h2> Quản lý Bài Viết</h2>
+                                                <!-- Add the container with id for the post list -->
+                                                <div id="post-list-container"></div>
                                             </div>
                                         </div>
                                     </li>
 
+                                    <section>
+                                                    
                                     <!-- View Event -->
 
                                     <li>
@@ -200,7 +243,12 @@
             <script type="module" src="js/memberList_mng.js"></script>
             <script type="module" src="js/reportList_mng.js"></script>
             <script type="module" src="js/postList_mng.js"></script>
+            <script type="module" src="js/services/post.service.js"></script>
+            <script type="module" src="js/services/member.service.js"></script>
+
+
 
 </body>
+
 
 </html>
