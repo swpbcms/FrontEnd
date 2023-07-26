@@ -1,4 +1,4 @@
-import { join } from "./services/join-event.service.js";
+import { join, unjoin} from "./services/join-event.service.js";
 
 $(document).ready(function () {
     var loggedInMember = sessionStorage.getItem("loggedInMember");
@@ -117,33 +117,80 @@ function displayData(data) {
     eventContainer.html(eventPost);
 }
 
+
 $(document).on("click", ".join-event-btn", function () {
-    // Extract memberId from session
-    var loggedInMember = sessionStorage.getItem("loggedInMember");
-    if (loggedInMember) {
-        var mem = JSON.parse(loggedInMember);
-        var memberId = mem.memberId;
-    } else {
-        // Handle the case when the memberId is not available in the session
-        console.error("MemberId not found in session.");
-        return; // Return early as we cannot proceed without memberId
-    }
+  // Extract memberId from session
+  var loggedInMember = sessionStorage.getItem("loggedInMember");
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+    var memberId = mem.memberId;
+  } else {
+    // Handle the case when the memberId is not available in the session
+    console.error("MemberId not found in session.");
+    return; // Return early as we cannot proceed without memberId
+  }
 
-    // Extract postId from the closest ancestor element with the class "event-post"
-    var postId = $(this).closest(".event-post").find(".post-id").text();
+  // Extract postId from the closest ancestor element with the class "event-post"
+  var postId = $(this).closest(".event-post").find(".post-id").text();
 
-    var isFollow = true; // Replace true with the appropriate value (e.g., from user input)
-    var status = true; // Replace true with the appropriate value (e.g., from user input)
+  // Check if the post has been joined by the user
+  var joinedPosts = JSON.parse(localStorage.getItem("joinedPosts") || "[]");
+  var joinedPostIndex = joinedPosts.findIndex(function (joinedPost) {
+    return joinedPost.postId === postId && joinedPost.memberId === memberId;
+  });
+  var isJoined = joinedPostIndex !== -1;
 
-    // Call the join function with the extracted data
-    join(memberId, postId, isFollow, status )
-        .then((response) => {
-            // Handle the response from the join function (e.g., show a success message)
-            console.log("Join successful:", response);
-        })
-        .catch((error) => {
-            // Handle any errors that occur during the join process (e.g., show an error message)
-            console.error("Error joining event:", error);
-        });
+  var promise;
+  if (isJoined) {
+    // Call unjoin function and update localstorage
+    promise = unjoin(memberId, postId)
+      .then(() => {
+        joinedPosts.splice(joinedPostIndex, 1);
+        localStorage.setItem("joinedPosts", JSON.stringify(joinedPosts));
+        console.log("Unjoin successful");
+      })
+      .catch((error) => {
+        console.error("Error unjoining event:", error);
+      });
+  } else {
+    // Call join function and update localstorage
+    promise = join(memberId, postId)
+      .then(() => {
+        joinedPosts.push({ postId: postId, memberId: memberId });
+        localStorage.setItem("joinedPosts", JSON.stringify(joinedPosts));
+        console.log("Join successful");
+      })
+      .catch((error) => {
+        console.error("Error joining event:", error);
+      });
+  }
+
+  promise.finally(() => location.reload());
 });
 
+
+$("#searchInput").on("keydown", function (event) {
+  if (event.which === 13) {
+    // Kiểm tra nếu phím Enter được nhấn
+    event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter (chuyển trang)
+
+    var searchQuery = $(this).val(); // Lấy giá trị tìm kiếm từ ô input
+
+    if (searchQuery.trim() !== "") {
+      // Kiểm tra nếu ô tìm kiếm không trống
+      searchAndNavigate(searchQuery);
+    }
+  }
+});
+
+function searchAndNavigate(query) {
+  // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
+  // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
+  var url =
+    "https://localhost:7206/api/Post/search-postuser?search=" +
+    encodeURIComponent(query);
+  var variable = query;
+  localStorage.setItem("myVariable", url);
+  localStorage.setItem("query", variable);
+  window.location.href = "search-result.html";
+}
