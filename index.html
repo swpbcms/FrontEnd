@@ -1493,61 +1493,140 @@
                     </div>
                     <div class="post-new">
                         <div class="post-newmeta">
-                            <!-- <ul class="post-categoroes">
-                                <li><i class="icofont-camera"></i> Photo / Video</li>
-                                <li><i class="icofont-google-map"></i> Post Location</li>
-                                <li><i class="icofont-file-gif"></i> Post Gif</li>
-                                <li><i class="icofont-ui-tag"></i> Tag to Friend</li>
-                                <li><i class="icofont-users"></i> Share in Group</li>
-                                <li><i class="icofont-link"></i> Share Link</li>
-                            </ul> -->
-                            <!-- <div class="drag-area">
-                                <div class="icons"><i class="fas fa-cloud-upload-alt"></i></div>
-                                <h3>Drag & Drop to Upload File</h3>
-                                <span>OR</span>
-                                <button>Browse File</button>
-                                <input type="file" hidden>
-                            </div> -->
-                                                         
-
-                            <form method="post" class="dropzone" >
-                                <div class="fallback">
-                                    <input name="file" type="file"  />
-                                </div>
-                            </form>
-
+                            
                             <form id="createPostForm">
-                                <label for="postTitle">Post Title:</label>
-                                <input type="text" id="postTitle" name="postTitle" required><br>
+                                <label for="title">Title:</label><br>
+                                <input type="text" id="title" name="title" required><br><br>
+                            
+                                <label for="description">Description:</label><br>
+                                <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+                            
+                                <label for="eventLocation">Event Location:</label><br>
+                                <input type="text" id="eventLocation" name="eventLocation" required><br><br>
+                            
+                                <label for="eventStartDate">Event Start Date:</label><br>
+                                <input type="datetime-local" id="eventStartDate" name="eventStartDate" required><br><br>
+                            
+                                <label for="eventEndDate">Event End Date:</label><br>
+                                <input type="datetime-local" id="eventEndDate" name="eventEndDate" required><br><br>
+                            
+                                <label for="categoryID">Category ID (comma-separated):</label><br>
+                                <select id="multiComboBox" multiple>
+                                    <!-- Các tùy chọn sẽ được điền vào đây sau khi lấy dữ liệu -->
+                                </select>
+                                <br><br>
+                            
+                                <label for="linkMedia">Media Link (comma-separated):</label><br>
+                                <input type="text" id="linkMedia" name="linkMedia" required><br><br>
+                            
+                                <input type="submit" value="Create Post">
+                              </form>
+                            
+                              <script>
+                               const endpoint2 = "https://localhost:7206/api/Category";
+
+// Hàm lấy danh sách category từ API
+const getCategories = async () => {
+  const response = await fetch(`${endpoint2}/All-Category`);
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    const data = await response.json();
+    return data.data;
+  }
+};
+
+// Hàm điền dữ liệu vào MultiComboBox
+const fillMultiComboBox = async () => {
+  const multiComboBox = document.getElementById("multiComboBox");
+
+  try {
+    const categories = await getCategories();
+    categories.forEach(category => {
+      const option = document.createElement("option");
+      option.value = category.categoryId;
+      option.textContent = category.categoryName;
+      multiComboBox.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error filling MultiComboBox:", error);
+  }
+};
+
+// Gọi hàm fillMultiComboBox để điền dữ liệu vào MultiComboBox khi trang được load
+fillMultiComboBox();
+
+// Hàm được gọi khi người dùng nhấn nút "Lấy dữ liệu"
+const getSelectedCategories = () => {
+  const selectedCategories = Array.from(document.querySelectorAll("#multiComboBox option:checked"));
+  const selectedCategoryIds = selectedCategories.map(option => option.value);
     
-                                <label for="postDescription">Post Description:</label>
-                                <input type="text" id="postDescription" name="postDescription" required><br>
-    
-                                <label for="postIsEvent">Is Event:</label>
-                                <input type="checkbox" id="postIsEvent" name="postIsEvent"><br>
-    
-                                <div id="eventFields" style="display: none;">
-                                    <label for="eventLocation">Event Location:</label>
-                                    <input type="text" id="eventLocation" name="eventLocation"><br>
-    
-                                    <label for="eventStartDate">Event Start Date:</label>
-                                    <input type="datetime-local" id="eventStartDate" name="eventStartDate"><br>
-    
-                                    <label for="eventEndDate">Event End Date:</label>
-                                    <input type="datetime-local" id="eventEndDate" name="eventEndDate"><br>
-                                </div>
-    
-                                <label for="memberId">Member ID:</label>
-                                <input type="text" id="memberId" name="memberId" required><br>
-    
-                                <label for="categoryID">Category ID:</label>
-                                <input type="text" id="categoryID" name="categoryID" required><br>
-    
-                                <label for="linkMedia">Media Link:</label>
-                                <input type="text" id="linkMedia" name="linkMedia" required><br>
-    
-                                <button type="submit">Create Post</button>
-                            </form>
+  // Điền danh sách category vào trường "Category ID (comma-separated)"
+  document.getElementById("categoryID").value = selectedCategoryIds.join(",");
+};
+
+                                const endpoint = "https://localhost:7206/api/Post";
+                            
+                                const createPost = async (data) => {
+                                  const response = await fetch(`${endpoint}/create-post`, {
+                                    method: "POST",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify(data),
+                                  });
+                                  if (!response.ok) {
+                                    throw new Error("Invalid Request");
+                                  } else {
+                                    return response.json();
+                                  }
+                                };
+                            
+                                const createPostForm = document.getElementById("createPostForm");
+                                var id = sessionStorage.getItem("loggedInMember");
+                                var mem = JSON.parse(id);
+                                var memID = mem.memberId;
+                                createPostForm.addEventListener("submit", async (event) => {
+                                  event.preventDefault();
+                            
+                                  const title = document.getElementById("title").value;
+                                  const description = document.getElementById("description").value;
+                                  const eventLocation = document.getElementById("eventLocation").value;
+                                  const eventStartDate = new Date(document.getElementById("eventStartDate").value);
+                                  const eventEndDate = new Date(document.getElementById("eventEndDate").value);
+                                  //const memberId = document.getElementById("memberId").value;
+                                  const memberId = memID;
+                                  const selectedCategoryIds = Array.from(document.querySelectorAll("#multiComboBox option:checked")).map(option => option.value);
+                                    const categoryIDs = selectedCategoryIds.map(id => ({ categoryID: id }));
+
+                                    const mediaLinks = document.getElementById("linkMedia").value.split(",");
+                                    const media = mediaLinks.map((link) => ({ linkMedia: link }));
+                            
+                                  const postData = {
+                                    postTitle: title,
+                                    postDescription: description,
+                                    postIsEvent: true,
+                                    eventLocation: eventLocation,
+                                    eventStartDate: eventStartDate.toISOString(),
+                                    eventEndDate: eventEndDate.toISOString(),
+                                    memberId: memberId,
+                                    categories: categoryIDs,
+                                    media: media,
+                                  };
+                            
+                                  try {
+                                    const response = await createPost(postData);
+                                    console.log("Post created successfully:", response);
+                                    // Do something with the response if needed
+                                  } catch (error) {
+                                    console.error("Error creating post:", error.message);
+                                    // Handle the error gracefully
+                                  }
+                                });
+                                
+                                
+                              </script>
+                              
                         </div>
                         <!-- <form method="post" class="c-form" id="myForm">
                             <input type="text" placeholder="Title" id="title">
@@ -2043,6 +2122,7 @@
     <script src="js/script.js"></script><!-- custom scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="js/index-page.js"></script>
+    <script src="js/services/post.service.js"></script>
     <!-- <script src="js/search-post.js"></script> -->
 </body>
 
