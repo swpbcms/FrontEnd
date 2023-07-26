@@ -25,7 +25,7 @@ let posts = [];
 let categories = [];
 window.addEventListener("DOMContentLoaded", async () => {
   // await getPosts().then((data) => console.log(data));
-  await getComments().then(data => comments = data);
+  // await getComments().then(data => comments = data);
   // await getPosts().then(data => posts = data);
   // await getCategories().then(data => categories = data);
   // await getCategoryByName("Chim bồ câu").then(data => console.log(data));
@@ -172,13 +172,6 @@ function displayData(data) {
     var postId = item.postId;
     var postStatus = item.postStatus;
     var mediaItems = item.media;
-    // $.each(comments, function (commentIndex, comment) {
-    //   var commentPostId = comment.postId;
-    //   if (commentPostId === postId) { // Kiểm tra comment thuộc postId hiện tại
-    //     var memberId = comment.memberId;
-    //     var commentContent = comment.commentContent;
-    //     var dateComment = comment.dateTime;
-    //     var inverseComment = comment.inverseReply;
 
     if (postStatus === "Thành công") {
       // Tạo HTML để hiển thị thông tin bài viết
@@ -324,40 +317,69 @@ function displayData(data) {
       postHTML += "</div>";
       postHTML +=
         '    <button title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      postHTML += `
-        <!-- Popup -->
-        <div id="commentPopup" class="popupComment">
-            <div class="popupContent">
-            <!-- Dữ liệu bình luận sẽ được điền vào các phần tử này -->
-            <h2 id="popupTitle"></h2>
-            <img id="popupImage" src="" alt="">
-            <p id="popupComment"></p>
-            <p id="popupDateTime"></p>
-        <button id="closePopupButton">Close</button>
-        </div>
-        </div>
-        `;
-
       postHTML +=
         '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Report</a>';
       postHTML += "</div>";
       postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
-      postHTML += '        <input type="text" placeholder="write comment">';
+      postHTML += '        <input type="text" class="comment-input" placeholder="write comment">';
       postHTML +=
         '        <button type="submit"><i class="icofont-paper-plane"></i></button>';
       postHTML += "    </form>";
       postHTML += "</div>";
 
-      postHTML += '    <div class="comments-area">';
+      // Check if there are any comments
+      if (item.comment && item.comment.length > 0) {
+        var commentToDisplay;
+
+        if (item.comment.length === 1) {
+          // If there's only one comment, select it to display
+          commentToDisplay = item.comment[0];
+        } else {
+          // If there are multiple comments, sort them and select the most recent one
+          var sortedComments = item.comment.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
+          commentToDisplay = sortedComments[0];
+        }
+
+        // Check if replyId is null, inverseReply is an empty array, and postId matches
+        if (commentToDisplay.postId === item.postId) {
+          var commentMemberImage = commentToDisplay.member.memberImage;
+          var commentContent = commentToDisplay.commentContent;
+          var commentDateTime = commentToDisplay.dateTime;
+          var commentMemberFullName = commentToDisplay.member.memberFullName;
+
+
+          // Build HTML to display the comment
+          postHTML += `<div class="comments-area">
+    <ul>
+        <li>
+            <figure>
+                <img alt="" src="${commentMemberImage}">
+            </figure>
+            <div class="commenter">
+                <h5>
+                    <a title="" href="#">${commentMemberFullName}</a>
+                </h5>
+                <span>${commentDateTime}</span>
+                <p>${commentContent}</p>
+            </div>
+            <a title="Like" href="#"><i class="icofont-heart"></i></a>
+            <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>
+        </li>
+    </ul>
+    </div>`;
+        }
+      }
+      // });
+      // postHTML += '    <div class="comments-area">';
       // postHTML += '        <ul>';
       // postHTML += '            <li>';
-      // postHTML += '                <figure><img alt="" src="' + memberImage + '">';
+      // postHTML += '                <figure><img alt="" src="">';
       // postHTML += '                 </figure>';
       // postHTML += '                <div class="commenter">';
-      // postHTML += '                    <h5><a title="" href="#">' + memberId + '</a></h5>';
-      // postHTML += '                    <span>' + dateComment + '</span>';
-      // postHTML += '                    <p>' + commentContent + '</p>';
+      // postHTML += '                    <h5><a title="" href="#"></a> '+ memberId +'</h5>';
+      // postHTML += '                    <span> '+ commentContent +' </span>';
+      // postHTML += '                    <p>' + dateComment + '</p>';
       // postHTML += '                </div>';
       // postHTML += '                <a title="Like" href="#"><i class="icofont-heart"></i></a>';
       // postHTML += '                <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>';
@@ -366,14 +388,14 @@ function displayData(data) {
       // postHTML += '                                <img src="" alt="">';
       // postHTML += '                            </figure>';
       // postHTML += '                               <div class="commenter">';
-      // postHTML += '                                <h5><a title="" href="#">' + memberId + '</a></h5>';
+      // postHTML += '                                <h5><a title="" href="#"></a></h5>';
       // postHTML += '                                <span class="comment-date"></span>';
-      // postHTML += '                                <p class="comment-content">' + inverseComment + '</p>';
+      // postHTML += '                                <p class="comment-content"></p>';
       // postHTML += '                            </div>';
       // postHTML += '                            </div>';
       // postHTML += '            </li>';
       // postHTML += '        </ul>';
-       postHTML += '    </div>';
+      // postHTML += '    </div>';
 
       postHTML += "</div>";
       postHTML += "</div>";
@@ -382,13 +404,13 @@ function displayData(data) {
       postHTML += "</div>";
       postHTML += "</div>";
       postHTML += "</div>";
-
-      // }
+      // Thêm HTML vào phần tử hiển thị
+      outputElement.append(postHTML);
     }
-    // Thêm HTML vào phần tử hiển thị
-    outputElement.append(postHTML);
-  });
+  }
+  )
 }
+
 
 // Add event listener to the Delete Post button
 $(document).on("click", ".icofont-ui-delete", function () {
@@ -425,30 +447,52 @@ $(document).on("click", ".likeButton", function () {
     // Get the current date and time
     var dateTime = new Date().toISOString();
 
-    // Create the data object for the "Like" API request
+    // Check if the post has been liked by the user
+    var likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+    var likedPostIndex = likedPosts.findIndex(function (likedPost) {
+      return likedPost.postId === postId && likedPost.memberId === memberId;
+    });
+    var isLiked = likedPostIndex !== -1;
+
+    // Depending on whether the post has been liked, call the "Like" or "disLike" API
+    var url = isLiked
+      ? "https://localhost:7206/api/Like/disLike"
+      : "https://localhost:7206/api/Like/Like";
+
+    // Create the data object for the API request
     var likeData = {
       memberId: memberId,
       postId: postId,
       dateTime: dateTime,
     };
 
-    // Send the AJAX request to the "Like" API
+    // Send the AJAX request to the API
     $.ajax({
-      url: "https://localhost:7206/api/Like/Like",
+      url: url,
       type: "POST",
       contentType: "application/json",
       data: JSON.stringify(likeData),
       success: function (response) {
+        // Update the list of liked posts in localStorage
+        if (isLiked) {
+          likedPosts.splice(likedPostIndex, 1);
+        } else {
+          likedPosts.push({ postId: postId, memberId: memberId });
+        }
+        localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+
         // Handle the success response (if needed)
-        console.log("Like successful");
+        console.log(isLiked ? "disLike successful" : "Like successful");
+        location.reload();
       },
       error: function (xhr, status, error) {
         // Handle the error (if needed)
-        console.log("Error liking post");
+        console.log(isLiked ? "Error disliking post" : "Error liking post");
       },
     });
   }
 });
+
 
 $("#searchInput").on("keydown", function (event) {
   if (event.which === 13) {
@@ -477,49 +521,51 @@ function searchAndNavigate(query) {
 }
 
 // Comment 
-// $(document).on("click", ".comment-to", function() {
-//   // Lấy postId từ thuộc tính data-postid trong nút Comment
-//   var postId = $(this).closest(".user-post").find(".post-id").text();
+$(document).on("submit", ".new-comment form", function (event) {
+  // Prevent the form from submitting normally
+  event.preventDefault();
 
-//   // Gọi hàm getComments từ module ./services/comment.service.js để lấy dữ liệu bình luận
-//   getComments(postId)
-//     .then((comments) => {
-//       // Xử lý dữ liệu bình luận từ API thành công
-//       if (comments && comments.length > 0) {
-//         // Lấy đối tượng chứa dữ liệu bài viết
-//         var postContainer = $(this).closest(".comments-area");
+  // Get the postId from the hidden element within the post HTML
+  var postId = $(this).closest(".user-post").find(".post-id").text();
 
-//         // Hiển thị popup và điền dữ liệu vào các phần tử trong popup
-//         $("#popupTitle").text(comments[0].member.memberFullName);
-//         $("#popupImage").attr("src", comments[0].member.memberImage);
-//         $("#popupComment").text(comments[0].commentContent);
-//         $("#popupDateTime").text(comments[0].dateTime);
-//         $("#commentPopup").show(); // Hiển thị popup
+  // Get the memberId from the session storage
+  var loggedInMember = sessionStorage.getItem("loggedInMember");
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+    var memberId = mem.memberId;
 
-//         // (Tùy chỉnh) Chèn các bình luận vào đối tượng chứa dữ liệu bài viết (postContainer)
-//         for (var i = 1; i < comments.length; i++) {
-//           var commentHtml = `
-//             <div class="comment">
-//               <h3 class="commentTitle">${comments[i].member.memberFullName}</h3>
-//               <p class="commentContent">${comments[i].commentContent}</p>
-//               <p class="commentDateTime">${comments[i].dateTime}</p>
-//             </div>
-//           `;
-//           postContainer.append(commentHtml);
-//         }
-//       } else {
-//         console.error("Không tìm thấy bình luận cho postId:", postId);
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Lỗi khi lấy dữ liệu bình luận từ API:", error);
-//     });
-// });
+    // Get the comment content from the input field
+    var commentContent = $(this).find(".comment-input").val();
 
-// // Đóng popup khi người dùng nhấn nút "Close"
-// $("#closePopupButton").click(function() {
-//   $("#commentPopup").hide(); // Ẩn popup
-// });
+    // Create the data object for the "Comment" API request
+    var commentData = {
+      memberId: memberId,
+      postId: postId,
+      commentContent: commentContent
+    };
+
+    // Send the AJAX request to the "Comment" API
+    $.ajax({
+      url: "https://localhost:7206/api/Comment/Comment",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(commentData),
+      success: function (response) {
+        // Handle the success response (if needed)
+        console.log("Comment successful");
+        location.reload();
+      },
+      error: function (xhr, status, error) {
+        // Handle the error (if needed)
+        console.log("Error commenting");
+      },
+    });
+  }
+});
+
+
+
+
 
 
 
