@@ -1488,61 +1488,92 @@
                     </div>
                     <div class="post-new">
                         <div class="post-newmeta">
-                            <!-- <ul class="post-categoroes">
-                                <li><i class="icofont-camera"></i> Photo / Video</li>
-                                <li><i class="icofont-google-map"></i> Post Location</li>
-                                <li><i class="icofont-file-gif"></i> Post Gif</li>
-                                <li><i class="icofont-ui-tag"></i> Tag to Friend</li>
-                                <li><i class="icofont-users"></i> Share in Group</li>
-                                <li><i class="icofont-link"></i> Share Link</li>
-                            </ul> -->
-                            <!-- <div class="drag-area">
-                                <div class="icons"><i class="fas fa-cloud-upload-alt"></i></div>
-                                <h3>Drag & Drop to Upload File</h3>
-                                <span>OR</span>
-                                <button>Browse File</button>
-                                <input type="file" hidden>
-                            </div> -->
-                                                         
-
-                            <form method="post" class="dropzone" >
-                                <div class="fallback">
-                                    <input name="file" type="file"  />
-                                </div>
-                            </form>
-
                             <form id="createPostForm">
-                                <label for="postTitle">Post Title:</label>
-                                <input type="text" id="postTitle" name="postTitle" required><br>
-    
-                                <label for="postDescription">Post Description:</label>
-                                <input type="text" id="postDescription" name="postDescription" required><br>
-    
-                                <label for="postIsEvent">Is Event:</label>
-                                <input type="checkbox" id="postIsEvent" name="postIsEvent"><br>
-    
-                                <div id="eventFields" style="display: none;">
-                                    <label for="eventLocation">Event Location:</label>
-                                    <input type="text" id="eventLocation" name="eventLocation"><br>
-    
-                                    <label for="eventStartDate">Event Start Date:</label>
-                                    <input type="datetime-local" id="eventStartDate" name="eventStartDate"><br>
-    
-                                    <label for="eventEndDate">Event End Date:</label>
-                                    <input type="datetime-local" id="eventEndDate" name="eventEndDate"><br>
-                                </div>
-    
-                                <label for="memberId">Member ID:</label>
-                                <input type="text" id="memberId" name="memberId" required><br>
-    
-                                <label for="categoryID">Category ID:</label>
-                                <input type="text" id="categoryID" name="categoryID" required><br>
-    
-                                <label for="linkMedia">Media Link:</label>
-                                <input type="text" id="linkMedia" name="linkMedia" required><br>
-    
-                                <button type="submit">Create Post</button>
-                            </form>
+                                <label for="title">Title:</label><br>
+                                <input type="text" id="title" name="title" required><br><br>
+                            
+                                <label for="description">Description:</label><br>
+                                <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+                            
+                                <label for="eventLocation">Event Location:</label><br>
+                                <input type="text" id="eventLocation" name="eventLocation" required><br><br>
+                            
+                                <label for="eventStartDate">Event Start Date:</label><br>
+                                <input type="datetime-local" id="eventStartDate" name="eventStartDate" required><br><br>
+                            
+                                <label for="eventEndDate">Event End Date:</label><br>
+                                <input type="datetime-local" id="eventEndDate" name="eventEndDate" required><br><br>
+                            
+                                <label for="memberId">Member ID:</label><br>
+                                <input type="text" id="memberId" name="memberId" required><br><br>
+                            
+                                <label for="categoryID">Category ID (comma-separated):</label><br>
+                                <input type="text" id="categoryID" name="categoryID" required><br><br>
+                            
+                                <label for="linkMedia">Media Link (comma-separated):</label><br>
+                                <input type="text" id="linkMedia" name="linkMedia" required><br><br>
+                            
+                                <input type="submit" value="Create Post">
+                              </form>
+                            
+                              <script>
+                                const endpoint = "https://localhost:7206/api/Post";
+                            
+                                const createPost = async (data) => {
+                                  const response = await fetch(`${endpoint}/create-post`, {
+                                    method: "POST",
+                                    headers: {
+                                      "Content-Type": "application/json",
+                                    },
+                                    body: JSON.stringify(data),
+                                  });
+                                  if (!response.ok) {
+                                    throw new Error("Invalid Request");
+                                  } else {
+                                    return response.json();
+                                  }
+                                };
+                            
+                                const createPostForm = document.getElementById("createPostForm");
+                            
+                                createPostForm.addEventListener("submit", async (event) => {
+                                  event.preventDefault();
+                            
+                                  const title = document.getElementById("title").value;
+                                  const description = document.getElementById("description").value;
+                                  const eventLocation = document.getElementById("eventLocation").value;
+                                  const eventStartDate = new Date(document.getElementById("eventStartDate").value);
+                                  const eventEndDate = new Date(document.getElementById("eventEndDate").value);
+                                  const memberId = document.getElementById("memberId").value;
+                                  const categoryIDs = document.getElementById("categoryID").value.split(",");
+                                  const mediaLinks = document.getElementById("linkMedia").value.split(",");
+                            
+                                  const categories = categoryIDs.map((id) => ({ categoryID: id }));
+                                  const media = mediaLinks.map((link) => ({ linkMedia: link }));
+                            
+                                  const postData = {
+                                    postTitle: title,
+                                    postDescription: description,
+                                    postIsEvent: true,
+                                    eventLocation: eventLocation,
+                                    eventStartDate: eventStartDate.toISOString(),
+                                    eventEndDate: eventEndDate.toISOString(),
+                                    memberId: memberId,
+                                    categories: categories,
+                                    media: media,
+                                  };
+                            
+                                  try {
+                                    const response = await createPost(postData);
+                                    console.log("Post created successfully:", response);
+                                    // Do something with the response if needed
+                                  } catch (error) {
+                                    console.error("Error creating post:", error.message);
+                                    // Handle the error gracefully
+                                  }
+                                });
+                              </script>
+                              
                         </div>
                         <!-- <form method="post" class="c-form" id="myForm">
                             <input type="text" placeholder="Title" id="title">
@@ -2038,6 +2069,7 @@
     <script src="js/script.js"></script><!-- custom scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="js/index-page.js"></script>
+    <script src="js/services/post.service.js"></script>
     <!-- <script src="js/search-post.js"></script> -->
 </body>
 
