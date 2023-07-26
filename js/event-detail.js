@@ -45,3 +45,72 @@ function searchAndNavigate(query) {
   window.location.href = "search-result.html";
 }
 
+$.ajax({
+  url: "https://localhost:7206/api/Post/get-post",
+  method: "GET",
+  success: function (response) {
+    // Kiểm tra dữ liệu trả về từ API
+    if (response && response.data) {
+      // Lưu các postId vào mảng
+      var postIds = response.data.map(function (post) {
+        return post.postId;
+      });
+
+      // Lưu mảng postIds vào local storage
+      localStorage.setItem("postIds", JSON.stringify(postIds));
+
+      // Hiển thị dữ liệu
+      displayData(response.data);
+    } else {
+      console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
+    }
+  },
+  error: function () {
+    console.log("Lỗi khi gọi API.");
+  },
+});
+
+function displayData(posts) {
+  // for simplicity, let's take the first post
+  // please modify accordingly if you have multiple posts or other criteria
+  var post = posts[0];
+
+  if (post.postTitle && post.media && post.postCreateAt) {
+      // set title
+      $(".main-title").text(post.postTitle);
+
+      // set image
+      if (post.media.length > 0) {
+          $(".event-detail-img img").attr("src", post.media[0].linkMedia);
+      }
+
+      // format date
+      var date = new Date(post.postCreateAt);
+      var formattedDate = date.toLocaleString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          timeZoneName: 'short',
+          hour12: true
+      });
+
+      // set date
+      $(".event-schedule h5").html(formattedDate);
+
+      // set event website
+      // Not sure where this should link to, using first media item as an example
+      if (post.media.length > 0) {
+          $(".event-desc a").attr("href", post.media[0].linkMedia);
+      }
+
+      // assuming you also have location, description and count of people in your post object
+      $(".event-loc span").text(post.eventLocation);
+      $(".event-desc p").text(post.postDescription);
+      $(".event-loc strong").text(post.postNumberJoin + " peoples has reached to join this event.");
+  }
+}
+
