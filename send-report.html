@@ -109,15 +109,15 @@
                     <li>
                         <div class="user-dp">
                             <a href="profile-page2.html" title="">
-                                <img alt="" src="images/resources/user.jpg">
+                                <img alt="" src="" id="image">
                                 <div class="name">
-                                    <h4>Danial Cardos</h4>
+                                    <h4 id="fullname"></h4>
                                 </div>
                             </a>
                         </div>
                     </li>
                     <li>
-                        <a href="feed.html" title="Home" data-toggle="tooltip">
+                        <a href="index.html" title="Home" data-toggle="tooltip">
                             <i>
 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></i>
                         </a>
@@ -287,7 +287,7 @@
                             <div class="col-lg-8">
                                 <div class="page-caro">
                                     <div class="link-item">
-                                        <a class="active" href="feed.html" title="">
+                                        <a class="active" href="index.html" title="">
                                             <i class="">
 											<svg class="feather feather-zap" stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="24" width="24" xmlns="http://www.w3.org/2000/svg"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
 										</i>
@@ -329,7 +329,7 @@
                                     <h4 class="text-center"><i class="icofont-comment"></i> Send Report</h4>
                                     <form class="mt-4">
                                         <fieldset class="row">
-                                            <div class="mb-4 col-lg-6">
+                                            <!-- <div class="mb-4 col-lg-6">
                                                 <input class="uk-input" type="text" placeholder="First Name">
                                             </div>
                                             <div class="mb-4 col-lg-6">
@@ -342,18 +342,18 @@
 										<option>UK</option>
 										<option>UAE</option>
 									</select>
+                                            </div> -->
+                                            <div class="mb-4 col-lg-12">
+                                                <input class="uk-input" type="text" placeholder="Report Title">
                                             </div>
-                                            <div class="mb-4 col-lg-6">
-                                                <input class="uk-input" type="text" placeholder="Email Address">
-                                            </div>
-                                            <div class="mb-4 col-lg-6">
+                                            <!-- <div class="mb-4 col-lg-6">
                                                 <input class="uk-input" type="text" placeholder="University">
-                                            </div>
+                                            </div> -->
 
                                             <div class="mb-4 col-lg-12">
-                                                <textarea class="uk-textarea" rows="4" placeholder="Textarea"></textarea>
+                                                <textarea class="uk-textarea" rows="4" placeholder="Write report"></textarea>
                                             </div>
-                                            <div class="mb-4 col-lg-12">
+                                            <!-- <div class="mb-4 col-lg-12">
                                                 <div class="form-group1 mt-30">
                                                     <label for="file5">Add Screenshots</label>
                                                     <div class="image-upload-wrap">
@@ -365,7 +365,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="mb-4 col-lg-12">
                                                 <div class="feed-back-emojies">
                                                     <span>How was your experience with Bird Club</span>
@@ -1003,8 +1003,8 @@
     <script src="js/sparkline.js"></script>
     <script type="module" src="js/chart.js"></script>
     <script src="js/script.js"></script>
-
-
+	<script type="module" src="js/send-report.js"></script>
+	<script type="module" src="js/services/report.service.js"></script>
 </body>
 
 </html>

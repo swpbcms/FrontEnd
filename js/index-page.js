@@ -20,9 +20,11 @@ import {
 } from "./services/categories.service.js";
 import { dislike, like } from "./services/like.service.js";
 import { createMedia } from "./services/media.service.js";
+import { getReportTypes } from "./services/report-type.service.js";
 let comments = [];
 let posts = [];
 let categories = [];
+
 window.addEventListener("DOMContentLoaded", async () => {
   // await getPosts().then((data) => console.log(data));
   // await getComments().then(data => comments = data);
@@ -211,7 +213,7 @@ function displayData(data) {
         "                        <span>If inappropriate Post By Mistake</span>";
       postHTML += "                    </li>";
       postHTML += "                    <li>";
-      postHTML += '                        <i class="icofont-flag"></i>Report';
+      postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
       postHTML += "                        <span>Inappropriate content</span>";
       postHTML += "                    </li>";
       postHTML += "                </ul>";
@@ -315,10 +317,10 @@ function displayData(data) {
         '        <button class="likeButton"> <i class="icofont-like"></i> Like</button>';
       postHTML += "    </div>";
       postHTML += "</div>";
+      postHTML += '    <button title="" href="#" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
+
       postHTML +=
-        '    <button title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      postHTML +=
-        '    <a title="" href="#" class="share-to"><i class="icofont-share-alt"></i> Report</a>';
+        '    <button title="" href="#" class="report-to"><i class="icofont-share-alt"></i> Report</button>';
       postHTML += "</div>";
       postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
@@ -562,6 +564,19 @@ $(document).on("submit", ".new-comment form", function (event) {
     });
   }
 });
+
+$(document).on("click", ".report", function () {
+  var postId = $(this).data('id');
+  sessionStorage.setItem('reportedPostId', postId);
+  window.location.href = 'send-report.html';
+});
+
+$(document).on("click", ".report-to", function () {
+  var postIdButton = $(this).attr('data-id');
+  sessionStorage.setItem('reportedButton', postIdButton);
+  window.location.href = 'send-report.html';
+});
+
 
 
 
