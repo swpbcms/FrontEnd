@@ -69,7 +69,7 @@ function displayData(data) {
             const eventHTML = `<div class="col-lg-4 col-md-4 col-sm-6">
         <div class="event-post mb-3">
           <figure>
-            <a href="event-detail.html" title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
+            <a href="" title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
           </figure>
           <div class="event-meta">
             <span class="eventStatus">${eventStatus}</span> 
