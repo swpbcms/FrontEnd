@@ -117,13 +117,13 @@ function displayData(data) {
     eventContainer.html(eventPost);
 }
 
-$(document).on("click", ".join-event-btn", function () {
-  // Extract the postId from the data-post-id attribute of the clicked button
-  var postId = $(this).data("post-id");
+// $(document).on("click", ".join-event-btn", function () {
+//   // Extract the postId from the data-post-id attribute of the clicked button
+//   var postId = $(this).data("post-id");
 
-  // Redirect to the "Event Detail Page" with the selected postId
-  window.location.href = "event-detail.html?postId=" + postId;
-});
+//   // Redirect to the "Event Detail Page" with the selected postId
+//   window.location.href = "event-detail.html?postId=" + postId;
+// });
 
 $(document).on("click", ".join-event-btn", function () {
   // Extract memberId from session
