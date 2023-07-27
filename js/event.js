@@ -69,7 +69,7 @@ function displayData(data) {
             const eventHTML = `<div class="col-lg-4 col-md-4 col-sm-6">
         <div class="event-post mb-3">
           <figure>
-            <a href="" title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
+            <a title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
           </figure>
           <div class="event-meta">
             <span class="eventStatus">${eventStatus}</span> 
@@ -206,26 +206,30 @@ $(document).on("click", ".eventImage", function () {
   // Extract postId from the closest ancestor element with the class "event-post"
   var postId = $(this).closest(".event-post").find(".post-id").text();
 
-  // Redirect to event-detail.html passing the postId
+  // Save postId to sessionStorage
+  sessionStorage.setItem('selectedPostId', postId);
+
+  // Redirect to event-detail.html
   redirectToEventDetail(postId);
 });
 
+
 // Function to redirect to event-detail.html with the postId
 function redirectToEventDetail(postId) {
-  // Fetch the event details using the postId (optional step, you can directly pass postId as a query parameter)
-  $.ajax({
-    url: "https://localhost:7206/api/Post/get-post-id?id=" + postId,
-    method: "GET",
-    success: function (response) {
-      if (response && response.data) {
-        // Redirect to the event-detail.html page, passing the postId as a query parameter
+  // // Fetch the event details using the postId (optional step, you can directly pass postId as a query parameter)
+  // $.ajax({
+  //   url: "https://localhost:7206/api/Post/get-post-id?id=" + postId,
+  //   method: "GET",
+  //   success: function (response) {
+  //     if (response && response.data) {
+  //       // Redirect to the event-detail.html page, passing the postId as a query parameter
         window.location.href = "event-detail.html?postId=" + postId;
-      } else {
-        console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
-      }
-    },
-    error: function () {
-      console.log("Lỗi khi gọi API.");
-    },
-  });
+    //   } else {
+    //     console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
+    //   }
+    // },
+    // error: function () {
+    //   console.log("Lỗi khi gọi API.");
+    // },
+  // });
 }
