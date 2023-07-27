@@ -317,10 +317,9 @@ function displayData(data) {
         '        <button class="likeButton"> <i class="icofont-like"></i> Like</button>';
       postHTML += "    </div>";
       postHTML += "</div>";
-      postHTML += '    <button title="" href="#" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
-
       postHTML +=
-        '    <button title="" href="#" class="report-to"><i class="icofont-share-alt"></i> Report</button>';
+        '    <button title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
+      postHTML += '    <button title="" href="#" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
       postHTML += "</div>";
       postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
@@ -565,17 +564,36 @@ $(document).on("submit", ".new-comment form", function (event) {
   }
 });
 
-$(document).on("click", ".report", function () {
-  var postId = $(this).data('id');
-  sessionStorage.setItem('reportedPostId', postId);
-  window.location.href = 'send-report.html';
+$(document).ready(function() {
+  // Bắt sự kiện click cho mỗi nút có class .report
+  $(".report").each(function() {
+      $(this).on("click", function() {
+          // Lấy giá trị data-id từ nút được nhấp
+          var postId = $(this).data('id');
+
+          // Lưu giá trị vào sessionStorage
+          sessionStorage.setItem('reportedPostId', postId);
+
+          // Chuyển đến trang send-report.html
+          window.location.href = 'send-report.html';
+      });
+  });
+
+  // Bắt sự kiện click cho mỗi nút có class .report-to
+  $(".report-to").each(function() {
+      $(this).on("click", function() {
+          // Lấy giá trị data-id từ nút được nhấp
+          var postIdButton = $(this).data('id');
+
+          // Lưu giá trị vào sessionStorage
+          sessionStorage.setItem('reportedPostId', postIdButton);
+
+          // Chuyển đến trang send-report.html
+          window.location.href = 'send-report.html';
+      });
+  });
 });
 
-$(document).on("click", ".report-to", function () {
-  var postIdButton = $(this).attr('data-id');
-  sessionStorage.setItem('reportedButton', postIdButton);
-  window.location.href = 'send-report.html';
-});
 
 
 
