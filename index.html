@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
+
 </head>
 
 <body>
@@ -343,7 +344,7 @@
                                     <div class="user-post" id="userpost">
 
                                     </div>
-
+                                    
 
 
                                     <!--                                     <div class="main-wraper">
@@ -1427,16 +1428,27 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> -->
-                                            <!-- suggested group -->
-                                            <div class="widget">
-                                                <h4 class="widget-title">Ask Research Question?</h4>
-                                                <div class="ask-question">
-                                                    <i class="icofont-question-circle"></i>
-                                                    <h6>Ask questions in Q&A to get help from experts in your field.
-                                                    </h6>
-                                                    <a class="ask-qst" href="#" title="">Ask a question</a>
-                                                </div>
+
+                                        <!-- suggested group -->
+                                        <div class="widget">
+                                            <h4 class="widget-title">Report post?</h4>
+                                            <div class="ask-question">
+                                                <i class="icofont-question-circle"></i>
+                                                <h6>You do not like this article or its content is not valid. </h6>
+                                                <a class="ask-qst" href="#" title="">Report here</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- ask question widget -->
+                                        <div class="widget">
+                                            <h4 class="widget-title">Explor Events <a class="see-all" href="#"
+                                                    title="">See All</a></h4>
+                                            <div class="rec-events bg-purple">
+                                                <i class="icofont-gift"></i>
+                                                <h6><a title="" href="">BZ University good night event in columbia</a>
+                                                </h6>
+                                                <img alt="" src="images/clock.png">
+
                                             </div>
                                             <!-- ask question widget -->
                                             <div class="widget">
@@ -1696,7 +1708,9 @@
                                     }
                                 });
 
+
                             </script>
+
 
                         </div>
                         <!-- <form method="post" class="c-form" id="myForm">
@@ -1783,7 +1797,6 @@
                 </div>
             </div>
         </div>
-        <!-- New post popup -->
 
         <div class="new-question-popup">
             <div class="popup">
@@ -1797,15 +1810,15 @@
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                </svg></i> Ask Question</h5>
+                                </svg></i> Report post</h5>
                     </div>
                     <div class="post-new">
                         <form method="post" class="c-form">
 
-                            <input type="text" placeholder="Question Title">
-                            <textarea placeholder="Write Question"></textarea>
+                            <input type="text" placeholder="Report Title">
+                            <textarea placeholder="Write report"></textarea>
 
-                            <select>
+                            <!-- <select>
                                 <option>Select Your Question Type</option>
                                 <option>Article</option>
                                 <option>Book</option>
@@ -1821,6 +1834,9 @@
                                 <option>Technicial Report</option>
                                 <option>Thesis</option>
                                 <option>Research</option>
+                            </select> -->
+                            <select id="ComboBox" multiple>
+                                <!-- Các tùy chọn sẽ được điền vào đây sau khi lấy dữ liệu -->
                             </select>
                             <div class="uploadimage">
                                 <i class="icofont-eye-alt-alt"></i>
@@ -1836,6 +1852,8 @@
             </div>
         </div>
         <!-- ask question -->
+
+        
 
 
         <div class="share-wraper">
@@ -2194,6 +2212,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="js/index-page.js"></script>
     <script src="js/services/post.service.js"></script>
+
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
 
@@ -2201,6 +2220,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
+    <script type="module" src="js/services/report-type.service.js"></script>
 
     <!-- <script src="js/search-post.js"></script> -->
 </body>

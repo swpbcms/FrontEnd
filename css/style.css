@@ -2574,7 +2574,8 @@ aside .widget {
 .wraper-invite,
 .new-question-popup,
 .createroom-popup,
-.popup-add-card {
+.popup-add-card,
+.new-report-popup {
     background: rgba(248, 248, 248, 0.85) none repeat scroll 0 0;
     height: 100%;
     left: 0;
@@ -2592,7 +2593,8 @@ aside .widget {
 .wraper-invite.active,
 .new-question-popup.active,
 .createroom-popup.active,
-.popup-add-card.active {
+.popup-add-card.active,
+.new-report-popup.active {
     opacity: 1;
     visibility: visible;
 }
@@ -2624,7 +2626,8 @@ aside .widget {
 .post-new-popup.active .popup,
 .wraper-invite.active .popup,
 .new-question-popup .popup,
-.createroom-popup .popup {
+.createroom-popup .popup
+.new-report-popup.active .popup {
     top: 50%;
 }
 
@@ -3742,6 +3745,7 @@ ul.welcome-caro li.welcome-box figure img {
 .ask-question>a:hover {
     color: #fff;
 }
+
 
 
 /*--- signup form ---*/
@@ -16447,15 +16451,11 @@ a.classic-btn:hover {
     width: 100%;
     z-index: 1;
 }
-.popupComment {
+
+
+.hide {
     display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
+}
 /* .Like .likeButton {
     display: none;
 } */

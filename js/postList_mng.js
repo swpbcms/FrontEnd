@@ -1,7 +1,9 @@
-$(document).ready(function() {
-    loadPostList();
-    loadEventPostList();
-  });
+import { getPosts, moderatePost, deletePost } from "./services/post.service.js";
+
+$(document).ready(function () {
+  loadPostList();
+  loadEventPostList();
+});
 
   function loadEventPostList() {
     $.ajax({
@@ -27,94 +29,290 @@ $(document).ready(function() {
         }
     });
 }
-  
-  function loadPostList() {
-    $.ajax({
-      url: 'https://localhost:7206/api/Post/get-post',
-      type: 'GET',
-      dataType: 'json',
-      success: function(response) {
-        // Handle API response
-        if (response && response.data) {
-          // Process the post list data and display it on the page
-          var posts = response.data;
-  
-          // Display post list
-          displayPostList(posts);
-        } else {
-          console.log('Failed to fetch post list');
-        }
-      },
-      error: function(error) {
-        console.log('An error occurred while fetching post list: ' + error);
+
+function loadPostList() {
+  getPosts()
+    .then((response) => {
+      if (response && response.data) {
+        // Process the post list data and display it on the page
+        var posts = response.data;
+
+        // Display post list
+        displayPostList(posts);
+      } else {
+        $("#components-nav li:nth-child(3)").html("<h2>Quản lý Bài Viết</h2><p>No posts found.</p>");
       }
+    })
+    .catch((error) => {
+      console.log('An error occurred while fetching post list: ' + error);
+      $("#components-nav li:nth-child(3)").html("<h2>Quản lý Bài Viết</h2><p>Failed to fetch post list.</p>");
     });
+}
+
+function displayPostList(posts) {
+  var postListHTML = "<h2>Quản lý Bài Viết</h2>";
+  postListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
+  postListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Sự kiện/Bài viết</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th><th>Thao tác</th></tr></thead><tbody>";
+
+  for (var i = 0; i < posts.length; i++) {
+    var post = posts[i];
+    var event = post.postIsEvent ? "Sự kiện" : "Bài viết";
+
+    postListHTML += "<tr>";
+    postListHTML += "<td>" + post.postId + "</td>";
+    postListHTML += "<td>" + post.postTitle + "</td>";
+    postListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
+    postListHTML += "<td>" + post.postDescription + "</td>";
+    postListHTML += "<td>" + event + "</td>";
+    postListHTML += "<td>" + post.postStatus + "</td>";
+    postListHTML += "<td>" + post.postNumberLike + "</td>";
+    postListHTML += "<td>" + post.postNumberJoin + "</td>";
+    postListHTML += "<td>" + post.eventLocation + "</td>";
+    postListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
+    postListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
+    postListHTML += "<td>" + post.member.memberId + "</td>";
+    // Add the Update and Delete Post buttons with the data attribute for post ID
+    postListHTML += "<td><button class='uk-button uk-button-small uk-button-primary agree-post-btn' data-post-id='" + post.postId + "'>Agree</button>";
+    postListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-post-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
+    postListHTML += "</tr>";
   }
+
+  postListHTML += "</tbody></table></div>";
+
+  $("#components-nav li:nth-child(3)").html(postListHTML);
+
+  $(".agree-post-btn").on("click", function () {
+    const postId = $(this).data("post-id");
   
-  function displayPostList(posts) {
-    var postListHTML = "<h2>Quản lý Bài Viết</h2>";
-    postListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
-    postListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Sự kiện/Bài viết</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th></tr></thead><tbody>";
-  
-    for (var i = 0; i < posts.length; i++) {
-      var post = posts[i];
-      var event = post.postIsEvent ? "Sự kiện" : "Bài viết";
-  
-      postListHTML += "<tr>";
-      postListHTML += "<td>" + post.postId + "</td>";
-      postListHTML += "<td>" + post.postTitle + "</td>";
-      postListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
-      postListHTML += "<td>" + post.postDescription + "</td>";
-      postListHTML += "<td>" + event + "</td>";
-      postListHTML += "<td>" + post.postStatus + "</td>";
-      postListHTML += "<td>" + post.postNumberLike + "</td>";
-      postListHTML += "<td>" + post.postNumberJoin + "</td>";
-      postListHTML += "<td>" + post.eventLocation + "</td>";
-      postListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
-      postListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
-      postListHTML += "<td>" + post.member.memberId + "</td>";
-      postListHTML += "</tr>";
+    // Get the manager's ID from the session storage
+    var loggedInManager = sessionStorage.getItem("loggedInManager");
+    if (!loggedInManager) {
+      console.error("Manager not logged in.");
+      return;
     }
   
-    postListHTML += "</tbody></table></div>";
+    var managerId = JSON.parse(loggedInManager).managerId;
   
-    $("#components-nav li:nth-child(3)").html(postListHTML);
+    moderatePost(postId, true, managerId)
+      .then(() => {
+        $(this).closest("tr").remove();
+        loadPostList();
+      })
+      .catch((error) => {
+        console.error("Error moderating post: ", error);
+      });
+  });
+
+  // Add the "Delete Post" button event listener here
+  $(".delete-post-btn").on("click", function () {
+    const postId = $(this).data("post-id");
+    // Call the deletePost function to delete the post
+    deletePost(postId)
+      .then(() => {
+        $(this).closest("tr").remove();
+        // Reload the post list to reflect the changes after successful deletion
+        loadPostList();
+      })
+      .catch((error) => {
+        console.error("Error deleting post: ", error);
+        // Handle error if needed
+      });
+  });
+}
+
+function formatDate(dateString) {
+  var date = new Date(dateString);
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+
+function displayEventList(eventPosts) {
+  var eventListHTML = "<h2>Quản lý sự kiện</h2>";
+  eventListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
+  eventListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th><th>Thao tác</th></tr></thead><tbody>";
+
+  for (var i = 0; i < eventPosts.length; i++) {
+    var post = eventPosts[i];
+
+    eventListHTML += "<tr>";
+    eventListHTML += "<td>" + post.postId + "</td>";
+    eventListHTML += "<td>" + post.postTitle + "</td>";
+    eventListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
+    eventListHTML += "<td>" + post.postDescription + "</td>";
+    eventListHTML += "<td>" + post.postStatus + "</td>";
+    eventListHTML += "<td>" + post.postNumberLike + "</td>";
+    eventListHTML += "<td>" + post.postNumberJoin + "</td>";
+    eventListHTML += "<td>" + post.eventLocation + "</td>";
+    eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
+    eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
+    eventListHTML += "<td>" + post.member.memberId + "</td>";
+    // Add the Update and Delete Event buttons with the data attribute for post ID
+    eventListHTML += "<td><button class='uk-button uk-button-small uk-button-primary agree-event-btn' data-post-id='" + post.postId + "'>Agree</button>";
+    eventListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-event-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
+    eventListHTML += "</tr>";
   }
+
+  eventListHTML += "</tbody></table></div>";
+
+  $("#components-nav li:nth-child(4)").html(eventListHTML);
+
+  // Add the "Agree Event" button event listener here
+  $(".agree-event-btn").on("click", function () {
+    const postId = $(this).data("post-id");
+
+    // Get the manager's ID from the session storage
+    var loggedInManager = sessionStorage.getItem("loggedInManager");
+    if (!loggedInManager) {
+      console.error("Manager not logged in.");
+      return;
+    }
+
+    var managerId = JSON.parse(loggedInManager).managerId;
+
+    moderatePost(postId, true, managerId)
+      .then(() => {
+        $(this).closest("tr").remove();
+        loadEventPostList();
+      })
+      .catch((error) => {
+        console.error("Error moderating event: ", error);
+      });
+  });
+
+  // Add the "Delete Event" button event listener here
+  $(".delete-event-btn").on("click", function () {
+    const postId = $(this).data("post-id");
+    // Call the deletePost function to delete the event
+    deletePost(postId)
+      .then(() => {
+        $(this).closest("tr").remove();
+        // Reload the event list to reflect the changes after successful deletion
+        loadEventPostList();
+      })
+      .catch((error) => {
+        console.error("Error deleting event: ", error);
+        // Handle error if needed
+      });
+  });
+}
+
+// $(document).ready(function() {
+//     loadPostList();
+//     loadEventPostList();
+//   });
+
+//   function loadEventPostList() {
+//     $.ajax({
+//         url: 'https://localhost:7206/api/Post/get-post',
+//         type: 'GET',
+//         dataType: 'json',
+//         success: function(response) {
+//             // Handle API response
+//             if (response && response.data) {
+//                 // Filter event posts
+//                 var eventPosts = response.data.filter(function(post) {
+//                     return post.postIsEvent === true;
+//                 });
+
+//                 // Display event post list
+//                 displayEventList(eventPosts);
+//             } else {
+//                 console.log('Failed to fetch post list');
+//             }
+//         },
+//         error: function(error) {
+//             console.log('An error occurred while fetching post list: ' + error);
+//         }
+//     });
+// }
+  
+//   function loadPostList() {
+//     $.ajax({
+//       url: 'https://localhost:7206/api/Post/get-post',
+//       type: 'GET',
+//       dataType: 'json',
+//       success: function(response) {
+//         // Handle API response
+//         if (response && response.data) {
+//           // Process the post list data and display it on the page
+//           var posts = response.data;
+  
+//           // Display post list
+//           displayPostList(posts);
+//         } else {
+//           console.log('Failed to fetch post list');
+//         }
+//       },
+//       error: function(error) {
+//         console.log('An error occurred while fetching post list: ' + error);
+//       }
+//     });
+//   }
+  
+//   function displayPostList(posts) {
+//     var postListHTML = "<h2>Quản lý Bài Viết</h2>";
+//     postListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
+//     postListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Sự kiện/Bài viết</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th></tr></thead><tbody>";
+  
+//     for (var i = 0; i < posts.length; i++) {
+//       var post = posts[i];
+//       var event = post.postIsEvent ? "Sự kiện" : "Bài viết";
+  
+//       postListHTML += "<tr>";
+//       postListHTML += "<td>" + post.postId + "</td>";
+//       postListHTML += "<td>" + post.postTitle + "</td>";
+//       postListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
+//       postListHTML += "<td>" + post.postDescription + "</td>";
+//       postListHTML += "<td>" + event + "</td>";
+//       postListHTML += "<td>" + post.postStatus + "</td>";
+//       postListHTML += "<td>" + post.postNumberLike + "</td>";
+//       postListHTML += "<td>" + post.postNumberJoin + "</td>";
+//       postListHTML += "<td>" + post.eventLocation + "</td>";
+//       postListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
+//       postListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
+//       postListHTML += "<td>" + post.member.memberId + "</td>";
+//       postListHTML += "</tr>";
+//     }
+  
+//     postListHTML += "</tbody></table></div>";
+  
+//     $("#components-nav li:nth-child(3)").html(postListHTML);
+//   }
   
 
-  function displayEventList(eventPosts) {
-    var eventListHTML = "<h2>Quản lý sự kiện</h2>";
-    eventListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
-    eventListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th></tr></thead><tbody>";
+//   function displayEventList(eventPosts) {
+//     var eventListHTML = "<h2>Quản lý sự kiện</h2>";
+//     eventListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
+//     eventListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th></tr></thead><tbody>";
   
-    for (var i = 0; i < eventPosts.length; i++) {
-      var post = eventPosts[i];
+//     for (var i = 0; i < eventPosts.length; i++) {
+//       var post = eventPosts[i];
   
-      eventListHTML += "<tr>";
-      eventListHTML += "<td>" + post.postId + "</td>";
-      eventListHTML += "<td>" + post.postTitle + "</td>";
-      eventListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
-      eventListHTML += "<td>" + post.postDescription + "</td>";
-      eventListHTML += "<td>" + post.postStatus + "</td>";
-      eventListHTML += "<td>" + post.postNumberLike + "</td>";
-      eventListHTML += "<td>" + post.postNumberJoin + "</td>";
-      eventListHTML += "<td>" + post.eventLocation + "</td>";
-      eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
-      eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
-      eventListHTML += "<td>" + post.member.memberId + "</td>";
-      eventListHTML += "</tr>";
-    }
+//       eventListHTML += "<tr>";
+//       eventListHTML += "<td>" + post.postId + "</td>";
+//       eventListHTML += "<td>" + post.postTitle + "</td>";
+//       eventListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
+//       eventListHTML += "<td>" + post.postDescription + "</td>";
+//       eventListHTML += "<td>" + post.postStatus + "</td>";
+//       eventListHTML += "<td>" + post.postNumberLike + "</td>";
+//       eventListHTML += "<td>" + post.postNumberJoin + "</td>";
+//       eventListHTML += "<td>" + post.eventLocation + "</td>";
+//       eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
+//       eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
+//       eventListHTML += "<td>" + post.member.memberId + "</td>";
+//       eventListHTML += "</tr>";
+//     }
   
-    eventListHTML += "</tbody></table></div>";
+//     eventListHTML += "</tbody></table></div>";
   
-    $("#components-nav li:nth-child(4)").html(eventListHTML);
-  }
+//     $("#components-nav li:nth-child(4)").html(eventListHTML);
+//   }
   
   
   
-  function formatDate(dateString) {
-    var date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-  }
+//   function formatDate(dateString) {
+//     var date = new Date(dateString);
+//     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+//   }
   
   
