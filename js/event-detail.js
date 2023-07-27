@@ -75,42 +75,53 @@ function displayData(posts) {
   // please modify accordingly if you have multiple posts or other criteria
   var post = posts[0];
 
-  if (post.postTitle && post.media && post.postCreateAt) {
-      // set title
-      $(".main-title").text(post.postTitle);
+  if (post.postTitle && post.postDescription && post.eventLocation && post.eventStartDate && post.eventEndDate) {
+    // set title
+    $(".main-title").text(post.postTitle);
 
-      // set image
-      if (post.media.length > 0) {
-          $(".event-detail-img img").attr("src", post.media[0].linkMedia);
-      }
+    // set description
+    $(".event-desc p").text(post.postDescription);
 
-      // format date
-      var date = new Date(post.postCreateAt);
-      var formattedDate = date.toLocaleString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-          timeZoneName: 'short',
-          hour12: true
-      });
+    // set location
+    $(".event-loc p").text(post.eventLocation);
 
-      // set date
-      $(".event-schedule h5").html(formattedDate);
+    // format start date
+    var startDate = new Date(post.eventStartDate);
+    var formattedStartDate = startDate.toLocaleString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+      hour12: true
+    });
 
-      // set event website
-      // Not sure where this should link to, using first media item as an example
-      if (post.media.length > 0) {
-          $(".event-desc a").attr("href", post.media[0].linkMedia);
-      }
+    // format end date
+    var endDate = new Date(post.eventEndDate);
+    var formattedEndDate = endDate.toLocaleString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      timeZoneName: 'short',
+      hour12: true
+    });
 
-      // assuming you also have location, description and count of people in your post object
-      $(".event-loc span").text(post.eventLocation);
-      $(".event-desc p").text(post.postDescription);
-      $(".event-loc strong").text(post.postNumberJoin + " peoples has reached to join this event.");
+    // set start and end date
+    $(".event-schedule p").html(`Start: ${formattedStartDate}<br>End: ${formattedEndDate}`);
+
+    // assuming you also have image and count of people in your post object
+    // set image (assuming you have the image link in post.media[0].linkMedia)
+    if (post.media && post.media.length > 0) {
+      $(".event-detail-img img").attr("src", post.media[0].linkMedia);
+    }
+
+    $(".event-loc strong").text(post.postNumberJoin + " peoples has reached to join this event.");
   }
 }
-

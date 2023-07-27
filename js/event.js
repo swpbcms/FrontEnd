@@ -125,7 +125,6 @@ $(document).on("click", ".join-event-btn", function () {
   window.location.href = "event-detail.html?postId=" + postId;
 });
 
-
 $(document).on("click", ".join-event-btn", function () {
   // Extract memberId from session
   var loggedInMember = sessionStorage.getItem("loggedInMember");
