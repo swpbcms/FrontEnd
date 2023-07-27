@@ -201,3 +201,31 @@ function searchAndNavigate(query) {
   localStorage.setItem("query", variable);
   window.location.href = "search-result.html";
 }
+
+$(document).on("click", ".eventImage", function () {
+  // Extract postId from the closest ancestor element with the class "event-post"
+  var postId = $(this).closest(".event-post").find(".post-id").text();
+
+  // Redirect to event-detail.html passing the postId
+  redirectToEventDetail(postId);
+});
+
+// Function to redirect to event-detail.html with the postId
+function redirectToEventDetail(postId) {
+  // Fetch the event details using the postId (optional step, you can directly pass postId as a query parameter)
+  $.ajax({
+    url: "https://localhost:7206/api/Post/get-post-id?id=" + postId,
+    method: "GET",
+    success: function (response) {
+      if (response && response.data) {
+        // Redirect to the event-detail.html page, passing the postId as a query parameter
+        window.location.href = "event-detail.html?postId=" + postId;
+      } else {
+        console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
+      }
+    },
+    error: function () {
+      console.log("Lỗi khi gọi API.");
+    },
+  });
+}
