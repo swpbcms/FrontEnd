@@ -114,7 +114,7 @@ $(".restore-post-btn").on("click", function () {
     // Get the manager's ID from the session storage
     var loggedInManager = sessionStorage.getItem("loggedInManager");
     if (!loggedInManager) {
-      console.error("Manager not logged in.");
+      console.error("Admin not logged in.");
       return;
     }
   
@@ -223,7 +223,7 @@ function displayEventList(eventPosts) {
     // Get the manager's ID from the session storage
     var loggedInManager = sessionStorage.getItem("loggedInManager");
     if (!loggedInManager) {
-      console.error("Manager not logged in.");
+      console.error("Admin not logged in.");
       return;
     }
 
