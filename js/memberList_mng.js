@@ -74,17 +74,45 @@ $(document).ready(function() {
     // Add the "Delete Member" button event listener here
     $(".delete-member-btn").on("click", function () {
       const memberId = $(this).data("member-id");
+    
+      // Show a confirmation dialog before proceeding with the deletion
+      const confirmation = confirm("Are you sure you want to delete this member?");
+      if (!confirmation) {
+        // If the user cancels the deletion, do nothing
+        return;
+      }
+    
       // Call the deleteMember function to delete the member
       deleteMember(memberId)
         .then(() => {
-          $(this).closest("tr").remove();
-          // Reload the member list to reflect the changes after successful deletion
-          // You can choose to call getMembers() again here or simply remove the deleted row
+          // Do not remove the member from the list immediately.
+          // You can choose to reload the member list to reflect the changes after successful deletion.
+          // You can call getMembers() again here or simply remove the deleted row
+          loadMembers(); // Assuming you have a function to reload the member list
         })
         .catch((error) => {
           console.error("Error deleting member: ", error);
           // Handle error if needed
         });
     });
+    
+    function loadMembers() {
+      getMembers()
+        .then((response) => {
+          if (response && response.data) {
+            // Process the member list data and display it on the page
+            var members = response.data;
+    
+            // Display member list
+            displayMemberList(members);
+          } else {
+            console.log("Failed to fetch member list");
+          }
+        })
+        .catch((error) => {
+          console.log("An error occurred while fetching member list: " + error);
+          console.log(error);
+        });
+    }
   }
-});
+})
