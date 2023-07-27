@@ -79,7 +79,7 @@ function displayData(data) {
             <p class="eventDescription">Start: ${eventStartDate}</p>
             <p class="eventDescription">End: ${eventEndDate}</p>
             <p class="eventLocation">Location: ${eventLocation}</p>
-            <button class="join-event-btn" href="#" title="">Join Event</button>
+            <button class="join-event-btn" data-post-id="${postId}" href="#" title="">Join Event</button>
             <div class="more">
               <div class="more-post-optns">
                 <i class="feather feather-more-horizontal"></i>
@@ -116,6 +116,14 @@ function displayData(data) {
     const eventContainer = $("#event-container");
     eventContainer.html(eventPost);
 }
+
+$(document).on("click", ".join-event-btn", function () {
+  // Extract the postId from the data-post-id attribute of the clicked button
+  var postId = $(this).data("post-id");
+
+  // Redirect to the "Event Detail Page" with the selected postId
+  window.location.href = "event-detail.html?postId=" + postId;
+});
 
 
 $(document).on("click", ".join-event-btn", function () {
