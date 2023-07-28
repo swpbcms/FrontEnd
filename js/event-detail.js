@@ -228,3 +228,53 @@ function unjoinEvent(memberId, postId, successCallback) {
   });
 }
 
+// Function to check if the user has already joined the event
+function checkJoinStatus() {
+  const postId = getPostIdFromURL();
+  const memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+  const isJoined = sessionStorage.getItem(`joinStatus_${memberId}_${postId}`) === "true";
+  return isJoined;
+}
+
+// Function to set the join status in localStorage
+function setJoinStatus(isJoined) {
+  const postId = getPostIdFromURL();
+  const memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+  sessionStorage.setItem(`joinStatus_${memberId}_${postId}`, isJoined ? "true" : "false");
+}
+
+// Function to handle the Join/Unjoin button click
+function handleJoinButtonClick() {
+  var isJoined = checkJoinStatus();
+  var memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+  const postId = getPostIdFromURL();
+
+  if (isJoined) {
+    unjoinEvent(memberId, postId, function () {
+      isJoined = false;
+      $("#joinButton").text("Join Event");
+      setJoinStatus(isJoined); // Save the join status in sessionStorage
+    });
+  } else {
+    joinEvent(memberId, postId, function () {
+      isJoined = true;
+      $("#joinButton").text("Unjoin Event");
+      setJoinStatus(isJoined); // Save the join status in sessionStorage
+    });
+  }
+}
+
+// Function to get the "postId" from the URL
+function getPostIdFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get("postId");
+}
+
+// Add event listener for the Join/Unjoin button
+$(document).ready(function () {
+  const isJoined = checkJoinStatus();
+  $("#joinButton").text(isJoined ? "Unjoin Event" : "Join Event");
+  $("#joinButton").on("click", handleJoinButtonClick);
+});
+
+// Rest of the existing code...
