@@ -16609,3 +16609,13 @@ a.classic-btn:hover {
 /* .Like .likeButton {
     display: none;
 } */
+
+.table-responsive {
+    max-height: 400px; /* Add a maximum height to make the table scrollable if needed */
+    overflow-y: auto; /* Enable vertical scrolling if the table exceeds the maximum height */
+  }
+  
+  .uk-table td,
+  .uk-table th {
+    font-size: 12px; /* Reduce the font size for table cells */
+  }
