@@ -52,7 +52,7 @@ $(document).ready(function() {
     for (var i = 0; i < members.length; i++) {
       var member = members[i];
       var gender = member.memberGender ? "Nam" : "Nữ";
-      var status = member.memberrStatus ? "Hoạt động" : "Không hoạt động";
+      var status = member.memberStatus ? "Hoạt động" : "Không hoạt động";
 
       memberListHTML += "<tr>";
       memberListHTML += "<td>" + member.memberId + "</td>";

@@ -78,7 +78,7 @@ function displayPostList(posts) {
 
   postListHTML += "</tbody></table></div>";
 
-  $("#components-nav li:nth-child(4)").html(postListHTML);
+  $("#components-nav li:nth-child(3)").html(postListHTML);
 
 // Add the "Restore Post" button event listener here
 $(".restore-post-btn").on("click", function () {
@@ -176,7 +176,7 @@ function displayEventList(eventPosts) {
 
   eventListHTML += "</tbody></table></div>";
 
-  $("#components-nav li:nth-child(5)").html(eventListHTML);
+  $("#components-nav li:nth-child(4)").html(eventListHTML);
 
   $(".restore-event-btn").on("click", function () {
     const postId = $(this).data("post-id");
