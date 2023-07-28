@@ -27,13 +27,7 @@ const getReportByMember = async (memberId) => {
   }
 };
 
-const createReport = async (title, memberId, type, description) => {
-  const model = {
-    reportTitle: title,
-    memberId: memberId,
-    reportType: type,
-    reportDescription: description,
-  };
+const createReport = async (model) => {
   const response = await fetch(`${endpoint}/create-report`, {
     method: "POST",
     headers: {
@@ -57,10 +51,55 @@ const getReportByModerate = async (memberId) => {
   }
 };
 
+const moderateReport = async (reportId, reply, managerId) => {
+  const requestBody = {
+    reportId: reportId,
+    reply: reply,
+    managerId: managerId,
+  };
+
+  const response = await fetch(`${endpoint}/moderate-report`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody), // Convert the object to a JSON string
+  });
+
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+}
+
+const moderateReportAdm = async (reportID, Reply) => {
+  const requestBody = {
+    reportID: reportID, // Make sure the field name matches the API's expected field name
+    Reply: Reply, // Make sure the field name matches the API's expected field name
+  };
+
+  const response = await fetch(`${endpoint}/moderate-report-admin`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+};
+
 export {
   getReports,
   getReport,
   getReportByMember,
   createReport,
   getReportByModerate,
+  moderateReport,
+  moderateReportAdm
 };

@@ -574,6 +574,20 @@ $(document).on("submit", ".new-comment form", function (event) {
 });
 
 $(document).ready(function () {
+  // Bắt sự kiện click cho mỗi nút có class .report
+  // $(".report").each(function() {
+  //     $(this).on("click", function() {
+  //         // Lấy giá trị data-id từ nút được nhấp
+  //         var postId = $(this).data('id');
+
+  //         // Lưu giá trị vào sessionStorage
+  //         sessionStorage.setItem('reportedPostId', postId);
+
+  //         // Chuyển đến trang send-report.html
+  //         window.location.href = 'send-report.html';
+  //     });
+  // });
+
   // Bắt sự kiện click cho mỗi nút có class .report-to
   $(".report-to").each(function () {
     $(this).on("click", function () {
@@ -588,3 +602,15 @@ $(document).ready(function () {
     });
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+

@@ -158,6 +158,21 @@ const moderatePost = async (id, option, managerID) => {
   }
 };
 
+const reStatusPost = async (id) => {
+  const response = await fetch(`${endpoint}/restatus-post?dto=${id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: undefined,
+  });
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+};
+
 export {
   createPost,
   getPosts,
@@ -169,4 +184,5 @@ export {
   updatePost,
   deletePost,
   moderatePost,
+  reStatusPost
 };

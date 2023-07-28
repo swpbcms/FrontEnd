@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.css">
+
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -57,9 +61,9 @@
                     <li>
                         <div class="user-dp">
                             <a href="profile.html" title="">
-                                <img alt="" src="images/resources/user.jpg">
+                                <!-- <img alt="" src="images/resources/user.jpg"> -->
                                 <div class="name">
-                                    <h4>Danial Cardos</h4>
+                                    <h4 id="usernameDisplay"></h4>
                                 </div>
                             </a>
                         </div>
@@ -93,7 +97,7 @@
                             <li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li>
                             <li><a class="dark-mod" href="#" title=""><i class="icofont-moon"></i> Dark Mode</a></li>
                             <li id="manager-link" style="display:none;"><a href="manager.html" title=""><i class="icofont-workers-group"></i> Manager</a></li>
-                            <li class="logout"><a href="sign-in.html" title=""><i class="icofont-power"></i> Logout</a></li>
+                            <li class="logout" id="logoutButton"><a href="sign-in.html" title=""><i class="icofont-power"></i> Logout</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -180,26 +184,32 @@
                                                 <h2> Quản lý Sự Kiện</h2>
                                             </div>
                                         </div>
-                                    </li>                                 
-                                </ul>
+                                    </li>
 
+                                    
+
+
+                                </ul>
+                                <li>
+                                    <a href="signup-manager.html" class="register-manager-btn" title="Register Manager">
+                                        Register Manager
+                                    </a>
+                                </li>
                             </div>
                         </div>
                     </div>
                 </div>
             <!-- ask question -->
-
     </div>
     <script src="js/main.min.js"></script>
     <script src="js/uikit.min.js"></script>
     <script src="js/sparkline.js"></script>
     <script type="module" src="js/chart.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/memberList_adm.js"></script>
-    <script src="js/managerList_adm.js"></script>
-    <script src="js/reportList_adm.js"></script>
-    <script src="js/postList_adm.js"></script>
-
+    <script type="module" src="js/memberList_adm.js"></script>
+    <script type="module" src="js/reportList_adm.js"></script>
+    <script type="module" src="js/postList_adm.js"></script>
+    <script type="module" src="js/managerList_adm.js"></script>
 
 
     

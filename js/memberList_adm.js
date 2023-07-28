@@ -1,57 +1,136 @@
-$(document).ready(function() {
-    // Fetch member list using AJAX
-    $.ajax({
-      url: "https://localhost:7206/api/Member/All-Member",
-      type: "GET",
-      dataType: "json",
-      success: function(response) {
-        // Handle API response
-        if (response && response.data) {
-          // Process the member list data and display it on the page
-          var members = response.data;
-  
-          // Display member list
-          displayMemberList(members);
-        } else {
-          console.log("Failed to fetch member list");
-        }
-      },
-      error: function(error) {
-        console.log("An error occurred while fetching member list: " + error);
-        console.log(error);
-      }
-    });
-  
-    // Display member list
-    function displayMemberList(members) {
-      var memberListHTML = "<h2>Danh sách thành viên</h2>";
-      memberListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
-      memberListHTML += "<thead><tr><th>ID</th><th>Tạo lúc</th><th>Giới tính</th><th>Ảnh</th><th>Họ và tên</th><th>Email</th><th>Ngày sinh</th><th>Trạng thái</th><th>Tên đăng nhập</th><th>Mật khẩu</th></tr></thead><tbody>";
-      
-      for (var i = 0; i < members.length; i++) {
-        var member = members[i];
-        var gender = member.memberGender ? "Nam" : "Nữ";
-        var status = member.memberrStatus ? "Hoạt động" : "Không hoạt động";
-        
-        memberListHTML += "<tr>";
-        memberListHTML += "<td>" + member.memberId + "</td>";
-        memberListHTML += "<td>" + member.memberCreateAt + "</td>";
-        memberListHTML += "<td>" + gender + "</td>";
-        memberListHTML += "<td><img src='" + member.memberImage + "' alt='Avatar' class='member-image' /></td>";
-        memberListHTML += "<td>" + member.memberFullName + "</td>";
-        memberListHTML += "<td>" + member.memberEmail + "</td>";
-        memberListHTML += "<td>" + member.memberDob + "</td>";
-        memberListHTML += "<td>" + status + "</td>";
-        memberListHTML += "<td>" + member.memberUserName + "</td>";
-        memberListHTML += "<td>" + member.memberPassword + "</td>";
-        memberListHTML += "</tr>";
-      }
-      
-      memberListHTML += "</tbody></table></div>";
-      
-      $("#components-nav li:first-child").html(memberListHTML);
-    }
-    
-    
-    
+import { getMembers, deleteMember } from "./services/member.service.js";
+
+$(document).ready(function () {
+  var username = sessionStorage.getItem('username');
+  var password = sessionStorage.getItem('password');
+
+  // Now you can use 'username' and 'password'
+  console.log('username:', username);
+  console.log('password:', password);
+
+  // Or you can use them to modify the DOM, for example:
+  $('#usernameDisplay').text(username);
+});
+
+$(document).ready(function () {
+  $("#logoutButton").click(function () {
+      // Clear the session storage
+      sessionStorage.removeItem('username');
+      sessionStorage.removeItem('password');
+
+      // Redirect to the login page or perform any other desired action
+      window.location.href = "login.html"; // change 'login.html' to your actual login page
   });
+});
+
+
+$(document).ready(function() {
+  // Fetch member list using API call from member.service.js
+  getMembers()
+    .then((response) => {
+      if (response && response.data) {
+        // Process the member list data and display it on the page
+        var members = response.data;
+
+        // Display member list
+        displayMemberList(members);
+      } else {
+        console.log("Failed to fetch member list");
+      }
+    })
+    .catch((error) => {
+      console.log("An error occurred while fetching member list: " + error);
+      console.log(error);
+    });
+
+  // Display member list
+  function displayMemberList(members) {
+    var memberListHTML = "<h2>Danh sách thành viên</h2>";
+    memberListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
+    memberListHTML += "<thead><tr><th>ID</th><th>Tạo lúc</th><th>Giới tính</th><th>Ảnh</th><th>Họ và tên</th><th>Email</th><th>Ngày sinh</th><th>Trạng thái</th><th>Tên đăng nhập</th><th>Mật khẩu</th><th>Thao tác</th></tr></thead><tbody>";
+
+    for (var i = 0; i < members.length; i++) {
+      var member = members[i];
+      var gender = member.memberGender ? "Nam" : "Nữ";
+      var status = member.memberStatus ? "Hoạt động" : "Không hoạt động";
+
+      memberListHTML += "<tr>";
+      memberListHTML += "<td>" + member.memberId + "</td>";
+      memberListHTML += "<td>" + member.memberCreateAt + "</td>";
+      memberListHTML += "<td>" + gender + "</td>";
+      memberListHTML += "<td><img src='" + member.memberImage + "' alt='Avatar' class='member-image' /></td>";
+      memberListHTML += "<td>" + member.memberFullName + "</td>";
+      memberListHTML += "<td>" + member.memberEmail + "</td>";
+      memberListHTML += "<td>" + member.memberDob + "</td>";
+      memberListHTML += "<td>" + status + "</td>";
+      memberListHTML += "<td>" + member.memberUserName + "</td>";
+      memberListHTML += "<td>" + member.memberPassword + "</td>";
+      // Add the Delete Member button with the data attribute for member ID
+      memberListHTML += "<td><button class='uk-button uk-button-small uk-button-danger delete-member-btn' data-member-id='" + member.memberId + "'>Delete</button></td>";
+      memberListHTML += "</tr>";
+    }
+
+    memberListHTML += "</tbody></table></div>";
+
+    $("#components-nav li:first-child").html(memberListHTML);
+
+    // Add the "Delete Member" button event listener here
+    $(".delete-member-btn").on("click", function () {
+      const memberId = $(this).data("member-id");
+      const status = $(this).closest("tr").find("td:eq(7)").text().trim();
+    
+      if (status === "Không hoạt động") {
+        // Using Swal.fire instead of alert
+        Swal.fire({
+          title: 'Error',
+          text: "Member is already inactive and can't be deleted.",
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+        return;
+      }
+    
+      // Show a confirmation dialog before proceeding with the deletion
+      Swal.fire({
+        title: 'Confirmation',
+        text: 'Are you sure you want to delete this member?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Call the deleteMember function to delete the member
+          deleteMember(memberId)
+            .then(() => {
+              // Reload the member list after successful deletion
+              loadMembers();
+            })
+            .catch((error) => {
+              console.error("Error deleting member: ", error);
+              // Handle error if needed
+            });
+        }
+      });
+    });
+    
+    function loadMembers() {
+      getMembers()
+        .then((response) => {
+          if (response && response.data) {
+            // Process the member list data and display it on the page
+            var members = response.data;
+    
+            // Display member list
+            displayMemberList(members);
+          } else {
+            console.log("Failed to fetch member list");
+          }
+        })
+        .catch((error) => {
+          console.log("An error occurred while fetching member list: " + error);
+          console.log(error);
+        });
+    }
+  }
+})
