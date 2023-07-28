@@ -65,7 +65,7 @@ function displayData(data) {
         var postId = post.postId;
         var postNumberJoin = post.postNumberJoin;
         // Generate the HTML for the current event post
-        if (post.postIsEvent === true) {
+        if (post.postIsEvent === true && post.postStatus === "Thành công") {
             const eventHTML = `<div class="col-lg-4 col-md-4 col-sm-6">
         <div class="event-post mb-3">
           <figure>
@@ -79,7 +79,6 @@ function displayData(data) {
             <p class="eventDescription">Start: ${eventStartDate}</p>
             <p class="eventDescription">End: ${eventEndDate}</p>
             <p class="eventLocation">Location: ${eventLocation}</p>
-            <button class="join-event-btn" data-post-id="${postId}" href="#" title="">Join Event</button>
             <div class="more">
               <div class="more-post-optns">
                 <i class="feather feather-more-horizontal"></i>
@@ -124,57 +123,6 @@ function displayData(data) {
 //   // Redirect to the "Event Detail Page" with the selected postId
 //   window.location.href = "event-detail.html?postId=" + postId;
 // });
-
-$(document).on("click", ".join-event-btn", function () {
-  // Extract memberId from session
-  var loggedInMember = sessionStorage.getItem("loggedInMember");
-  if (loggedInMember) {
-    var mem = JSON.parse(loggedInMember);
-    var memberId = mem.memberId;
-  } else {
-    // Handle the case when the memberId is not available in the session
-    console.error("MemberId not found in session.");
-    return; // Return early as we cannot proceed without memberId
-  }
-
-  // Extract postId from the closest ancestor element with the class "event-post"
-  var postId = $(this).closest(".event-post").find(".post-id").text();
-
-  // Check if the post has been joined by the user
-  var joinedPosts = JSON.parse(localStorage.getItem("joinedPosts") || "[]");
-  var joinedPostIndex = joinedPosts.findIndex(function (joinedPost) {
-    return joinedPost.postId === postId && joinedPost.memberId === memberId;
-  });
-  var isJoined = joinedPostIndex !== -1;
-
-  var promise;
-  if (isJoined) {
-    // Call unjoin function and update localstorage
-    promise = unjoin(memberId, postId)
-      .then(() => {
-        joinedPosts.splice(joinedPostIndex, 1);
-        localStorage.setItem("joinedPosts", JSON.stringify(joinedPosts));
-        console.log("Unjoin successful");
-      })
-      .catch((error) => {
-        console.error("Error unjoining event:", error);
-      });
-  } else {
-    // Call join function and update localstorage
-    promise = join(memberId, postId)
-      .then(() => {
-        joinedPosts.push({ postId: postId, memberId: memberId });
-        localStorage.setItem("joinedPosts", JSON.stringify(joinedPosts));
-        console.log("Join successful");
-      })
-      .catch((error) => {
-        console.error("Error joining event:", error);
-      });
-  }
-
-  promise.finally(() => location.reload());
-});
-
 
 $("#searchInput").on("keydown", function (event) {
   if (event.which === 13) {
