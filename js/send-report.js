@@ -1,3 +1,7 @@
+import { createReport } from "./services/report.service.js";
+import { getReportTypes } from "./services/report-type.service.js";
+
+
 $(document).ready(function () {
     var loggedInMember = sessionStorage.getItem("loggedInMember");
     if (loggedInMember) {
@@ -18,9 +22,6 @@ $(document).ready(function () {
         window.location.href = "feed.html";
     });
 });
-import { createReport } from "./services/report.service.js";
-import { getReportTypes } from "./services/report-type.service.js";
-
 
 
 
@@ -34,35 +35,47 @@ $(document).ready(function () {
         var reportTitle = $("#reportTitleInput").val();
         var reportDescription = $("#reportDescriptionInput").val();
         var reportType = $("#reportTypeSelect option:selected").val(); // get reportTypeId from select box
-        
+
         // Get values from sessionStorage
         var loggedInMember = sessionStorage.getItem("loggedInMember");
         if (loggedInMember) {
             var mem = JSON.parse(loggedInMember);
             var memberId = mem.memberId;
             var postId = sessionStorage.getItem("reportedPostId");
-            
-            // Create a report object to send
-            var report = {
-                title: reportTitle,
+
+            // Assuming that 'model' is your data object
+            var model = {
+                reportTitle: reportTitle,
                 memberId: memberId,
-                type: reportType, // use reportTypeId here
-                description: reportDescription,
+                reportType: reportType,
+                reportDescription: reportDescription,
                 posId: postId
             };
 
-            // Call the createReport API
-            createReport(report).then((response) => {
-                if (response.status == 200) { // assuming API responds with status code 200 on success
-                    alert("Report sent successfully!");
-                    // here, do what you want after a successful report (e.g., redirect to another page)
-                } else {
-                    alert("Something went wrong!");
+            $.ajax({
+                url: "https://localhost:7206/api/Report/create-report",
+                type: "POST",
+                data: JSON.stringify(model),
+                contentType: "application/json",
+                success: function (data, textStatus, jqXHR) {
+                    if (data) { // if data exists
+                        $('#messageBox').text("Report sent successfully!").show();
+                        
+                        // clear input fields
+                        $('#reportTitleInput').val('');
+                        $('#reportDescriptionInput').val('');
+                        $('#reportTypeSelect').val(''); // only works if there's an option with value '', otherwise, use .prop('selectedIndex', 0)
+                    } else {
+                        $('#messageBox').text("Something went wrong!").show();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $('#messageBox').text("Something went wrong!").show();
                 }
-            }).catch((error) => {
-                console.log(error);
-                alert("Something went wrong!");
             });
+             
+
+
         }
     });
 

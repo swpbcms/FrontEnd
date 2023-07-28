@@ -65,11 +65,11 @@ function displayData(data) {
         var postId = post.postId;
         var postNumberJoin = post.postNumberJoin;
         // Generate the HTML for the current event post
-        if (post.postIsEvent === true) {
+        if (post.postIsEvent === true && post.postStatus === "Thành công") {
             const eventHTML = `<div class="col-lg-4 col-md-4 col-sm-6">
         <div class="event-post mb-3">
           <figure>
-            <a href="event-detail.html" title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
+            <a title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
           </figure>
           <div class="event-meta">
             <span class="eventStatus">${eventStatus}</span> 
@@ -79,7 +79,6 @@ function displayData(data) {
             <p class="eventDescription">Start: ${eventStartDate}</p>
             <p class="eventDescription">End: ${eventEndDate}</p>
             <p class="eventLocation">Location: ${eventLocation}</p>
-            <button class="join-event-btn" data-post-id="${postId}" href="#" title="">Join Event</button>
             <div class="more">
               <div class="more-post-optns">
                 <i class="feather feather-more-horizontal"></i>
@@ -125,57 +124,6 @@ function displayData(data) {
 //   window.location.href = "event-detail.html?postId=" + postId;
 // });
 
-$(document).on("click", ".join-event-btn", function () {
-  // Extract memberId from session
-  var loggedInMember = sessionStorage.getItem("loggedInMember");
-  if (loggedInMember) {
-    var mem = JSON.parse(loggedInMember);
-    var memberId = mem.memberId;
-  } else {
-    // Handle the case when the memberId is not available in the session
-    console.error("MemberId not found in session.");
-    return; // Return early as we cannot proceed without memberId
-  }
-
-  // Extract postId from the closest ancestor element with the class "event-post"
-  var postId = $(this).closest(".event-post").find(".post-id").text();
-
-  // Check if the post has been joined by the user
-  var joinedPosts = JSON.parse(localStorage.getItem("joinedPosts") || "[]");
-  var joinedPostIndex = joinedPosts.findIndex(function (joinedPost) {
-    return joinedPost.postId === postId && joinedPost.memberId === memberId;
-  });
-  var isJoined = joinedPostIndex !== -1;
-
-  var promise;
-  if (isJoined) {
-    // Call unjoin function and update localstorage
-    promise = unjoin(memberId, postId)
-      .then(() => {
-        joinedPosts.splice(joinedPostIndex, 1);
-        localStorage.setItem("joinedPosts", JSON.stringify(joinedPosts));
-        console.log("Unjoin successful");
-      })
-      .catch((error) => {
-        console.error("Error unjoining event:", error);
-      });
-  } else {
-    // Call join function and update localstorage
-    promise = join(memberId, postId)
-      .then(() => {
-        joinedPosts.push({ postId: postId, memberId: memberId });
-        localStorage.setItem("joinedPosts", JSON.stringify(joinedPosts));
-        console.log("Join successful");
-      })
-      .catch((error) => {
-        console.error("Error joining event:", error);
-      });
-  }
-
-  promise.finally(() => location.reload());
-});
-
-
 $("#searchInput").on("keydown", function (event) {
   if (event.which === 13) {
     // Kiểm tra nếu phím Enter được nhấn
@@ -206,26 +154,30 @@ $(document).on("click", ".eventImage", function () {
   // Extract postId from the closest ancestor element with the class "event-post"
   var postId = $(this).closest(".event-post").find(".post-id").text();
 
-  // Redirect to event-detail.html passing the postId
+  // Save postId to sessionStorage
+  sessionStorage.setItem('selectedPostId', postId);
+
+  // Redirect to event-detail.html
   redirectToEventDetail(postId);
 });
 
+
 // Function to redirect to event-detail.html with the postId
 function redirectToEventDetail(postId) {
-  // Fetch the event details using the postId (optional step, you can directly pass postId as a query parameter)
-  $.ajax({
-    url: "https://localhost:7206/api/Post/get-post-id?id=" + postId,
-    method: "GET",
-    success: function (response) {
-      if (response && response.data) {
-        // Redirect to the event-detail.html page, passing the postId as a query parameter
+  // // Fetch the event details using the postId (optional step, you can directly pass postId as a query parameter)
+  // $.ajax({
+  //   url: "https://localhost:7206/api/Post/get-post-id?id=" + postId,
+  //   method: "GET",
+  //   success: function (response) {
+  //     if (response && response.data) {
+  //       // Redirect to the event-detail.html page, passing the postId as a query parameter
         window.location.href = "event-detail.html?postId=" + postId;
-      } else {
-        console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
-      }
-    },
-    error: function () {
-      console.log("Lỗi khi gọi API.");
-    },
-  });
+    //   } else {
+    //     console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
+    //   }
+    // },
+    // error: function () {
+    //   console.log("Lỗi khi gọi API.");
+    // },
+  // });
 }

@@ -383,13 +383,15 @@
 										<fieldset class="row">
 
 											<div class="mb-4 col-lg-12">
-												<input id="reportTitleInput" class="uk-input" type="text" placeholder="Report Title">
-											  </div>
-											  
-											  <div class="mb-4 col-lg-12">
-												<textarea id="reportDescriptionInput" class="uk-textarea" rows="4" placeholder="Write report"></textarea>
-											  </div>
-											
+												<input id="reportTitleInput" class="reportTitle" type="text"
+													placeholder="Report Title">
+											</div>
+
+											<div class="mb-4 col-lg-12">
+												<textarea id="reportDescriptionInput" class="uk-textarea" rows="4"
+													placeholder="Write report"></textarea>
+											</div>
+
 											<div class="mb-4 col-lg-12">
 												<select id="reportTypeSelect" class="form-control"></select>
 											</div>
@@ -424,7 +426,7 @@
 												fillComboBox();
 											</script>
 
-											<div class="mb-4 col-lg-12">
+											<!-- <div class="mb-4 col-lg-12">
 												<div class="feed-back-emojies">
 													<span>How was your experience with Bird Club</span>
 													<ul>
@@ -446,7 +448,8 @@
 														</li>
 													</ul>
 												</div>
-											</div>
+											</div> -->
+											<div id="messageBox" class="alert" style="display: none; font-weight: bold; color: blue; font-size: 20px;"></div>
 											<div class="mb-0 col-lg-12 text-center">
 												<button type="submit" class="main-btn">Send Your Report</button>
 											</div>

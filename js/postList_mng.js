@@ -1,4 +1,4 @@
-import { getPosts, moderatePost, deletePost } from "./services/post.service.js";
+import { getPosts, moderatePost, deletePost, reStatusPost} from "./services/post.service.js";
 
 $(document).ready(function () {
   loadPostList();
@@ -71,8 +71,8 @@ function displayPostList(posts) {
     postListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
     postListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
     postListHTML += "<td>" + post.member.memberId + "</td>";
-    // Add the Update and Delete Post buttons with the data attribute for post ID
-    postListHTML += "<td><button class='uk-button uk-button-small uk-button-primary agree-post-btn' data-post-id='" + post.postId + "'>Agree</button>";
+    postListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-post-btn' data-post-id='" + post.postId + "'>Restore</button>";
+    postListHTML += "<button class='uk-button uk-button-small uk-button-primary agree-post-btn' data-post-id='" + post.postId + "'>Agree</button>";
     postListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-post-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
     postListHTML += "</tr>";
   }
@@ -80,6 +80,33 @@ function displayPostList(posts) {
   postListHTML += "</tbody></table></div>";
 
   $("#components-nav li:nth-child(3)").html(postListHTML);
+
+// Add the "Restore Post" button event listener here
+$(".restore-post-btn").on("click", function () {
+  const postId = $(this).data("post-id");
+
+  // Show a confirmation dialog before proceeding with the restoration
+  const confirmation = confirm("Are you sure you want to restore this post?");
+  if (!confirmation) {
+    // If the user cancels the restoration, do nothing
+    return;
+  }
+
+  // Call the reStatusPost function to restore the post
+  reStatusPost(postId)
+    .then(() => {
+      // Do not remove the post from the list immediately.
+      // You can choose to reload the post list to reflect the changes after successful restoration.
+      // You can call loadPostList() again here or simply remove the restored row
+      loadPostList();
+    })
+    .catch((error) => {
+      console.error("Error restoring post: ", error);
+      // Handle error if needed
+    });
+});
+
+
 
   $(".agree-post-btn").on("click", function () {
     const postId = $(this).data("post-id");
@@ -106,6 +133,14 @@ function displayPostList(posts) {
   // Add the "Delete Post" button event listener here
   $(".delete-post-btn").on("click", function () {
     const postId = $(this).data("post-id");
+  
+    // Show a confirmation dialog before proceeding with the deletion
+    const confirmation = confirm("Are you sure you want to delete this post?");
+    if (!confirmation) {
+      // If the user cancels the deletion, do nothing
+      return;
+    }
+  
     // Call the deletePost function to delete the post
     deletePost(postId)
       .then(() => {
@@ -118,6 +153,7 @@ function displayPostList(posts) {
         // Handle error if needed
       });
   });
+  
 }
 
 function formatDate(dateString) {
@@ -146,7 +182,7 @@ function displayEventList(eventPosts) {
     eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
     eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
     eventListHTML += "<td>" + post.member.memberId + "</td>";
-    // Add the Update and Delete Event buttons with the data attribute for post ID
+    eventListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-event-btn' data-post-id='" + post.postId + "'>Restore</button>";
     eventListHTML += "<td><button class='uk-button uk-button-small uk-button-primary agree-event-btn' data-post-id='" + post.postId + "'>Agree</button>";
     eventListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-event-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
     eventListHTML += "</tr>";
@@ -155,6 +191,30 @@ function displayEventList(eventPosts) {
   eventListHTML += "</tbody></table></div>";
 
   $("#components-nav li:nth-child(4)").html(eventListHTML);
+
+  $(".restore-event-btn").on("click", function () {
+    const postId = $(this).data("post-id");
+  
+    // Show a confirmation dialog before proceeding with the restoration
+    const confirmation = confirm("Are you sure you want to restore this event?");
+    if (!confirmation) {
+      // If the user cancels the restoration, do nothing
+      return;
+    }
+  
+    // Call the reStatusPost function to restore the event
+    reStatusPost(postId)
+      .then(() => {
+        // Do not remove the event from the list immediately.
+        // You can choose to reload the event list to reflect the changes after successful restoration.
+        // You can call loadEventPostList() again here or simply remove the restored row
+        loadEventPostList();
+      })
+      .catch((error) => {
+        console.error("Error restoring event: ", error);
+        // Handle error if needed
+      });
+  });
 
   // Add the "Agree Event" button event listener here
   $(".agree-event-btn").on("click", function () {
@@ -182,6 +242,14 @@ function displayEventList(eventPosts) {
   // Add the "Delete Event" button event listener here
   $(".delete-event-btn").on("click", function () {
     const postId = $(this).data("post-id");
+  
+    // Show a confirmation dialog before proceeding with the deletion
+    const confirmation = confirm("Are you sure you want to delete this event?");
+    if (!confirmation) {
+      // If the user cancels the deletion, do nothing
+      return;
+    }
+  
     // Call the deletePost function to delete the event
     deletePost(postId)
       .then(() => {
