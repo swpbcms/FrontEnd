@@ -71,30 +71,42 @@ $(document).ready(function() {
     // Add the "Delete Manager" button event listener here
     $(".delete-manager-btn").on("click", function () {
       const managerId = $(this).data("manager-id");
+      const status = $(this).closest("tr").find("td:eq(5)").text().trim(); // Get the status from the table cell
+
       if (status === "Không hoạt động") {
-        alert("Manager is already inactive and can't be deleted.");
+        Swal.fire({
+          title: 'Warning',
+          text: "Manager is already inactive and can't be deleted.",
+          icon: 'warning',
+          confirmButtonText: 'OK',
+        });
         return;
       }
 
       // Show a confirmation dialog before proceeding with the deletion
-      const confirmation = confirm("Are you sure you want to delete this manager?");
-      if (!confirmation) {
-        // If the user cancels the deletion, do nothing
-        return;
-      }
-
-      // Call the deleteManager function to delete the manager
-      deleteManager(managerId)
-        .then(() => {
-          // Do not remove the manager from the list immediately.
-          // You can choose to reload the manager list to reflect the changes after successful deletion.
-          // You can call getManagers() again here or simply remove the deleted row
-          loadManagers(); // Assuming you have a function to reload the manager list
-        })
-        .catch((error) => {
-          console.error("Error deleting manager: ", error);
-          // Handle error if needed
-        });
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to delete this manager?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Call the deleteManager function to delete the manager
+          deleteManager(managerId)
+            .then(() => {
+              // Do not remove the manager from the list immediately.
+              // You can choose to reload the manager list to reflect the changes after successful deletion.
+              // You can call getManagers() again here or simply remove the deleted row
+              loadManagers(); // Assuming you have a function to reload the manager list
+            })
+            .catch((error) => {
+              console.error("Error deleting manager: ", error);
+              // Handle error if needed
+            });
+        }
+      });
     });
 
     function loadManagers() {

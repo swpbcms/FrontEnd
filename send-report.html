@@ -14,142 +14,140 @@
 	<link rel="stylesheet" href="css/color.css">
 	<link rel="stylesheet" href="css/responsive.css">
 	<style>
-        /* Styling for the list items (li) */
-        ul.notificationz {
-            list-style: none;
-            padding: 0;
-            /* Set a fixed height and add a scrollbar */
-            height: 400px;
-            overflow-y: auto;
-        }
+		/* Styling for the list items (li) */
+		ul.notificationz {
+			list-style: none;
+			padding: 0;
+			/* Set a fixed height and add a scrollbar */
+			height: 400px;
+			overflow-y: auto;
+		}
 
-        ul.notificationz li {
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
-        }
+		ul.notificationz li {
+			padding: 10px;
+			border-bottom: 1px solid #ccc;
+		}
 
-        ul.notificationz li:last-child {
-            border-bottom: none;
-        }
+		ul.notificationz li:last-child {
+			border-bottom: none;
+		}
 
-        /* Styling for the mesg-info div */
-        .mesg-info {
-            display: flex;
-            flex-direction: column;
-        }
+		/* Styling for the mesg-info div */
+		.mesg-info {
+			display: flex;
+			flex-direction: column;
+		}
 
-        /* Styling for the span elements inside mesg-info */
-        .mesg-info span {
-            margin-bottom: 5px;
-        }
+		/* Styling for the span elements inside mesg-info */
+		.mesg-info span {
+			margin-bottom: 5px;
+		}
 
-        /* Additional styles to improve presentation */
-        .icofont-bell-alt {
-            font-size: 24px;
-            margin-right: 5px;
-        }
+		/* Additional styles to improve presentation */
+		.icofont-bell-alt {
+			font-size: 24px;
+			margin-right: 5px;
+		}
 
-        h4 {
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
+		h4 {
+			font-size: 20px;
+			margin-bottom: 10px;
+		}
 
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-        }
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+		}
 
-        /* Optional: Customize the colors */
-        body {
-            background-color: #f8f8f8;
-        }
+		/* Optional: Customize the colors */
+		body {
+			background-color: #f8f8f8;
+		}
 
-        ul.notificationz li {
-            background-color: #fff;
-        }
+		ul.notificationz li {
+			background-color: #fff;
+		}
 
-        /* Optional: Add some spacing */
-        .tab-pane {
-            margin-top: 20px;
-        }
-    </style>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f8f8f8;
-        }
+		/* Optional: Add some spacing */
+		.tab-pane {
+			margin-top: 20px;
+		}
+	</style>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			line-height: 1.6;
+			background-color: #f8f8f8;
+		}
 
-        #createPostForm {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+		#createPostForm {
+			max-width: 500px;
+			margin: 20px auto;
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
 
-        #createPostForm label {
-            font-weight: bold;
-        }
+		#createPostForm label {
+			font-weight: bold;
+		}
 
-        #createPostForm input[type="text"],
-        #createPostForm textarea,
-        #createPostForm select,
-        #createPostForm input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
+		#createPostForm input[type="text"],
+		#createPostForm textarea,
+		#createPostForm select,
+		#createPostForm input[type="file"] {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			margin-bottom: 15px;
+		}
 
-        #createPostForm input[type="checkbox"] {
-            margin-right: 5px;
-        }
+		#createPostForm input[type="checkbox"] {
+			margin-right: 5px;
+		}
 
-        #eventFields {
-            display: none;
-        }
+		#eventFields {
+			display: none;
+		}
 
-        #multiComboBox {
-            height: 100px;
-            overflow-y: auto;
-        }
+		#multiComboBox {
+			height: 100px;
+			overflow-y: auto;
+		}
 
-        #previewMedia img {
-            max-width: 100px;
-            max-height: 100px;
-            margin-right: 5px;
-            margin-bottom: 5px;
-        }
+		#previewMedia img {
+			max-width: 100px;
+			max-height: 100px;
+			margin-right: 5px;
+			margin-bottom: 5px;
+		}
 
-        #previewMedia img:last-child {
-            margin-right: 0;
-        }
+		#previewMedia img:last-child {
+			margin-right: 0;
+		}
 
-        #createPostForm input[type="submit"] {
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+		#createPostForm input[type="submit"] {
+			background-color: #4CAF50;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 4px;
+			cursor: pointer;
+		}
 
-        #createPostForm input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+		#createPostForm input[type="submit"]:hover {
+			background-color: #45a049;
+		}
 
-        .post-newmeta {
-            max-height: 400px;
-            /* Set the maximum height of the popup content */
-            overflow-y: auto;
-            /* Add a vertical scrollbar when content overflows */
-        }
-
-        
-    </style>
+		.post-newmeta {
+			max-height: 400px;
+			/* Set the maximum height of the popup content */
+			overflow-y: auto;
+			/* Add a vertical scrollbar when content overflows */
+		}
+	</style>
 </head>
 
 <body>
@@ -180,12 +178,14 @@
 		</div>
 	</div>
 	<script>
-		const endpoint3 = "https://localhost:7206/api/Notification/get-noti-user?memberId="; // Replace this with the actual API endpoint
-
+		const endpoint4 = "https://localhost:7206/api/Notification/get-noti-user?memberId="; // Replace this with the actual API endpoint
+		var id = sessionStorage.getItem("loggedInMember");
+		var mem = JSON.parse(id);
+		var memID = mem.memberId;
 		// Function to fetch notifications from the API
 		async function fetchNotifications(memID) {
 			try {
-				const response = await fetch(`${endpoint3}${memID}`);
+				const response = await fetch(`${endpoint4}${memID}`);
 				const data = await response.json();
 				return data.data;
 			} catch (error) {
@@ -209,11 +209,11 @@
 
 		// Function to display notifications on the page
 		async function displayNotifications() {
-			const memberId = "Mem40080c3"; // Replace this with the actual member ID from the session
+			// Replace this with the actual member ID from the session
 			const notificationsList = document.getElementById("notificationsList");
 			notificationsList.innerHTML = "<li>Loading notifications...</li>";
 
-			const notifications = await fetchNotifications(memberId);
+			const notifications = await fetchNotifications(memID);
 
 			if (notifications.length === 0) {
 				notificationsList.innerHTML = "<li>No notifications found.</li>";

@@ -148,8 +148,6 @@
             overflow-y: auto;
             /* Add a vertical scrollbar when content overflows */
         }
-
-        
     </style>
 </head>
 
@@ -439,12 +437,15 @@
                                         </div>
                                     </div>
                                     <script>
-                                        const endpoint3 = "https://localhost:7206/api/Notification/get-noti-user?memberId="; // Replace this with the actual API endpoint
+                                        var id = sessionStorage.getItem("loggedInMember");
+                                        var mem = JSON.parse(id);
+                                        var memID = mem.memberId;
+                                        const endpointi = "https://localhost:7206/api/Notification/get-noti-user?memberId="; // Replace this with the actual API endpoint
 
                                         // Function to fetch notifications from the API
                                         async function fetchNotifications(memID) {
                                             try {
-                                                const response = await fetch(`${endpoint3}${memID}`);
+                                                const response = await fetch(`${endpointi}${memID}`);
                                                 const data = await response.json();
                                                 return data.data;
                                             } catch (error) {
@@ -472,7 +473,7 @@
                                             const notificationsList = document.getElementById("notificationsList");
                                             notificationsList.innerHTML = "<li>Loading notifications...</li>";
 
-                                            const notifications = await fetchNotifications(memberId);
+                                            const notifications = await fetchNotifications(memID);
 
                                             if (notifications.length === 0) {
                                                 notificationsList.innerHTML = "<li>No notifications found.</li>";

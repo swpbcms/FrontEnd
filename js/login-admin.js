@@ -27,7 +27,7 @@ $(document).ready(function () {
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error in API call:", errorThrown);
-                alert("Login failed!");
+                // alert("Login failed!");
             }
         });
     });

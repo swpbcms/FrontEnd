@@ -129,21 +129,25 @@ function displayRecentPost(data) {
     const postTitle = post.postTitle;
     const postCreateAt = post.postCreateAt;
     const linkMedia = post.media[0].linkMedia;
+    const postStatus = post.postStatus; // Assuming the post status is a property of the post object
 
-    // Generate the HTML for the current post
-    const postHTML = `
-      <li>
-        <figure>
-          <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
-        </figure>
-        <div class="re-links-meta">
-          <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
-          <span id="postDate">${postCreateAt}</span>
-        </div>
-      </li>
-    `;
+    // Only generate HTML for the post if the status is successful
+    if (postStatus === 'Thành công') {
+      // Generate the HTML for the current post
+      const postHTML = `
+        <li>
+          <figure>
+            <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
+          </figure>
+          <div class="re-links-meta">
+            <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
+            <span id="postDate">${postCreateAt}</span>
+          </div>
+        </li>
+      `;
 
-    recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+      recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+    }
   });
 
   // Update the content of the <ul> element with the accumulated HTML
@@ -191,32 +195,32 @@ function displayData(data) {
       postHTML += '    <div class="friend-name">';
       postHTML += '        <div class="more">';
       postHTML += '            <div class="more-post-optns">';
-      postHTML += '                <i class="">';
-      postHTML +=
-        '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
-      postHTML += "                </i>";
-      postHTML += "                <ul>";
-      postHTML += "                    <li>";
-      postHTML +=
-        '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
-      postHTML +=
-        "                        <span>Edit This Post within a Hour</span>";
-      postHTML += "                    </li>";
+      // postHTML += '                <i class="">';
+      // postHTML +=
+      //   '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
+      // postHTML += "                </i>";
+      // postHTML += "                <ul>";
       // postHTML += "                    <li>";
-      // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
-      // postHTML += "                        <span>Hide This Post</span>";
+      // // postHTML +=
+      // //   '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
+      // // postHTML +=
+      // //   "                        <span>Edit This Post within a Hour</span>";
       // postHTML += "                    </li>";
-      postHTML += "                    <li>";
-      postHTML +=
-        '                        <i class="icofont-ui-delete"></i>Delete Post';
-      postHTML +=
-        "                        <span>If inappropriate Post By Mistake</span>";
-      postHTML += "                    </li>";
-      postHTML += "                    <li>";
-      postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
-      postHTML += "                        <span>Inappropriate content</span>";
-      postHTML += "                    </li>";
-      postHTML += "                </ul>";
+      // // postHTML += "                    <li>";
+      // // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
+      // // postHTML += "                        <span>Hide This Post</span>";
+      // // postHTML += "                    </li>";
+      // postHTML += "                    <li>";
+      // postHTML +=
+      //   '                        <i class="icofont-ui-delete"></i>Delete Post';
+      // postHTML +=
+      //   "                        <span>If inappropriate Post By Mistake</span>";
+      // postHTML += "                    </li>";
+      // postHTML += "                    <li>";
+      // postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
+      // postHTML += "                        <span>Inappropriate content</span>";
+      // postHTML += "                    </li>";
+      // postHTML += "                </ul>";
       postHTML += "            </div>";
       postHTML += "        </div>";
       postHTML +=
@@ -295,18 +299,23 @@ function displayData(data) {
       postHTML += '    <div class="we-video-info">';
       postHTML += "        <ul>";
       postHTML += "            <li>";
-      postHTML += '                <span title="views" class="views">';
-      postHTML += "                    <i>";
-      postHTML +=
-        '                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
-      postHTML += "                    </i>";
-      postHTML += "                    <ins>" + likePost + "</ins>";
-      postHTML += "                </span>";
+      // postHTML += '                <span title="views" class="views">';
+      // postHTML += "                    <i>";
+      // postHTML +=
+      //   '                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+      // postHTML += "                    </i>";
+      // postHTML += "                    <ins>" + likePost + "</ins>";
+      // postHTML += "                </span>";
+      postHTML += '<span title="views" class="views">';
+      postHTML += '  <i class="fas fa-thumbs-up"></i>';
+      postHTML += '  <ins>' + likePost + '</ins>';
+      postHTML += '</span>';
+
       postHTML += "            </li>";
       postHTML += "            <li>";
       postHTML += "        </ul>";
-      postHTML +=
-        '        <a href="post-detail.html" title="" class="reply">Reply <i class="icofont-reply"></i></a>';
+      // postHTML +=
+      //   '        <a href="post-detail.html" title="" class="reply">Reply <i class="icofont-reply"></i></a>';
       postHTML += "    </div>";
       postHTML += "</div>";
       postHTML += '<div class="stat-tools">';
@@ -364,13 +373,13 @@ function displayData(data) {
                 <span>${commentDateTime}</span>
                 <p>${commentContent}</p>
             </div>
-            <a title="Like" href="#"><i class="icofont-heart"></i></a>
-            <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>
         </li>
     </ul>
     </div>`;
         }
       }
+      // <a title="Like" href="#"><i class="icofont-heart"></i></a>
+      // <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>
       // });
       // postHTML += '    <div class="comments-area">';
       // postHTML += '        <ul>';
@@ -564,33 +573,33 @@ $(document).on("submit", ".new-comment form", function (event) {
   }
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
   // Bắt sự kiện click cho mỗi nút có class .report
-  $(".report").each(function() {
-      $(this).on("click", function() {
-          // Lấy giá trị data-id từ nút được nhấp
-          var postId = $(this).data('id');
+  // $(".report").each(function() {
+  //     $(this).on("click", function() {
+  //         // Lấy giá trị data-id từ nút được nhấp
+  //         var postId = $(this).data('id');
 
-          // Lưu giá trị vào sessionStorage
-          sessionStorage.setItem('reportedPostId', postId);
+  //         // Lưu giá trị vào sessionStorage
+  //         sessionStorage.setItem('reportedPostId', postId);
 
-          // Chuyển đến trang send-report.html
-          window.location.href = 'send-report.html';
-      });
-  });
+  //         // Chuyển đến trang send-report.html
+  //         window.location.href = 'send-report.html';
+  //     });
+  // });
 
   // Bắt sự kiện click cho mỗi nút có class .report-to
-  $(".report-to").each(function() {
-      $(this).on("click", function() {
-          // Lấy giá trị data-id từ nút được nhấp
-          var postIdButton = $(this).data('id');
+  $(".report-to").each(function () {
+    $(this).on("click", function () {
+      // Lấy giá trị data-id từ nút được nhấp
+      var postIdButton = $(this).data('id');
 
-          // Lưu giá trị vào sessionStorage
-          sessionStorage.setItem('reportedPostId', postIdButton);
+      // Lưu giá trị vào sessionStorage
+      sessionStorage.setItem('reportedPostId', postIdButton);
 
-          // Chuyển đến trang send-report.html
-          window.location.href = 'send-report.html';
-      });
+      // Chuyển đến trang send-report.html
+      window.location.href = 'send-report.html';
+    });
   });
 });
 

@@ -92,34 +92,55 @@ $(document).ready(function() {
     // Add the "Moderate Report" button event listener here
     $(".moderate-report-btn").on("click", function () {
       const reportId = $(this).data("report-id");
-      const reply = prompt("Enter your reply for this report:");
-  
-      if (reply === null) {
-        // If the user cancels the reply, do nothing
-        return;
-      }
-  
-      // Get the manager's ID from the session storage
-      var loggedInManager = sessionStorage.getItem("loggedInManager");
-      if (!loggedInManager) {
-        console.error("Manager not logged in.");
-        return;
-      }
-  
-      var managerId = JSON.parse(loggedInManager).managerId;
-  
-      // Call the moderateReport function to moderate the report
-      moderateReport(reportId, reply, managerId)
-        .then((response) => {
-          // Do something with the response if needed
-          // For example, you can display a success message or reload the report list
-          console.log("Report moderated successfully:", response);
-          loadReportList(); // Assuming you have a function to reload the report list
-        })
-        .catch((error) => {
-          console.error("Error moderating report: ", error);
-          // Handle error if needed
-        });
+    
+      // Create a custom Swal.fire modal with a textarea input
+      Swal.fire({
+        title: 'Enter your reply for this report:',
+        input: 'textarea',
+        inputAttributes: {
+          autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Moderate',
+        showLoaderOnConfirm: true,
+        preConfirm: (reply) => {
+          // Get the manager's ID from the session storage
+          var loggedInManager = sessionStorage.getItem("loggedInManager");
+          if (!loggedInManager) {
+            console.error("Manager not logged in.");
+            Swal.showValidationMessage("Manager not logged in.");
+            return;
+          }
+    
+          var managerId = JSON.parse(loggedInManager).managerId;
+    
+          // Call the moderateReport function to moderate the report
+          return moderateReport(reportId, reply, managerId)
+            .then((response) => {
+              // Do something with the response if needed
+              // For example, you can display a success message or reload the report list
+              console.log("Report moderated successfully:", response);
+              loadReportList(); // Assuming you have a function to reload the report list
+    
+              // Check if the report status is "Đã xử lý"
+              const status = $(this).closest("tr").find("td:eq(5)").text().trim();
+              if (status === "Đã xử lý") {
+                // Using Swal.fire to display a notification if the report is already processed
+                Swal.fire({
+                  title: 'Warning',
+                  text: "This report has already been processed.",
+                  icon: 'warning',
+                  confirmButtonText: 'OK',
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Error moderating report: ", error);
+              Swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+      });
     });
   }
   
