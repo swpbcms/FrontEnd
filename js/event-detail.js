@@ -120,3 +120,111 @@ $(".event-detail-img img").attr("src", eventImage);
 // Hiển thị số lượng người đã tham gia sự kiện
 $(".event-loc strong").text(eventData.postNumberJoin + " people have joined this event.");
 }
+
+$(document).ready(function () {
+  // Lấy post id từ URL (lấy giá trị của tham số postId trong URL)
+  const urlParams = new URLSearchParams(window.location.search);
+  const postId = urlParams.get("postId");
+
+  // Kiểm tra nếu postId không tồn tại trong URL hoặc giá trị postId không hợp lệ
+  if (!postId || postId.trim() === "") {
+    console.log("Không tìm thấy postId trong URL hoặc postId không hợp lệ.");
+    return;
+  }
+
+  // Gọi API để lấy thông tin chi tiết của event dựa vào postId
+  $.ajax({
+    url: "https://localhost:7206/api/Post/get-post-id?id=" + postId,
+    method: "GET",
+    success: function (response) {
+      if (response && response.data) {
+        // Hiển thị thông tin chi tiết của event lên trang event-detail.html
+        displayEventData(response.data);
+        // Check if the user is already joined the event
+        var isJoined = response.data.isJoined;
+        // Add event listener for the Join/Unjoin button
+        $("#joinButton").on("click", function () {
+          // Call the joinEvent or unjoinEvent function based on the event status
+          var memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+          if (isJoined) {
+            unjoinEvent(memberId, postId, function () {
+              // Callback function after successful unjoin
+              isJoined = false;
+              $("#joinButton").text("Join Event");
+            });
+          } else {
+            joinEvent(memberId, postId, function () {
+              // Callback function after successful join
+              isJoined = true;
+              $("#joinButton").text("Unjoin Event");
+            });
+          }
+        });
+      } else {
+        console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
+      }
+    },
+    error: function () {
+      console.log("Lỗi khi gọi API.");
+    },
+  });
+});
+
+// Function to join an event
+function joinEvent(memberId, postId, successCallback) {
+  $.ajax({
+    url: "https://localhost:7206/api/JoinEvent/Join",
+    method: "POST",
+    headers: {
+      accept: "*/*",
+      "Content-Type": "application/json-patch+json",
+    },
+    data: JSON.stringify({
+      memberId: memberId,
+      postId: postId,
+      isFollow: true,
+      status: true,
+    }),
+    success: function (response) {
+      // Handle success, for example, show a success message or update UI
+      console.log("Successfully joined the event.");
+      if (successCallback) {
+        successCallback();
+      }
+    },
+    error: function () {
+      // Handle error, for example, show an error message or handle the failure
+      console.log("Failed to join the event.");
+    },
+  });
+}
+
+// Function to unjoin an event
+function unjoinEvent(memberId, postId, successCallback) {
+  $.ajax({
+    url: "https://localhost:7206/api/JoinEvent/UnJoin",
+    method: "PUT",
+    headers: {
+      accept: "*/*",
+      "Content-Type": "application/json-patch+json",
+    },
+    data: JSON.stringify({
+      memberId: memberId,
+      postId: postId,
+      isFollow: true,
+      status: true,
+    }),
+    success: function (response) {
+      // Handle success, for example, show a success message or update UI
+      console.log("Successfully unjoined the event.");
+      if (successCallback) {
+        successCallback();
+      }
+    },
+    error: function () {
+      // Handle error, for example, show an error message or handle the failure
+      console.log("Failed to unjoin the event.");
+    },
+  });
+}
+
