@@ -51,10 +51,33 @@ const getReportByModerate = async (memberId) => {
   }
 };
 
+const moderateReport = async (reportId, reply, managerId) => {
+  const requestBody = {
+    reportId: reportId,
+    reply: reply,
+    managerId: managerId,
+  };
+
+  const response = await fetch(`${endpoint}/moderate-report`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody), // Convert the object to a JSON string
+  });
+
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+}
+
 export {
   getReports,
   getReport,
   getReportByMember,
   createReport,
   getReportByModerate,
+  moderateReport
 };
