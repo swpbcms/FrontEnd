@@ -1,33 +1,36 @@
-// import { loginAdmin } from "./services/admin.service.js";
+$(document).ready(function () {
+    // Handle the form submit event
+    $("#loginForm").submit(function (event) {
+        event.preventDefault(); // prevent the browser's default action on form submit
 
-// $(document).ready(function() {
-//   // Xử lý sự kiện khi biểu mẫu được gửi đi
-//   $("#loginForm").submit(function(event) {
-//     event.preventDefault(); // Ngăn chặn việc gửi yêu cầu mặc định của biểu mẫu
+        // Get values from form fields
+        var username = $("#userNameInput").val();
+        var password = $("#passwordInput").val();
 
-//     // Lấy tên đăng nhập và mật khẩu từ người dùng
-//     var username = $("#userNameInput").val();
-//     var password = $("#passwordInput").val();
+        // Construct the API URL with the entered username and password
+        var apiUrl = "https://localhost:7206/api/Admin/login-admin?username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
 
-//     // Gọi API đăng nhập cho admin
-//     loginAdmin(username, password)
-//       .then((data) => {
-//         if (data) {
-//           // Xử lý đăng nhập admin thành công
-//           sessionStorage.setItem("loggedInAdmin", JSON.stringify(data));
-//           window.location.href = "admin.html";
-//         } else {
-//           // Xử lý khi tên đăng nhập hoặc mật khẩu admin không đúng
-//           Swal.fire({
-//             icon: "error",
-//             title: "Đăng nhập thất bại",
-//             text: "Tên đăng nhập hoặc mật khẩu admin không đúng",
-//           });
-//         }
-//       })
-//       .catch((error) => {
-//         // Xử lý khi có lỗi xảy ra trong quá trình gửi yêu cầu đăng nhập admin
-//         console.log("Đã xảy ra lỗi khi đăng nhập admin: " + error);
-//       });
-//   });
-// });
+        // Call the login API
+        $.ajax({
+            url: apiUrl,
+            type: "POST",
+            success: function (data, textStatus, jqXHR) {
+                if (data && data.data && data.data.username && data.data.password) {
+                    // Store data into sessionStorage
+                    sessionStorage.setItem('username', data.data.username);
+                    sessionStorage.setItem('password', data.data.password);
+
+                    // Redirect to admin.html
+                    window.location.href = "admin.html";
+                } else {
+                    alert("Login failed!");
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log("Error in API call:", errorThrown);
+                alert("Login failed!");
+            }
+        });
+    });
+});
+    

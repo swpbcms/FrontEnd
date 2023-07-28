@@ -1,25 +1,28 @@
 import { getMembers, deleteMember } from "./services/member.service.js";
 
 $(document).ready(function () {
-  var loggedInManager = sessionStorage.getItem("loggedInManager");
-  if (loggedInManager) {
-    var manager = JSON.parse(loggedInManager);
+  var username = sessionStorage.getItem('username');
+  var password = sessionStorage.getItem('password');
 
-    var managerFullName = manager.managerFullName;
-    var managerImage = manager.managerImage;
-    $('#fullname').html(managerFullName);
-    $('#image').attr('src', managerImage);
-  }
+  // Now you can use 'username' and 'password'
+  console.log('username:', username);
+  console.log('password:', password);
+
+  // Or you can use them to modify the DOM, for example:
+  $('#usernameDisplay').text(username);
 });
 
 $(document).ready(function () {
   $("#logoutButton").click(function () {
-    // Clear the session storage
-    sessionStorage.removeItem("loggedInMember");
-    // Redirect to the login page or perform any other desired action
-    window.location.href = "feed.html";
+      // Clear the session storage
+      sessionStorage.removeItem('username');
+      sessionStorage.removeItem('password');
+
+      // Redirect to the login page or perform any other desired action
+      window.location.href = "login.html"; // change 'login.html' to your actual login page
   });
 });
+
 
 $(document).ready(function() {
   // Fetch member list using API call from member.service.js
