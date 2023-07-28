@@ -79,5 +79,5 @@ function displayReportList(reports, reportTypes) {
 
   reportListHTML += "</tbody></table></div>";
 
-  $("#components-nav li:nth-child(2)").html(reportListHTML);
+  $("#components-nav li:nth-child(3)").html(reportListHTML);
 }

@@ -71,6 +71,10 @@ $(document).ready(function() {
     // Add the "Delete Manager" button event listener here
     $(".delete-manager-btn").on("click", function () {
       const managerId = $(this).data("manager-id");
+      if (status === "Không hoạt động") {
+        alert("Manager is already inactive and can't be deleted.");
+        return;
+      }
 
       // Show a confirmation dialog before proceeding with the deletion
       const confirmation = confirm("Are you sure you want to delete this manager?");

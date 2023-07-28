@@ -72,7 +72,6 @@ function displayPostList(posts) {
     postListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
     postListHTML += "<td>" + post.member.memberId + "</td>";
     postListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-post-btn' data-post-id='" + post.postId + "'>Restore</button>";
-    postListHTML += "<button class='uk-button uk-button-small uk-button-primary agree-post-btn' data-post-id='" + post.postId + "'>Agree</button>";
     postListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-post-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
     postListHTML += "</tr>";
   }
@@ -84,6 +83,12 @@ function displayPostList(posts) {
 // Add the "Restore Post" button event listener here
 $(".restore-post-btn").on("click", function () {
   const postId = $(this).data("post-id");
+  const status = $(this).closest("tr").find("td:eq(5)").text().trim(); // Get the status from the table cell
+
+  if (status === "Thành công") {
+    alert("Post already restored.");
+    return;
+  }
 
   // Show a confirmation dialog before proceeding with the restoration
   const confirmation = confirm("Are you sure you want to restore this post?");
@@ -106,53 +111,35 @@ $(".restore-post-btn").on("click", function () {
     });
 });
 
+// Add the "Delete Post" button event listener here
+$(".delete-post-btn").on("click", function () {
+  const postId = $(this).data("post-id");
+  const status = $(this).closest("tr").find("td:eq(5)").text().trim(); // Get the status from the table cell
 
+  if (status === "hủy") {
+    alert("Post already deleted.");
+    return;
+  }
 
-  $(".agree-post-btn").on("click", function () {
-    const postId = $(this).data("post-id");
-  
-    // Get the manager's ID from the session storage
-    var loggedInManager = sessionStorage.getItem("loggedInManager");
-    if (!loggedInManager) {
-      console.error("Admin not logged in.");
-      return;
-    }
-  
-    var managerId = JSON.parse(loggedInManager).managerId;
-  
-    moderatePost(postId, true, managerId)
-      .then(() => {
-        $(this).closest("tr").remove();
-        loadPostList();
-      })
-      .catch((error) => {
-        console.error("Error moderating post: ", error);
-      });
-  });
+  // Show a confirmation dialog before proceeding with the deletion
+  const confirmation = confirm("Are you sure you want to delete this post?");
+  if (!confirmation) {
+    // If the user cancels the deletion, do nothing
+    return;
+  }
 
-  // Add the "Delete Post" button event listener here
-  $(".delete-post-btn").on("click", function () {
-    const postId = $(this).data("post-id");
-  
-    // Show a confirmation dialog before proceeding with the deletion
-    const confirmation = confirm("Are you sure you want to delete this post?");
-    if (!confirmation) {
-      // If the user cancels the deletion, do nothing
-      return;
-    }
-  
-    // Call the deletePost function to delete the post
-    deletePost(postId)
-      .then(() => {
-        $(this).closest("tr").remove();
-        // Reload the post list to reflect the changes after successful deletion
-        loadPostList();
-      })
-      .catch((error) => {
-        console.error("Error deleting post: ", error);
-        // Handle error if needed
-      });
-  });
+  // Call the deletePost function to delete the post
+  deletePost(postId)
+    .then(() => {
+      $(this).closest("tr").remove();
+      // Reload the post list to reflect the changes after successful deletion
+      loadPostList();
+    })
+    .catch((error) => {
+      console.error("Error deleting post: ", error);
+      // Handle error if needed
+    });
+});
   
 }
 
@@ -183,7 +170,6 @@ function displayEventList(eventPosts) {
     eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
     eventListHTML += "<td>" + post.member.memberId + "</td>";
     eventListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-event-btn' data-post-id='" + post.postId + "'>Restore</button>";
-    eventListHTML += "<td><button class='uk-button uk-button-small uk-button-primary agree-event-btn' data-post-id='" + post.postId + "'>Agree</button>";
     eventListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-event-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
     eventListHTML += "</tr>";
   }
@@ -194,14 +180,20 @@ function displayEventList(eventPosts) {
 
   $(".restore-event-btn").on("click", function () {
     const postId = $(this).data("post-id");
-  
+    const status = $(this).closest("tr").find("td:eq(4)").text().trim(); // Get the status from the table cell
+
+    if (status === "Thành công") {
+      alert("Event already restored.");
+      return;
+    }
+
     // Show a confirmation dialog before proceeding with the restoration
     const confirmation = confirm("Are you sure you want to restore this event?");
     if (!confirmation) {
       // If the user cancels the restoration, do nothing
       return;
     }
-  
+
     // Call the reStatusPost function to restore the event
     reStatusPost(postId)
       .then(() => {
@@ -216,40 +208,23 @@ function displayEventList(eventPosts) {
       });
   });
 
-  // Add the "Agree Event" button event listener here
-  $(".agree-event-btn").on("click", function () {
-    const postId = $(this).data("post-id");
-
-    // Get the manager's ID from the session storage
-    var loggedInManager = sessionStorage.getItem("loggedInManager");
-    if (!loggedInManager) {
-      console.error("Admin not logged in.");
-      return;
-    }
-
-    var managerId = JSON.parse(loggedInManager).managerId;
-
-    moderatePost(postId, true, managerId)
-      .then(() => {
-        $(this).closest("tr").remove();
-        loadEventPostList();
-      })
-      .catch((error) => {
-        console.error("Error moderating event: ", error);
-      });
-  });
-
   // Add the "Delete Event" button event listener here
   $(".delete-event-btn").on("click", function () {
     const postId = $(this).data("post-id");
-  
+    const status = $(this).closest("tr").find("td:eq(4)").text().trim(); // Get the status from the table cell
+
+    if (status === "hủy") {
+      alert("Event already deleted.");
+      return;
+    }
+
     // Show a confirmation dialog before proceeding with the deletion
     const confirmation = confirm("Are you sure you want to delete this event?");
     if (!confirmation) {
       // If the user cancels the deletion, do nothing
       return;
     }
-  
+
     // Call the deletePost function to delete the event
     deletePost(postId)
       .then(() => {
