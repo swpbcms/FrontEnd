@@ -96,30 +96,53 @@ $(".restore-post-btn").on("click", function () {
 
   // Check if the status is "Thành công"
   if (status === "Thành công") {
-    alert("Post already exists.");
+    Swal.fire({
+      title: 'Warning',
+      text: "Post already exists.",
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
     return;
   }
 
   // Show a confirmation dialog before proceeding with the restoration
-  const confirmation = confirm("Are you sure you want to restore this post?");
-  if (!confirmation) {
-    // If the user cancels the restoration, do nothing
-    return;
-  }
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to restore this post?",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Restore',
+    cancelButtonText: 'Cancel',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Show a loading modal while waiting for the API response
+      Swal.showLoading();
 
-  // Call the reStatusPost function to restore the post
-  reStatusPost(postId)
-    .then(() => {
-      // Do not remove the post from the list immediately.
-      // You can choose to reload the post list to reflect the changes after successful restoration.
-      // You can call loadPostList() again here or simply remove the restored row
-      loadPostList();
-    })
-    .catch((error) => {
-      console.error("Error restoring post: ", error);
-      // Handle error if needed
-    });
+      // Call the reStatusPost function to restore the post
+      reStatusPost(postId)
+        .then(() => {
+          // Reload the post list to reflect the changes after successful restoration
+          loadPostList();
+          Swal.fire({
+            title: 'Success',
+            text: 'Post restored successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK',
+          });
+        })
+        .catch((error) => {
+          console.error("Error restoring post: ", error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Failed to restore post. Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        });
+    }
+  });
 });
+
 
 $(".agree-post-btn").on("click", function () {
   const postId = $(this).data("post-id");
@@ -127,7 +150,12 @@ $(".agree-post-btn").on("click", function () {
 
   // Check if the status is "hủy" or "Thành công"
   if (status === "hủy" || status === "Thành công") {
-    alert("Post already moderated.");
+    Swal.fire({
+      title: 'Warning',
+      text: "Post already moderated.",
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
     return;
   }
 
@@ -140,45 +168,67 @@ $(".agree-post-btn").on("click", function () {
 
   var managerId = JSON.parse(loggedInManager).managerId;
 
-  moderatePost(postId, true, managerId)
-    .then(() => {
-      $(this).closest("tr").remove();
-      loadPostList();
-    })
-    .catch((error) => {
-      console.error("Error moderating post: ", error);
-    });
+  // Show a confirmation dialog before proceeding with the agreement
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to agree to this post?",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Agree',
+    cancelButtonText: 'Cancel',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Call the moderatePost function to agree to the post
+      moderatePost(postId, true, managerId)
+        .then(() => {
+          // Remove the post row from the table after successful agreement
+          $(this).closest("tr").remove();
+          loadPostList();
+        })
+        .catch((error) => {
+          console.error("Error moderating post: ", error);
+        });
+    }
+  });
 });
-
   // Add the "Delete Post" button event listener here
   $(".delete-post-btn").on("click", function () {
     const postId = $(this).data("post-id");
     const status = $(this).closest("tr").find("td:eq(5)").text().trim(); // Get the status from the table cell
   
     // Check if the status is "hủy"
-    if (status === "hủy") {
-      alert("Post already deleted.");
-      return;
-    }
-  
-    // Show a confirmation dialog before proceeding with the deletion
-    const confirmation = confirm("Are you sure you want to delete this post?");
-    if (!confirmation) {
-      // If the user cancels the deletion, do nothing
-      return;
-    }
-  
-    // Call the deletePost function to delete the post
-    deletePost(postId)
-      .then(() => {
-        $(this).closest("tr").remove();
-        // Reload the post list to reflect the changes after successful deletion
-        loadPostList();
-      })
-      .catch((error) => {
-        console.error("Error deleting post: ", error);
-        // Handle error if needed
+       if (status === "hủy") {
+      Swal.fire({
+        title: 'Warning',
+        text: "Post already deleted.",
+        icon: 'warning',
+        confirmButtonText: 'OK',
       });
+      return;
+    }
+
+    // Show a confirmation dialog before proceeding with the deletion
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You want to delete this post?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call the deletePost function to delete the post
+        deletePost(postId)
+          .then(() => {
+            // Remove the post row from the table after successful deletion
+            $(this).closest("tr").remove();
+            loadPostList();
+          })
+          .catch((error) => {
+            console.error("Error deleting post: ", error);
+          });
+      }
+    });
   });
 
 }
@@ -233,39 +283,65 @@ $(".restore-event-btn").on("click", function () {
 
   // Check if the status is "Thành công"
   if (status === "Thành công") {
-    alert("Event already exists.");
+    Swal.fire({
+      title: 'Warning',
+      text: "Event already exists.",
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
     return;
   }
 
   // Show a confirmation dialog before proceeding with the restoration
-  const confirmation = confirm("Are you sure you want to restore this event?");
-  if (!confirmation) {
-    // If the user cancels the restoration, do nothing
-    return;
-  }
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to restore this event?",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Restore',
+    cancelButtonText: 'Cancel',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Show a loading modal while waiting for the API response
+      Swal.showLoading();
 
-  // Call the reStatusPost function to restore the event
-  reStatusPost(postId)
-    .then(() => {
-      // Do not remove the event from the list immediately.
-      // You can choose to reload the event list to reflect the changes after successful restoration.
-      // You can call loadEventPostList() again here or simply remove the restored row
-      loadEventPostList();
-    })
-    .catch((error) => {
-      console.error("Error restoring event: ", error);
-      // Handle error if needed
-    });
+      // Call the reStatusPost function to restore the event
+      reStatusPost(postId)
+        .then(() => {
+          // Reload the event list to reflect the changes after successful restoration
+          loadEventPostList();
+          Swal.fire({
+            title: 'Success',
+            text: 'Event restored successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK',
+          });
+        })
+        .catch((error) => {
+          console.error("Error restoring event: ", error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Failed to restore event. Please try again later.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        });
+    }
+  });
 });
 
-// Add the "Agree Event" button event listener here
 $(".agree-event-btn").on("click", function () {
   const postId = $(this).data("post-id");
   const status = $(this).closest("tr").find("td:eq(4)").text().trim(); // Get the status from the table cell
 
   // Check if the status is "hủy" or "Thành công"
   if (status === "hủy" || status === "Thành công") {
-    alert("Event already moderated.");
+    Swal.fire({
+      title: 'Warning',
+      text: "Event already moderated.",
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
     return;
   }
 
@@ -278,16 +354,29 @@ $(".agree-event-btn").on("click", function () {
 
   var managerId = JSON.parse(loggedInManager).managerId;
 
-  moderatePost(postId, true, managerId)
-    .then(() => {
-      $(this).closest("tr").remove();
-      loadEventPostList();
-    })
-    .catch((error) => {
-      console.error("Error moderating event: ", error);
-    });
+  // Show a confirmation dialog before proceeding with the agreement
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to agree to this event?",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Agree',
+    cancelButtonText: 'Cancel',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Call the moderatePost function to agree to the event
+      moderatePost(postId, true, managerId)
+        .then(() => {
+          // Remove the event row from the table after successful agreement
+          $(this).closest("tr").remove();
+          loadEventPostList();
+        })
+        .catch((error) => {
+          console.error("Error moderating event: ", error);
+        });
+    }
+  });
 });
-
 // Add the "Delete Event" button event listener here
 $(".delete-event-btn").on("click", function () {
   const postId = $(this).data("post-id");
@@ -295,29 +384,39 @@ $(".delete-event-btn").on("click", function () {
 
   // Check if the status is "hủy"
   if (status === "hủy") {
-    alert("Event already deleted.");
+    Swal.fire({
+      title: 'Warning',
+      text: "Event already deleted.",
+      icon: 'warning',
+      confirmButtonText: 'OK',
+    });
     return;
   }
 
   // Show a confirmation dialog before proceeding with the deletion
-  const confirmation = confirm("Are you sure you want to delete this event?");
-  if (!confirmation) {
-    // If the user cancels the deletion, do nothing
-    return;
-  }
-
-  // Call the deletePost function to delete the event
-  deletePost(postId)
-    .then(() => {
-      $(this).closest("tr").remove();
-      // Reload the event list to reflect the changes after successful deletion
-      loadEventPostList();
-    })
-    .catch((error) => {
-      console.error("Error deleting event: ", error);
-      // Handle error if needed
-    });
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You want to delete this event?",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Delete',
+    cancelButtonText: 'Cancel',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // Call the deletePost function to delete the event
+      deletePost(postId)
+        .then(() => {
+          // Remove the event row from the table after successful deletion
+          $(this).closest("tr").remove();
+          loadEventPostList();
+        })
+        .catch((error) => {
+          console.error("Error deleting event: ", error);
+        });
+    }
+  });
 });
+
 }
 
 // $(document).ready(function() {

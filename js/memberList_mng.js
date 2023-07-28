@@ -73,36 +73,44 @@ $(document).ready(function() {
 
     // Add the "Delete Member" button event listener here
     // Add the "Delete Member" button event listener here
-$(".delete-member-btn").on("click", function () {
-  const memberId = $(this).data("member-id");
-  const status = $(this).closest("tr").find("td:eq(7)").text().trim(); // Get the status from the table cell
-
-  // Check if the member status is "Không hoạt động"
-  if (status === "Không hoạt động") {
-    alert("Member is already inactive and can't be deleted.");
-    return;
-  }
-
-  // Show a confirmation dialog before proceeding with the deletion
-  const confirmation = confirm("Are you sure you want to delete this member?");
-  if (!confirmation) {
-    // If the user cancels the deletion, do nothing
-    return;
-  }
-
-  // Call the deleteMember function to delete the member
-  deleteMember(memberId)
-    .then(() => {
-      // Do not remove the member from the list immediately.
-      // You can choose to reload the member list to reflect the changes after successful deletion.
-      // You can call getMembers() again here or simply remove the deleted row
-      loadMembers(); // Assuming you have a function to reload the member list
-    })
-    .catch((error) => {
-      console.error("Error deleting member: ", error);
-      // Handle error if needed
+    $(".delete-member-btn").on("click", function () {
+      const memberId = $(this).data("member-id");
+      const status = $(this).closest("tr").find("td:eq(7)").text().trim();
+    
+      if (status === "Không hoạt động") {
+        // Using Swal.fire instead of alert
+        Swal.fire({
+          title: 'Error',
+          text: "Member is already inactive and can't be deleted.",
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
+        return;
+      }
+    
+      // Show a confirmation dialog before proceeding with the deletion
+      Swal.fire({
+        title: 'Confirmation',
+        text: 'Are you sure you want to delete this member?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Call the deleteMember function to delete the member
+          deleteMember(memberId)
+            .then(() => {
+              // Reload the member list after successful deletion
+              loadMembers();
+            })
+            .catch((error) => {
+              console.error("Error deleting member: ", error);
+              // Handle error if needed
+            });
+        }
+      });
     });
-});
 
     
     function loadMembers() {
