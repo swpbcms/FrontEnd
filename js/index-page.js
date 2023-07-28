@@ -84,7 +84,7 @@ $(document).ready(function () {
     // Clear the session storage
     sessionStorage.removeItem("loggedInMember");
     // Redirect to the login page or perform any other desired action
-    window.location.href = "feed.html";
+    window.location.href = "sign-in.html";
   });
 });
 

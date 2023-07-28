@@ -52,69 +52,81 @@ $.ajax({
 
 
 function displayData(data) {
-    let eventPost = ''; // Initialize the variable to store the generated HTML
+  let eventPost = ''; // Initialize the variable to store the generated HTML
 
-    // Use $.each() to iterate through the data
-    $.each(data, (index, post) => {
-        var eventTitle = post.postTitle;
-        var eventImage = post.media[0].linkMedia;
-        var eventStatus = post.postIsEvent ? "Event" : "Post"; // Display "Event" if postStatus is true
-        var eventLocation = post.eventLocation;
-        var eventStartDate = post.eventStartDate;
-        var eventEndDate = post.eventEndDate;
-        var postId = post.postId;
-        var postNumberJoin = post.postNumberJoin;
-        // Generate the HTML for the current event post
-        if (post.postIsEvent === true && post.postStatus === "Thành công") {
-            const eventHTML = `<div class="col-lg-4 col-md-4 col-sm-6">
-        <div class="event-post mb-3">
-          <figure>
-            <a title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
-          </figure>
-          <div class="event-meta">
-            <span class="eventStatus">${eventStatus}</span> 
-            <span class="eventStatus">Number join event: ${postNumberJoin}</span> 
-            <span class="post-id" style="display: none;">${postId}</span>
-            <h6><a href="event-detail.html" title="" class="eventTitle">${eventTitle}</a></h6>
-            <p class="eventDescription">Start: ${eventStartDate}</p>
-            <p class="eventDescription">End: ${eventEndDate}</p>
-            <p class="eventLocation">Location: ${eventLocation}</p>
-            <div class="more">
-              <div class="more-post-optns">
-                <i class="feather feather-more-horizontal"></i>
-                <ul>
-                  <li>
-                    <i class="icofont-share-alt"></i>Share to Feed
-                    <span>Share This Post to Friends</span>
-                  </li>
-                  <li>
-                    <i class="icofont-ui-text-chat"></i>Send Message
-                    <span>Send This in messages, groups</span>
-                  </li>
-                  <li>
-                    <i class="icofont-ui-delete"></i>Delete Post
-                    <span>If inappropriate Post By Mistake</span>
-                  </li>
-                  <li>
-                    <i class="icofont-flag"></i>Report
-                    <span>Inappropriate content</span>
-                  </li>
-                </ul>
-              </div>
+  // Use $.each() to iterate through the data
+  $.each(data, (index, post) => {
+      var eventTitle = post.postTitle;
+      var eventImage = post.media[0].linkMedia;
+      var eventLocation = post.eventLocation;
+      var eventStartDate = new Date(post.eventStartDate);
+      var eventEndDate = new Date(post.eventEndDate);
+      var postId = post.postId;
+      var postNumberJoin = post.postNumberJoin;
+
+      var eventStatus = '';
+      var now = new Date();
+      
+      if (now < eventStartDate) {
+          eventStatus = "Sắp diễn ra";
+      } else if (now > eventEndDate) {
+          eventStatus = "Đã diễn ra";
+      } else {
+          eventStatus = "Đang diễn ra";
+      }
+      
+      // Generate the HTML for the current event post
+      if (post.postIsEvent === true && post.postStatus === "Thành công") {
+          const eventHTML = `<div class="col-lg-4 col-md-4 col-sm-6">
+      <div class="event-post mb-3">
+        <figure>
+          <a title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
+        </figure>
+        <div class="event-meta">
+          <span class="eventStatus">${eventStatus}</span> 
+          <span class="eventStatus">Number join event: ${postNumberJoin}</span> 
+          <span class="post-id" style="display: none;">${postId}</span>
+          <h6><a href="event-detail.html" title="" class="eventTitle">${eventTitle}</a></h6>
+          <p class="eventDescription">Start: ${eventStartDate}</p>
+          <p class="eventDescription">End: ${eventEndDate}</p>
+          <p class="eventLocation">Location: ${eventLocation}</p>
+          <div class="more">
+            <div class="more-post-optns">
+              <i class="feather feather-more-horizontal"></i>
+              <ul>
+                <li>
+                  <i class="icofont-share-alt"></i>Share to Feed
+                  <span>Share This Post to Friends</span>
+                </li>
+                <li>
+                  <i class="icofont-ui-text-chat"></i>Send Message
+                  <span>Send This in messages, groups</span>
+                </li>
+                <li>
+                  <i class="icofont-ui-delete"></i>Delete Post
+                  <span>If inappropriate Post By Mistake</span>
+                </li>
+                <li>
+                  <i class="icofont-flag"></i>Report
+                  <span>Inappropriate content</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-        </div>
-      `;
+      </div>
+      </div>
+    `;
 
-            eventPost += eventHTML; // Append the current event's HTML to the eventPost variable
-        }
-    });
+    eventPost += eventHTML; 
 
-    // Update the content of the <div> container with the accumulated HTML
-    const eventContainer = $("#event-container");
-    eventContainer.html(eventPost);
+  }
+});
+  // Update the content of the <div> container with the accumulated HTML
+  const eventContainer = $("#event-container");
+  eventContainer.html(eventPost); 
 }
+
 
 // $(document).on("click", ".join-event-btn", function () {
 //   // Extract the postId from the data-post-id attribute of the clicked button
