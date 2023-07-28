@@ -129,21 +129,25 @@ function displayRecentPost(data) {
     const postTitle = post.postTitle;
     const postCreateAt = post.postCreateAt;
     const linkMedia = post.media[0].linkMedia;
+    const postStatus = post.postStatus; // Assuming the post status is a property of the post object
 
-    // Generate the HTML for the current post
-    const postHTML = `
-      <li>
-        <figure>
-          <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
-        </figure>
-        <div class="re-links-meta">
-          <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
-          <span id="postDate">${postCreateAt}</span>
-        </div>
-      </li>
-    `;
+    // Only generate HTML for the post if the status is successful
+    if (postStatus === 'Thành công') {
+      // Generate the HTML for the current post
+      const postHTML = `
+        <li>
+          <figure>
+            <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
+          </figure>
+          <div class="re-links-meta">
+            <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
+            <span id="postDate">${postCreateAt}</span>
+          </div>
+        </li>
+      `;
 
-    recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+      recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+    }
   });
 
   // Update the content of the <ul> element with the accumulated HTML
