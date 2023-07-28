@@ -65,13 +65,13 @@ $(document).ready(function() {
           Swal.fire({
             icon: 'error',
             title: 'Đăng nhập thất bại',
-            text: 'Tên đăng nhập hoặc mật khẩu quản lý không đúng'
+            text: 'Tên đăng nhập hoặc mật khẩu không đúng'
           });
         }
       },
       error: function(error) {
         // Xử lý khi có lỗi xảy ra trong quá trình gửi yêu cầu đăng nhập quản lý
-        console.log("Đã xảy ra lỗi khi đăng nhập quản lý: " + error);
+        console.log("Đã xảy ra lỗi khi đăng nhập: " + error);
       }
     });
   });
