@@ -2626,8 +2626,7 @@ aside .widget {
 .post-new-popup.active .popup,
 .wraper-invite.active .popup,
 .new-question-popup .popup,
-.createroom-popup .popup
-.new-report-popup.active .popup {
+.createroom-popup .popup .new-report-popup.active .popup {
     top: 50%;
 }
 
@@ -3331,14 +3330,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     11% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     21% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3350,14 +3352,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     11% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     21% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3369,14 +3374,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     17% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     27% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3388,14 +3396,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     17% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     27% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3407,14 +3418,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     23% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     33% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3426,14 +3440,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     23% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     33% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3445,14 +3462,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     29% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     39% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3464,14 +3484,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     29% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     39% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3483,14 +3506,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     35% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     45% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3502,14 +3528,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     35% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     45% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3521,14 +3550,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     41% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     51% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3540,14 +3572,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     41% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     51% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3559,14 +3594,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     47% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     57% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3578,14 +3616,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     47% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     57% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3597,14 +3638,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     53% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     63% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3616,14 +3660,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     53% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     63% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3635,14 +3682,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     59% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     69% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3654,14 +3704,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     59% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     69% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3673,14 +3726,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     65% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     75% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -3692,14 +3748,17 @@ ul.welcome-caro li.welcome-box figure img {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     65% {
         -webkit-transform: scaleY(1.4);
         transform: scaleY(1.4);
     }
+
     75% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
     }
+
     100% {
         -webkit-transform: scaleY(1);
         transform: scaleY(1);
@@ -5993,6 +6052,21 @@ a.button.disabled {
     transition-property: color, background-color, border;
 }
 
+.reportTitle {
+
+    border-radius: 5px;
+    font-size: 14px;
+    height: auto;
+    padding: 12px 15px;
+    max-width: 100%;
+    width: 100%;
+    background: #fff;
+    color: #62626e;
+    border: 1px solid #e5e5e5;
+    transition: .2s ease-in-out;
+    transition-property: color, background-color, border;
+}
+
 .chosen-container-single .chosen-single span {
     color: #62626e;
 }
@@ -7064,6 +7138,7 @@ a.wish-btn {
         -webkit-transform: scale(1);
         transform: scale(1);
     }
+
     100% {
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
@@ -7074,6 +7149,7 @@ a.wish-btn {
     0% {
         transform: scale(1);
     }
+
     100% {
         transform: scale(1.1);
     }
@@ -8799,7 +8875,7 @@ table.table-striped tbody tr td a.button:hover {
 
 .tooltip-arrow,
 .tooltip.bottom {
-    border-bottom-color: #1f273f!important;
+    border-bottom-color: #1f273f !important;
 }
 
 
@@ -10953,6 +11029,7 @@ a.main-btn2:hover,
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg);
@@ -10963,6 +11040,7 @@ a.main-btn2:hover,
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(359deg);
     }
@@ -11015,12 +11093,15 @@ a.main-btn2:hover,
     0% {
         opacity: 1;
     }
+
     33% {
         opacity: 0.25;
     }
+
     66% {
         opacity: 0.25;
     }
+
     100% {
         opacity: 1;
     }
@@ -11030,12 +11111,15 @@ a.main-btn2:hover,
     0% {
         opacity: 1;
     }
+
     33% {
         opacity: 0.25;
     }
+
     66% {
         opacity: 0.25;
     }
+
     100% {
         opacity: 1;
     }
@@ -11045,9 +11129,11 @@ a.main-btn2:hover,
     0% {
         opacity: 0.25;
     }
+
     33% {
         opacity: 1;
     }
+
     66% {
         opacity: 0.25;
     }
@@ -11057,9 +11143,11 @@ a.main-btn2:hover,
     0% {
         opacity: 0.25;
     }
+
     33% {
         opacity: 1;
     }
+
     66% {
         opacity: 0.25;
     }
@@ -11069,9 +11157,11 @@ a.main-btn2:hover,
     33% {
         opacity: 0.25;
     }
+
     66% {
         opacity: 1;
     }
+
     100% {
         opacity: 0.25;
     }
@@ -11081,9 +11171,11 @@ a.main-btn2:hover,
     33% {
         opacity: 0.25;
     }
+
     66% {
         opacity: 1;
     }
+
     100% {
         opacity: 0.25;
     }
@@ -11117,6 +11209,7 @@ a.main-btn2:hover,
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg);
@@ -11127,6 +11220,7 @@ a.main-btn2:hover,
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(359deg);
     }
@@ -11156,14 +11250,14 @@ a.main-btn2:hover,
 .sp-vortex:before {
     border-top: 6px #088dcd solid;
     top: -3px;
-    left: calc( -50% - 3px);
+    left: calc(-50% - 3px);
     transform-origin: right center;
 }
 
 .sp-vortex:after {
     border-bottom: 6px #088dcd solid;
     top: 3px;
-    right: calc( -50% - 3px);
+    right: calc(-50% - 3px);
     transform-origin: left center;
 }
 
@@ -11172,6 +11266,7 @@ a.main-btn2:hover,
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg);
@@ -11182,6 +11277,7 @@ a.main-btn2:hover,
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(359deg);
     }
@@ -11207,24 +11303,28 @@ a.main-btn2:hover,
         border-bottom: 16px rgba(0, 0, 0, 0.25) solid;
         border-left: 16px rgba(0, 0, 0, 0.25) solid;
     }
+
     25% {
         border-top: 16px rgba(0, 0, 0, 0.25) solid;
         border-right: 16px rgba(0, 0, 0, 0.75) solid;
         border-bottom: 16px rgba(0, 0, 0, 0.25) solid;
         border-left: 16px rgba(0, 0, 0, 0.25) solid;
     }
+
     50% {
         border-top: 16px rgba(0, 0, 0, 0.25) solid;
         border-right: 16px rgba(0, 0, 0, 0.25) solid;
         border-bottom: 16px rgba(0, 0, 0, 0.75) solid;
         border-left: 16px rgba(0, 0, 0, 0.25) solid;
     }
+
     75% {
         border-top: 16px rgba(0, 0, 0, 0.25) solid;
         border-right: 16px rgba(0, 0, 0, 0.25) solid;
         border-bottom: 16px rgba(0, 0, 0, 0.25) solid;
         border-left: 16px rgba(0, 0, 0, 0.75) solid;
     }
+
     100% {
         border-top: 16px rgba(0, 0, 0, 0.75) solid;
         border-right: 16px rgba(0, 0, 0, 0.25) solid;
@@ -11240,24 +11340,28 @@ a.main-btn2:hover,
         border-bottom: 16px rgba(0, 0, 0, 0.25) solid;
         border-left: 16px rgba(0, 0, 0, 0.25) solid;
     }
+
     25% {
         border-top: 16px rgba(0, 0, 0, 0.25) solid;
         border-right: 16px rgba(0, 0, 0, 0.75) solid;
         border-bottom: 16px rgba(0, 0, 0, 0.25) solid;
         border-left: 16px rgba(0, 0, 0, 0.25) solid;
     }
+
     50% {
         border-top: 16px rgba(0, 0, 0, 0.25) solid;
         border-right: 16px rgba(0, 0, 0, 0.25) solid;
         border-bottom: 16px rgba(0, 0, 0, 0.75) solid;
         border-left: 16px rgba(0, 0, 0, 0.25) solid;
     }
+
     75% {
         border-top: 16px rgba(0, 0, 0, 0.25) solid;
         border-right: 16px rgba(0, 0, 0, 0.25) solid;
         border-bottom: 16px rgba(0, 0, 0, 0.25) solid;
         border-left: 16px rgba(0, 0, 0, 0.75) solid;
     }
+
     100% {
         border-top: 16px rgba(0, 0, 0, 0.75) solid;
         border-right: 16px rgba(0, 0, 0, 0.25) solid;
@@ -11282,14 +11386,17 @@ a.main-btn2:hover,
         border-left: 0px #088dcd solid;
         border-right: 0px #088dcd solid;
     }
+
     33% {
         border-left: 32px #088dcd solid;
         border-right: 0px #088dcd solid;
     }
+
     34% {
         border-left: 0px #088dcd solid;
         border-right: 32px #088dcd solid;
     }
+
     66% {
         border-left: 0px #088dcd solid;
         border-right: 0px #088dcd solid;
@@ -11301,14 +11408,17 @@ a.main-btn2:hover,
         border-left: 0px #088dcd solid;
         border-right: 0px #088dcd solid;
     }
+
     33% {
         border-left: 32px #088dcd solid;
         border-right: 0px #088dcd solid;
     }
+
     34% {
         border-left: 0px #088dcd solid;
         border-right: 32px #088dcd solid;
     }
+
     66% {
         border-left: 0px #088dcd solid;
         border-right: 0px #088dcd solid;
@@ -11357,15 +11467,19 @@ a.main-btn2:hover,
     0% {
         transform: scale(1, 1);
     }
+
     25% {
         transform: scale(1, 1.25);
     }
+
     50% {
         transform: scale(1, 0.75);
     }
+
     75% {
         transform: scale(1, 1);
     }
+
     100% {
         transform: scale(1, 1);
     }
@@ -11375,15 +11489,19 @@ a.main-btn2:hover,
     0% {
         transform: scale(1, 1);
     }
+
     25% {
         transform: scale(1, 1);
     }
+
     50% {
         transform: scale(1, 1.25);
     }
+
     75% {
         transform: scale(1, 1);
     }
+
     100% {
         transform: scale(1, 1);
     }
@@ -11393,15 +11511,19 @@ a.main-btn2:hover,
     0% {
         transform: scale(1, 1);
     }
+
     25% {
         transform: scale(1, 1);
     }
+
     50% {
         transform: scale(1, 0.75);
     }
+
     75% {
         transform: scale(1, 1.25);
     }
+
     100% {
         transform: scale(1, 1);
     }
@@ -11422,7 +11544,7 @@ a.main-btn2:hover,
     position: absolute;
     top: 2px;
     width: 1px;
-    height: calc( 50% - 2px);
+    height: calc(50% - 2px);
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
     -ms-transform-origin: 0% 100%;
@@ -11437,6 +11559,7 @@ a.main-btn2:hover,
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg);
@@ -11447,6 +11570,7 @@ a.main-btn2:hover,
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(359deg);
     }
@@ -11492,6 +11616,7 @@ a.main-btn2:hover,
         transform: scale(0.5, 0.5);
         opacity: 0;
     }
+
     to {
         -webkit-transform: scale(1, 1);
         transform: scale(1, 1);
@@ -11504,6 +11629,7 @@ a.main-btn2:hover,
         transform: scale(0.5, 0.5);
         opacity: 0;
     }
+
     to {
         transform: scale(1, 1);
         opacity: 1;
@@ -11516,6 +11642,7 @@ a.main-btn2:hover,
         transform: scale(1, 1);
         opacity: 1;
     }
+
     to {
         -webkit-transform: scale(1.5, 1.5);
         transform: scale(1.5, 1.5);
@@ -11529,6 +11656,7 @@ a.main-btn2:hover,
         transform: scale(1, 1);
         opacity: 1;
     }
+
     to {
         -webkit-transform: scale(1.5, 1.5);
         transform: scale(1.5, 1.5);
@@ -11554,6 +11682,7 @@ a.main-btn2:hover,
     from {
         background-position: 0px 0px;
     }
+
     to {
         background-position: -16px 0px;
     }
@@ -11563,6 +11692,7 @@ a.main-btn2:hover,
     from {
         background-position: 0px 0px;
     }
+
     to {
         background-position: -16px 0px;
     }
@@ -11587,6 +11717,7 @@ a.main-btn2:hover,
     from {
         background-position: 0px 0px;
     }
+
     to {
         background-position: -20px 0px;
     }
@@ -11596,6 +11727,7 @@ a.main-btn2:hover,
     from {
         background-position: 0px 0px;
     }
+
     to {
         background-position: -20px 0px;
     }
@@ -11623,8 +11755,8 @@ a.main-btn2:hover,
 }
 
 .sp-hydrogen:before {
-    top: calc( 50% - 5px);
-    left: calc( 50% - 5px);
+    top: calc(50% - 5px);
+    left: calc(50% - 5px);
 }
 
 .sp-hydrogen:after {
@@ -11637,6 +11769,7 @@ a.main-btn2:hover,
         -webkit-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -webkit-transform: rotate(359deg);
         transform: rotate(359deg);
@@ -11647,6 +11780,7 @@ a.main-btn2:hover,
     from {
         transform: rotate(0deg);
     }
+
     to {
         transform: rotate(359deg);
     }
@@ -14699,6 +14833,7 @@ ul.chat-rooms {
     from {
         transform: scaleY(1);
     }
+
     to {
         transform: scaleY(0);
     }
@@ -15350,13 +15485,16 @@ Advanced example - Customized layout
 */
 
 @media all and (min-width: 600px) {
+
     /* Change color for backdrop */
     .fancybox-custom-layout .fancybox-bg {
         background: #fcfaf9;
     }
+
     .fancybox-custom-layout.fancybox-is-open .fancybox-bg {
         opacity: 1;
     }
+
     /* Move caption area to the right side */
     .fancybox-custom-layout .fancybox-caption {
         background: #f1ecec;
@@ -15368,23 +15506,28 @@ Advanced example - Customized layout
         top: 0;
         width: 256px;
     }
+
     .fancybox-custom-layout .fancybox-caption h3 {
         color: #444;
         font-size: 21px;
         line-height: 1.3;
         margin-bottom: 24px;
     }
+
     .fancybox-custom-layout .fancybox-caption a {
         color: #444;
     }
+
     /* Remove gradient from caption*/
     .fancybox-custom-layout .fancybox-caption::before {
         display: none;
     }
+
     /* Adjust content area position */
     .fancybox-custom-layout .fancybox-stage {
         right: 300px;
     }
+
     /* Align buttons at the right side  */
     .fancybox-custom-layout .fancybox-toolbar {
         background: #3b3b45;
@@ -15394,10 +15537,12 @@ Advanced example - Customized layout
         top: 0;
         width: 44px;
     }
+
     /* Remove background from all buttons */
     .fancybox-custom-layout .fancybox-button {
         background: transparent;
     }
+
     /* Navigation arrows */
     .fancybox-custom-layout .fancybox-navigation .fancybox-button div {
         padding: 6px;
@@ -15407,15 +15552,19 @@ Advanced example - Customized layout
         box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
         opacity: .7;
     }
+
     .fancybox-custom-layout .fancybox-navigation .fancybox-button:not([disabled]):hover div {
         opacity: 1;
     }
+
     .fancybox-custom-layout .fancybox-navigation .fancybox-button[disabled] {
         color: #999;
     }
+
     .fancybox-custom-layout .fancybox-navigation .fancybox-button:not([disabled]) {
         color: #333;
     }
+
     /* Reposition right arrow */
     .fancybox-custom-layout .fancybox-button--arrow_right {
         right: 308px;
@@ -16391,7 +16540,7 @@ a.classic-btn:hover {
     /* Chrome10-25,Safari5.1-6 */
     background: linear-gradient(to bottom, rgba(125, 185, 232, 0) 0%, rgba(8, 141, 205, 1) 100%);
     /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#007db9e8', endColorstr='#088dcd', GradientType=0);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#007db9e8', endColorstr='#088dcd', GradientType=0);
     /* IE6-9 */
     bottom: 0;
     content: "";
@@ -16456,6 +16605,7 @@ a.classic-btn:hover {
 .hide {
     display: none;
 }
+
 /* .Like .likeButton {
     display: none;
 } */

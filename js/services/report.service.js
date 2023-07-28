@@ -27,14 +27,7 @@ const getReportByMember = async (memberId) => {
   }
 };
 
-const createReport = async (title, memberId, type, description, posId) => {
-  const model = {
-    reportTitle: title,
-    memberId: memberId,
-    reportType: type,
-    reportDescription: description,
-    posId: posId,
-  };
+const createReport = async (model) => {
   const response = await fetch(`${endpoint}/create-report`, {
     method: "POST",
     headers: {

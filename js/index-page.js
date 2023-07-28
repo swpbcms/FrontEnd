@@ -318,8 +318,8 @@ function displayData(data) {
       postHTML += "    </div>";
       postHTML += "</div>";
       postHTML +=
-        '    <button title="" href="#" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      postHTML += '    <button title="" href="#" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
+        '    <button title="" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
+      postHTML += '    <button title="" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
       postHTML += "</div>";
       postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
