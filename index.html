@@ -1741,10 +1741,10 @@
                                         const response = await createPost(postData);
                                         console.log("Post created successfully:", response);
                                         // Do something with the response if needed
-                                        window.location.href("index.html");
+                                        window.location.href = "index.html";
                                     } catch (error) {
                                         console.error("Error creating post:", error.message);
-                                        alert("Something went wrong!");
+                                        
                                     }
                                 });
 
@@ -2251,12 +2251,6 @@
     <script src="js/script.js"></script><!-- custom scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="module" src="js/index-page.js"></script>
-<<<<<<< Updated upstream
-    <script src="js/services/post.service.js">
-    </script>
-=======
-    <!-- <script src="js/services/post.service.js"></script> -->
->>>>>>> Stashed changes
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
@@ -2265,15 +2259,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
-<<<<<<< Updated upstream
-    <script type="module" src="js/services/report-type.service.js"></script>
 
-
-    <!-- <script src="js/search-post.js"></script> -->
-=======
-    <!-- <script type="module" src="js/services/report-type.service.js"></script> -->
-
->>>>>>> Stashed changes
 </body>
 
 </html>

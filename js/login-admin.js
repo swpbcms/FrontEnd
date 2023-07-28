@@ -22,9 +22,8 @@ $(document).ready(function () {
 
                     // Redirect to admin.html
                     window.location.href = "admin.html";
-                } else {
-                    alert("Login failed!");
-                }
+                } 
+                
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 console.log("Error in API call:", errorThrown);
