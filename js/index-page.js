@@ -328,7 +328,7 @@ function displayData(data) {
       postHTML += "</div>";
       postHTML +=
         '    <button title="" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      postHTML += '    <button title="" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
+      postHTML += '    <button title="" class="report-to"><i class="icofont-share-alt"></i> Report</button>';
       postHTML += "</div>";
       postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
@@ -420,6 +420,17 @@ function displayData(data) {
   }
   )
 }
+
+  // Bắt sự kiện click cho mỗi nút có class .report-to
+$(document).on("click", ".report-to", function () {
+  var postIdButton = $(this).closest(".user-post").find(".post-id").text();
+
+  // Lưu giá trị vào sessionStorage
+  sessionStorage.setItem('reportedPostId', postIdButton);
+
+  // Chuyển đến trang send-report.html
+  window.location.href = 'send-report.html';
+});
 
 
 // Add event listener to the Delete Post button
@@ -573,35 +584,7 @@ $(document).on("submit", ".new-comment form", function (event) {
   }
 });
 
-$(document).ready(function () {
-  // Bắt sự kiện click cho mỗi nút có class .report
-  // $(".report").each(function() {
-  //     $(this).on("click", function() {
-  //         // Lấy giá trị data-id từ nút được nhấp
-  //         var postId = $(this).data('id');
 
-  //         // Lưu giá trị vào sessionStorage
-  //         sessionStorage.setItem('reportedPostId', postId);
-
-  //         // Chuyển đến trang send-report.html
-  //         window.location.href = 'send-report.html';
-  //     });
-  // });
-
-  // Bắt sự kiện click cho mỗi nút có class .report-to
-  $(".report-to").each(function () {
-    $(this).on("click", function () {
-      // Lấy giá trị data-id từ nút được nhấp
-      var postIdButton = $(this).data('id');
-
-      // Lưu giá trị vào sessionStorage
-      sessionStorage.setItem('reportedPostId', postIdButton);
-
-      // Chuyển đến trang send-report.html
-      window.location.href = 'send-report.html';
-    });
-  });
-});
 
 
 

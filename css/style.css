@@ -16717,5 +16717,17 @@ button {
     background-color: #ff0000;  /* Red */
     color: #fff;
   }
+
+.viewsLike {
+    display: inline-block;
+    margin-right: 10px;
+    color: #007bff; /* You can choose the color you prefer for the icon */
+    font-size: 16px;
+    vertical-align: middle;
+  }
+  
+  select.custom-select option:hover {
+    background-color: #f8f9fa; /* change as desired */
+  }
   
   
