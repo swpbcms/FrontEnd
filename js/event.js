@@ -67,13 +67,18 @@ function displayData(data) {
       var eventStatus = '';
       var now = new Date();
       
+      var eventStatusClass = '';
       if (now < eventStartDate) {
-          eventStatus = "Sắp diễn ra";
+        eventStatus = "Sắp diễn ra";
+        eventStatusClass = "upcoming";
       } else if (now > eventEndDate) {
-          eventStatus = "Đã diễn ra";
+        eventStatus = "Đã diễn ra";
+        eventStatusClass = "past";
       } else {
-          eventStatus = "Đang diễn ra";
+        eventStatus = "Đang diễn ra";
+        eventStatusClass = "ongoing";
       }
+      
       
       // Generate the HTML for the current event post
       if (post.postIsEvent === true && post.postStatus === "Thành công") {
@@ -83,7 +88,7 @@ function displayData(data) {
           <a title=""><img src="${eventImage}" alt="${eventTitle}" class="eventImage"></a>
         </figure>
         <div class="event-meta">
-          <span class="eventStatus">${eventStatus}</span> 
+        <span class="eventStatus ${eventStatusClass}">${eventStatus}</span>
           <span class="eventStatus">Number join event: ${postNumberJoin}</span> 
           <span class="post-id" style="display: none;">${postId}</span>
           <h6><a href="event-detail.html" title="" class="eventTitle">${eventTitle}</a></h6>

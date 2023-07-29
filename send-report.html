@@ -321,7 +321,7 @@
 				<ul class="web-elements">
 					<li>
 						<div class="user-dp">
-							<a href="profile-page2.html" title="">
+							<a href="profile.html" title="">
 								<img alt="" src="" id="image">
 								<div class="name">
 									<h4 id="fullname"></h4>
@@ -592,7 +592,10 @@
 											</div>
 
 											<div class="mb-4 col-lg-12">
-												<select id="reportTypeSelect" class="form-control"></select>
+												<label for="reportTypeSelect">Report Type</label>
+												<select id="reportTypeSelect" class="custom-select">
+												  <option selected>Please select a report type...</option>
+												</select>
 											</div>
 											<script>
 												const endpoint3 = "https://localhost:7206/api/ReportType";

@@ -108,6 +108,19 @@ var formattedEndDate = new Date(eventEndDate).toLocaleString("en-US", {
   hour12: true,
 });
 
+// Get current time
+var currentTime = new Date();
+
+if (currentTime < new Date(eventStartDate)) {
+  $(".time-event").text("Sắp diễn ra").addClass("upcoming");
+} else if (currentTime > new Date(eventEndDate)) {
+  $(".time-event").text("Đã diễn ra").addClass("past");
+} else {
+  $(".time-event").text("Đang diễn ra").addClass("ongoing");
+}
+
+
+
 // Hiển thị thông tin của event lên trang event-detail.html
 $(".main-title").text(eventTitle);
 $(".event-desc p").text(eventDescription);

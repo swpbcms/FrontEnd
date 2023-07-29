@@ -1,161 +1,42 @@
-import { getComments } from "./services/comment.service.js";
-import {
-  createPost,
-  deletePost,
-  getJoinPosts,
-  getLikePosts,
-  getPosts,
-  getPostsUser,
-  moderatePost,
-  searchPostsManager,
-  searchPostsUser,
-  updatePost,
-} from "./services/post.service.js";
-import {
-  createCategory,
-  getCategories,
-  getCategoryByID,
-  getCategoryByName,
-  updateCategory,
-} from "./services/categories.service.js";
-import { dislike, like } from "./services/like.service.js";
-import { createMedia } from "./services/media.service.js";
-import { getReportTypes } from "./services/report-type.service.js";
-let comments = [];
-let posts = [];
-let categories = [];
+$(document).ready(function () {
+    var loggedInMember = sessionStorage.getItem("loggedInMember");
+    if (loggedInMember) {
+      var mem = JSON.parse(loggedInMember);
+  
+      var memberFullName = mem.memberFullName;
+      var memberImage = mem.memberImage;
+      var memberEmail = mem.memberEmail;
+      $("#fullname").html(memberFullName);
+      $("#full-name").html(memberFullName);
+      $("#image").attr("src", memberImage);
+      $("#imagev2").attr("src", memberImage);
+      $("#email").html(memberEmail);
+    }
+  });
+  
+$(document).ready(function () {
+    $("#logoutButton").click(function () {
+      // Clear the session storage
+      sessionStorage.removeItem("loggedInMember");
+      // Redirect to the login page or perform any other desired action
+      window.location.href = "sign-in.html";
+    });
+  });
 
-window.addEventListener("DOMContentLoaded", async () => {
-  // await getPosts().then((data) => console.log(data));
-  // await getComments().then(data => comments = data);
-  // await getPosts().then(data => posts = data);
-  // await getCategories().then(data => categories = data);
-  // await getCategoryByName("Chim bồ câu").then(data => console.log(data));
-  // await getCategoryByID("Cate10d7de").then(data => console.log(data));
-  // await createCategory("Chim chích chòe", "this is chim cc").then(data => console.log(data));
-  // await updateCategory("Cateaa306a","Chim chích chòe nè", "this is chim cchoe").then(data => console.log(data));
-  // await getPostsUser().then((data) => displayData(data));
-  // await createPost(
-  //   "chim chích chòe nè",
-  //   "chim cc 2",
-  //   "hcm",
-  //   "2023-06-28T13:24:08.660",
-  //   "2023-06-28T13:24:08.660",
-  //   "Mem40080c3",
-  //   [{ categoryID: "Cate10d7de" }],
-  //   [{ linkMedia: "MNG91188d0" }]
-  // ).then((data) => console.log(data));
-  // await searchPostsUser("bồ câu").then(data => console.log(data));
-  // await searchPostsManager().then(data => console.log(data));
-  // await getJoinPosts("Postca781f").then(data => console.log(data));
-  // await getLikePosts("Postca781f").then(data => console.log(data));
-  // await updatePost(
-  //   "Post78bf71",
-  //   "chim chích chòe nèeeee",
-  //   "chim cc 22222",
-  //   "hcmmmmm",
-  //   "2023-06-28T13:24:08.660",
-  //   "2023-06-28T13:24:08.660",
-  //   "Mem047047c",
-  //   [{ categoryID: "Cate10d7de" }],
-  //   [{ linkMedia: "MNG91188d0" }]
-  // ).then((data) => console.log(data));
-  // await deletePost("Postca781f").then((data) => console.log(data));
-  // await moderatePost("Post7a4917", true, "MNG91188d0").then((data) => console.log(data));
-
-  // await like("Mem40080c3", "Posta05a2c").then((data) => console.log(data));
-  // await dislike("Mem40080c3", "Posta05a2c").then((data) => console.log(data));
-});
+import {getPostsUser} from "./services/post.service.js";
 
 $(document).ready(function () {
-  var loggedInMember = sessionStorage.getItem("loggedInMember");
-  if (loggedInMember) {
-    var mem = JSON.parse(loggedInMember);
-
-    var memberFullName = mem.memberFullName;
-    var memberImage = mem.memberImage;
-    $("#fullname").html(memberFullName);
-    $("#image").attr("src", memberImage);
-  }
-});
-
-$(document).ready(function () {
-  $("#logoutButton").click(function () {
-    // Clear the session storage
-    sessionStorage.removeItem("loggedInMember");
-    // Redirect to the login page or perform any other desired action
-    window.location.href = "sign-in.html";
+  // Call the getPostsUser function
+  getPostsUser().then(data => {
+    // Once the data is received, pass it to displayData
+    displayData(data.data);
+  }).catch(error => {
+    // If there's an error, log it
+    console.error("An error occurred:", error);
   });
 });
 
-$.ajax({
-  url: "https://localhost:7206/api/Post/get-post",
-  method: "GET",
-  success: function (response) {
-    // Kiểm tra dữ liệu trả về từ API
-    if (response && response.data) {
-      // Lưu các postId vào mảng
-      var postIds = response.data.map(function (post) {
-        return post.postId;
-      });
 
-      // Lưu mảng postIds vào local storage
-      localStorage.setItem("postIds", JSON.stringify(postIds));
-
-      // Hiển thị dữ liệu
-      displayData(response.data);
-      displayRecentPost(response.data);
-    } else {
-      console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
-    }
-  },
-  error: function () {
-    console.log("Lỗi khi gọi API.");
-  },
-});
-
-//Hàm hiện thị các bài viết gần nhất
-function displayRecentPost(data) {
-  // Sort the data by postCreateAt in descending order (newest to oldest)
-  data.sort((a, b) => new Date(b.postCreateAt) - new Date(a.postCreateAt));
-
-  // Slice the first three elements to get the three most recent posts
-  const recentPosts = data.slice(0, 3);
-
-  let recentPost = ''; // Initialize the variable to store the generated HTML
-
-  // Use $.each() to iterate through the recentPosts
-  $.each(recentPosts, (index, post) => {
-    const postTitle = post.postTitle;
-    const postCreateAt = post.postCreateAt;
-    const linkMedia = post.media[0].linkMedia;
-    const postStatus = post.postStatus; // Assuming the post status is a property of the post object
-
-    // Only generate HTML for the post if the status is successful
-    if (postStatus === 'Thành công') {
-      // Generate the HTML for the current post
-      const postHTML = `
-        <li>
-          <figure>
-            <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
-          </figure>
-          <div class="re-links-meta">
-            <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
-            <span id="postDate">${postCreateAt}</span>
-          </div>
-        </li>
-      `;
-
-      recentPost += postHTML; // Append the current post's HTML to the recentPost variable
-    }
-  });
-
-  // Update the content of the <ul> element with the accumulated HTML
-  const postListElement = $("#postList");
-  postListElement.html(recentPost);
-}
-
-// Hàm để hiển thị dữ liệu lên trang web
 function displayData(data) {
   // Truy cập phần tử HTML để hiển thị dữ liệu
   var outputElement = $("#userpost");
@@ -167,19 +48,28 @@ function displayData(data) {
   }
 
   // Duyệt qua từng đối tượng dữ liệu và hiển thị lên trang web
+  var sessionMemberId = sessionStorage.getItem('loggedInMember');
+  if (sessionMemberId) {
+    var mem = JSON.parse(sessionMemberId);
+    var memberId = mem.memberId;
+  }
+  
   $.each(data, function (index, item) {
-    var postTitle = item.postTitle;
-    var postDescription = item.postDescription;
-    var memberFullName = item.member.memberFullName;
-    var memberImage = item.member.memberImage;
-    var comments = item.member.comment;
-    var likePost = item.postNumberLike;
-    var postCreateAt = item.postCreateAt;
-    var postId = item.postId;
     var postStatus = item.postStatus;
-    var mediaItems = item.media;
+    var member = item.member;
 
-    if (postStatus === "Thành công") {
+    // Kiểm tra nếu postStatus là "Thành công" và memberId trùng khớp với sessionMemberId
+    if (postStatus === "Thành công" && member && member.memberId === memberId) {
+      var postTitle = item.postTitle;
+      var postDescription = item.postDescription;
+      var memberFullName = member.memberFullName;
+      var memberImage = member.memberImage;
+      var comments = member.comment;
+      var likePost = item.postNumberLike;
+      var postCreateAt = item.postCreateAt;
+      var postId = item.postId;
+      var mediaItems = item.media;
+
       // Tạo HTML để hiển thị thông tin bài viết
       var postHTML = '<div class="main-wraper">';
       postHTML += '<div class="user-post">';
@@ -306,7 +196,7 @@ function displayData(data) {
       // postHTML += "                    </i>";
       // postHTML += "                    <ins>" + likePost + "</ins>";
       // postHTML += "                </span>";
-      postHTML += '<span title="views" class="views">';
+      postHTML += '<span title="views" class="viewsLike">';
       postHTML += '  <i class="fas fa-thumbs-up"></i>';
       postHTML += '  <ins>' + likePost + '</ins>';
       postHTML += '</span>';
@@ -328,7 +218,7 @@ function displayData(data) {
       postHTML += "</div>";
       postHTML +=
         '    <button title="" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      postHTML += '    <button title="" class="report-to"><i class="icofont-share-alt"></i> Report</button>';
+      postHTML += '    <button title="" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
       postHTML += "</div>";
       postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
@@ -417,8 +307,7 @@ function displayData(data) {
       // Thêm HTML vào phần tử hiển thị
       outputElement.append(postHTML);
     }
-  }
-  )
+  });
 }
 
   // Bắt sự kiện click cho mỗi nút có class .report-to
@@ -432,29 +321,6 @@ $(document).on("click", ".report-to", function () {
   window.location.href = 'send-report.html';
 });
 
-
-// Add event listener to the Delete Post button
-$(document).on("click", ".icofont-ui-delete", function () {
-  // Show confirmation dialog
-  var confirmDelete = window.confirm("Bạn có chắc chắn xoá bài viết này?");
-
-  // If user clicks OK (confirmed), proceed with deletion
-  if (confirmDelete) {
-    var postId = $(this).closest(".user-post").find(".post-id").text();
-    // Add code here to handle the deletion of the post
-    // For example, you can call the function to delete the post from the server
-    deletePost(postId)
-      .then(() => {
-        // If deletion is successful, remove the post element from the page
-        $(this).closest(".user-post").remove();
-      })
-      .catch((error) => {
-        console.error("Error deleting post:", error);
-      });
-  }
-});
-
-// Event listener for the "Like" button
 $(document).on("click", ".likeButton", function () {
   // Get the postId from the hidden element within the post HTML
   var postId = $(this).closest(".user-post").find(".post-id").text();
@@ -514,33 +380,6 @@ $(document).on("click", ".likeButton", function () {
   }
 });
 
-
-$("#searchInput").on("keydown", function (event) {
-  if (event.which === 13) {
-    // Kiểm tra nếu phím Enter được nhấn
-    event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter (chuyển trang)
-
-    var searchQuery = $(this).val(); // Lấy giá trị tìm kiếm từ ô input
-
-    if (searchQuery.trim() !== "") {
-      // Kiểm tra nếu ô tìm kiếm không trống
-      searchAndNavigate(searchQuery);
-    }
-  }
-});
-
-function searchAndNavigate(query) {
-  // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
-  // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
-  var url =
-    "https://localhost:7206/api/Post/search-postuser?search=" +
-    encodeURIComponent(query);
-  var variable = query;
-  localStorage.setItem("myVariable", url);
-  localStorage.setItem("query", variable);
-  window.location.href = "search-result.html";
-}
-
 // Comment 
 $(document).on("submit", ".new-comment form", function (event) {
   // Prevent the form from submitting normally
@@ -583,17 +422,3 @@ $(document).on("submit", ".new-comment form", function (event) {
     });
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
