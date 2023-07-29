@@ -13,7 +13,144 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/color.css">
     <link rel="stylesheet" href="css/responsive.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
+
+	<style>
+        /* Styling for the list items (li) */
+        ul.notificationz {
+            list-style: none;
+            padding: 0;
+            /* Set a fixed height and add a scrollbar */
+            height: 400px;
+            overflow-y: auto;
+        }
+
+        ul.notificationz li {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        ul.notificationz li:last-child {
+            border-bottom: none;
+        }
+
+        /* Styling for the mesg-info div */
+        .mesg-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Styling for the span elements inside mesg-info */
+        .mesg-info span {
+            margin-bottom: 5px;
+        }
+
+        /* Additional styles to improve presentation */
+        .icofont-bell-alt {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+
+        h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Optional: Customize the colors */
+        body {
+            background-color: #f8f8f8;
+        }
+
+        ul.notificationz li {
+            background-color: #fff;
+        }
+
+        /* Optional: Add some spacing */
+        .tab-pane {
+            margin-top: 20px;
+        }
+    </style>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f8f8;
+        }
+
+        #createPostForm {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #createPostForm label {
+            font-weight: bold;
+        }
+
+        #createPostForm input[type="text"],
+        #createPostForm textarea,
+        #createPostForm select,
+        #createPostForm input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        #createPostForm input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        #eventFields {
+            display: none;
+        }
+
+        #multiComboBox {
+            height: 100px;
+            overflow-y: auto;
+        }
+
+        #previewMedia img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        #previewMedia img:last-child {
+            margin-right: 0;
+        }
+
+        #createPostForm input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #createPostForm input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .post-newmeta {
+            max-height: 400px;
+            /* Set the maximum height of the popup content */
+            overflow-y: auto;
+            /* Add a vertical scrollbar when content overflows */
+        }
+    </style>
 </head>
 <body>
 <div class="page-loader" id="page-loader">
@@ -104,10 +241,10 @@
 			<ul class="web-elements">
 				<li>
 					<div class="user-dp">
-						<a href="profile-page2.html" title="">
-							<img alt="" src="">
+						<a href="profile.html" title="">
+							<img alt="" src="" id="image">
 							<div class="name">
-								<h4></h4>
+								<h4 id="fullname"></h4>
 							</div>
 						</a>	
 					</div>
@@ -244,10 +381,10 @@
 					<div class="col-lg-12">
 						<div class="post-subject">
 							<div class="university-tag">
-								<figure><img src="" alt=""></figure>
+								<figure><img src="" alt="" id="imagev2"></figure>
 								<div class="uni-name">
-									<h4> Minh ND</h4>
-									<span>minhndse161781@fpt.edu.vn</span>
+									<h4 id="full-name"></h4>
+									<span id="email"></span>
 								</div>
 								<!-- <ul class="sharing-options">
 									<li><a title="Invite Colleagues" href="#" data-toggle="tooltip"><i class="icofont-id-card"></i></a> </li>
@@ -258,7 +395,7 @@
 							</div>
 
 							<ul class="nav nav-tabs post-detail-btn">
-								 <li class="nav-item"><a class="active" href="#timeline" data-toggle="tab">Timeline</a></li>
+								 <li class="nav-item"><a class="active" href="#timeline" data-toggle="tab">My Post</a></li>
 								 <!-- <li class="nav-item"><a class="" href="#followers" data-toggle="tab">Followers</a><span>23</span></li>
 								 <li class="nav-item"><a class="" href="#follow" data-toggle="tab">Follow</a><span>100</span></li> -->
 								<li class="nav-item"><a class="" href="#about" data-toggle="tab">About</a></li>
@@ -278,7 +415,7 @@
 				<div class="row">
 					<div class="col-lg-12">
 						<div id="page-contents" class="row merged20">
-							<div class="col-lg-8">
+							<div class="col-lg-12">
 								<div class="tab-content">
 								    <div class="tab-pane fade active show" id="timeline" >
 										<div class="main-wraper">
@@ -304,6 +441,7 @@
 												</ul> -->
 											</div>
 										</div><!-- create new post -->
+										<div id="userpost"></div>
 										<!-- <div class="main-wraper">
 											<div class="user-post">
 												<div class="friend-info">
@@ -2056,7 +2194,7 @@
 											</div>
 										</div>
 									</div> -->
-								  	<!-- <div class="tab-pane fade " id="about">
+								  	<div class="tab-pane fade " id="about">
 										<div class="main-wraper">
 											<h3 class="main-title">About Engin</h3>
 											<div class="lang">
@@ -2163,7 +2301,7 @@
 											</div>
 										</div>
 										
-									</div> -->
+									</div>
 								</div>
 								<!-- <div class="main-wraper">
 									<div class="user-post">
@@ -2205,7 +2343,7 @@
 									</div>
 								</div>suggested friends -->
 							</div>
-							<div class="col-lg-4">
+							<!-- <div class="col-lg-4">
 								<aside class="sidebar static right">
 									<div class="widget">
 										<h4 class="widget-title">Post Analytics</h4>
@@ -2237,7 +2375,7 @@
 											<img alt="" src="images/clock.png">
 										</div>
 									</div>
-									<!-- <div class="widget stick-widget">
+									<div class="widget stick-widget">
 										<h4 class="widget-title">Who's follownig</h4>
 										<ul class="followers" >
 											<li>
@@ -2291,9 +2429,9 @@
 												</div>
 											</li>
 										</ul>	
-									</div> -->
+									</div>
 								</aside>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
@@ -2359,100 +2497,74 @@
 		</div>
 	</div>send message popup -->
 	
-	<!-- <div class="side-slide">
+	<div class="side-slide active">
 		<span class="popup-closed"><i class="icofont-close"></i></span>
 		<div class="slide-meta">
 			<ul class="nav nav-tabs slide-btns">
-				 <li class="nav-item"><a class="active" href="#messages" data-toggle="tab">Messages</a></li>
-				 <li class="nav-item"><a class="" href="#notifications" data-toggle="tab">Notifications</a></li>
+				<li class="nav-item"><a class="active"
+						data-toggle="tab">Notifications</a></li>
 			</ul>
 			<div class="tab-content">
-				<div class="tab-pane active fade show" id="messages" >
-					<h4><i class="icofont-envelope"></i> messages</h4>
-					<a href="#" class="send-mesg" title="New Message" data-toggle="tooltip"><i class="icofont-edit"></i></a>
-					<ul class="new-messages">
-						<li>
-							<figure><img src="images/resources/user1.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Ibrahim Ahmed</span>
-								<a href="#" title="">Helo dear i wanna talk to you</a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user2.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Fatima J.</span>
-								<a href="#" title="">Helo dear i wanna talk to you</a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user3.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Fawad Ahmed</span>
-								<a href="#" title="">Helo dear i wanna talk to you</a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user4.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Saim Turan</span>
-								<a href="#" title="">Helo dear i wanna talk to you</a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user5.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Alis wells</span>
-								<a href="#" title="">Helo dear i wanna talk to you</a>
-							</div>
-						</li>
+				<div class="tab-pane fade active show" id="notifications">
+					<h4><i class="icofont-bell-alt"></i> Notifications</h4>
+					<ul class="notificationz" id="notificationsList">
+						<!-- Notifications will be dynamically added here -->
 					</ul>
-					<a href="#" title="" class="main-btn" data-ripple="">view all</a>
-				</div>
-				<div class="tab-pane fade" id="notifications">
-					<h4><i class="icofont-bell-alt"></i> notifications</h4>
-					<ul class="notificationz">
-						<li>
-							<figure><img src="images/resources/user5.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Alis wells</span>
-								<a href="#" title="">recommend your post</a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user4.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Alis wells</span>
-								<a href="#" title="">share your post <strong>a good time today!</strong></a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user2.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Alis wells</span>
-								<a href="#" title="">recommend your post</a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user1.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Alis wells</span>
-								<a href="#" title="">share your post <strong>a good time today!</strong></a>
-							</div>
-						</li>
-						<li>
-							<figure><img src="images/resources/user3.jpg" alt=""></figure>
-							<div class="mesg-info">
-								<span>Alis wells</span>
-								<a href="#" title="">recommend your post</a>
-							</div>
-						</li>
-					</ul>
-					<a href="#" title="" class="main-btn" data-ripple="">view all</a>
 				</div>
 			</div>
 		</div>
-	</div>side slide message & popup -->
+	</div>
+	<script>
+		var id = sessionStorage.getItem("loggedInMember");
+		var mem = JSON.parse(id);
+		var memID = mem.memberId;
+		const endpointi = "https://localhost:7206/api/Notification/get-noti-user?memberId="; // Replace this with the actual API endpoint
+
+		// Function to fetch notifications from the API
+		async function fetchNotifications(memID) {
+			try {
+				const response = await fetch(`${endpointi}${memID}`);
+				const data = await response.json();
+				return data.data;
+			} catch (error) {
+				console.error("Error fetching notifications:", error);
+				return [];
+			}
+		}
+
+		// Function to generate HTML for a single notification
+		function generateNotificationHTML(notification) {
+			const { notificationContent, notificationDateTime } = notification;
+			return `
+			<li>
+			  <div class="mesg-info">
+				<span>${notificationContent}</span>
+				<span>${new Date(notificationDateTime).toLocaleString()}</span>
+			  </div>
+			</li>
+		  `;
+		}
+
+		// Function to display notifications on the page
+		async function displayNotifications() {
+			const memberId = "Mem40080c3"; // Replace this with the actual member ID from the session
+			const notificationsList = document.getElementById("notificationsList");
+			notificationsList.innerHTML = "<li>Loading notifications...</li>";
+
+			const notifications = await fetchNotifications(memID);
+
+			if (notifications.length === 0) {
+				notificationsList.innerHTML = "<li>No notifications found.</li>";
+			} else {
+				const notificationsHTML = notifications.map(generateNotificationHTML).join("");
+				notificationsList.innerHTML = notificationsHTML;
+			}
+		}
+
+		// Call the function to display notifications when the page loads
+		displayNotifications();
+	</script>
+	<!-- side slide message & popup -->
 	
 	<!-- <div class="post-new-popup">
 		<div class="popup" style="width: 800px;">
@@ -2529,6 +2641,243 @@
 			</div>
 		</div>
 	</div>New post popup -->
+	<div class="post-new-popup">
+		<div class="popup" style="width: 800px;">
+			<span class="popup-closed"><i class="icofont-close"></i></span>
+			<div class="popup-meta">
+				<div class="popup-head">
+					<h5><i>
+							<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+								fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+								stroke-linejoin="round" class="feather feather-plus">
+								<line x1="12" y1="5" x2="12" y2="19"></line>
+								<line x1="5" y1="12" x2="19" y2="12"></line>
+							</svg></i>Create New Post
+					</h5>
+				</div>
+				<div class="post-new">
+					<div class="post-newmeta">
+
+						<form id="createPostForm">
+							<label for="title">Title:</label><br>
+							<input type="text" id="title" name="title" required><br><br>
+
+							<label for="description">Description:</label><br>
+							<textarea id="description" name="description" rows="4" cols="50"
+								required></textarea><br><br>
+
+							<label for="isEvent">Is Event:</label>
+							<input type="checkbox" id="isEvent" name="isEvent"><br><br>
+
+							<div id="eventFields" style="display: none;">
+								<label for="eventLocation">Event Location:</label><br>
+								<input type="text" id="eventLocation" name="eventLocation"><br><br>
+
+								<label for="eventStartDate">Event Start Date:</label><br>
+								<input type="datetime-local" id="eventStartDate" name="eventStartDate"><br><br>
+
+								<label for="eventEndDate">Event End Date:</label><br>
+								<input type="datetime-local" id="eventEndDate" name="eventEndDate"><br><br>
+							</div>
+
+							<label for="categoryID">Category ID :</label><br>
+							<select id="multiComboBox" multiple>
+								<!-- Các tùy chọn sẽ được điền vào đây sau khi lấy dữ liệu -->
+							</select>
+							<br><br>
+
+							<label for="linkMedia">Media </label><br>
+							<input type="file" id="linkMedia" name="linkMedia" multiple><br><br>
+							<div id="previewMedia"></div><br>
+
+							<input type="submit" value="Create Post">
+						</form>
+						<script>
+							const isEventCheckbox = document.getElementById("isEvent");
+							const eventFieldsDiv = document.getElementById("eventFields");
+
+							isEventCheckbox.addEventListener("change", () => {
+								if (isEventCheckbox.checked) {
+									eventFieldsDiv.style.display = "block";
+								} else {
+									eventFieldsDiv.style.display = "none";
+								}
+							});
+							const endpoint2 = "https://localhost:7206/api/Category";
+
+							// Hàm lấy danh sách category từ API
+							const getCategories = async () => {
+								const response = await fetch(`${endpoint2}/All-Category`);
+								if (!response.ok) {
+									throw new Error("Invalid Request");
+								} else {
+									const data = await response.json();
+									return data.data;
+								}
+							};
+
+							// Hàm điền dữ liệu vào MultiComboBox
+							const fillMultiComboBox = async () => {
+								const multiComboBox = document.getElementById("multiComboBox");
+
+								try {
+									const categories = await getCategories();
+									categories.forEach(category => {
+										const option = document.createElement("option");
+										option.value = category.categoryId;
+										option.textContent = category.categoryName;
+										multiComboBox.appendChild(option);
+									});
+								} catch (error) {
+									console.error("Error filling MultiComboBox:", error);
+								}
+							};
+
+							// Gọi hàm fillMultiComboBox để điền dữ liệu vào MultiComboBox khi trang được load
+							fillMultiComboBox();
+
+						</script>
+						<script type="module">
+							// Import the functions you need from the SDKs you need
+							import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
+							import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
+							import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-storage.js"; // Thêm dòng này
+
+							// Your web app's Firebase configuration
+							// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+							const firebaseConfig = {
+								apiKey: "AIzaSyBSmYdFThKNYigjDxj42PeM95J7aDBSAI0",
+								authDomain: "bcms-196c0.firebaseapp.com",
+								projectId: "bcms-196c0",
+								storageBucket: "bcms-196c0.appspot.com",
+								messagingSenderId: "202968346986",
+								appId: "1:202968346986:web:5258ec686fd1880c95b513",
+								measurementId: "G-HTJGQEQLKW"
+							};
+
+							// Initialize Firebase
+							const app = initializeApp(firebaseConfig);
+							const analytics = getAnalytics(app);
+
+							// Function to upload image to Firebase Storage and get the download URL
+							const uploadImageToStorage = async (file) => {
+								const storage = getStorage(); // Khởi tạo Firebase Storage
+
+								try {
+									const storageRef = ref(storage, `images/${file.name}`); // Tạo tham chiếu đến vị trí lưu trữ hình ảnh
+									await uploadBytes(storageRef, file); // Tải hình ảnh lên Firebase Storage
+									const downloadURL = await getDownloadURL(storageRef); // Lấy đường dẫn tải xuống của hình ảnh đã tải lên
+									return downloadURL; // Trả về đường dẫn tải xuống
+								} catch (error) {
+									console.error("Error uploading image to Firebase Storage:", error);
+									throw error;
+								}
+							};
+
+							// Sau khi có đường dẫn tải xuống hình ảnh, bạn có thể sử dụng nó như bạn đã làm trong đoạn mã JavaScript hiện tại của bạn.
+
+							// Hàm được gọi khi người dùng nhấn nút "Lấy dữ liệu"
+							const getSelectedCategories = () => {
+								const selectedCategories = Array.from(document.querySelectorAll("#multiComboBox option:checked"));
+								const selectedCategoryIds = selectedCategories.map(option => option.value);
+								// Điền danh sách category vào trường "Category ID (comma-separated)"
+								document.getElementById("categoryID").value = selectedCategoryIds.join(",");
+							};
+
+							const endpoint = "https://localhost:7206/api/Post";
+
+							const createPost = async (data) => {
+								const response = await fetch(`${endpoint}/create-post`, {
+									method: "POST",
+									headers: {
+										"Content-Type": "application/json",
+									},
+									body: JSON.stringify(data),
+								});
+								if (!response.ok) {
+									throw new Error("Invalid Request");
+								} else {
+									return response.json();
+								}
+							};
+
+							const linkMediaInput = document.getElementById("linkMedia");
+							const previewMedia = document.getElementById("previewMedia");
+							linkMediaInput.addEventListener("change", () => {
+								previewMedia.innerHTML = ""; // Xóa các hình ảnh hiển thị trước đó (nếu có)
+								const selectedMedia = Array.from(linkMediaInput.files);
+								selectedMedia.forEach((file) => {
+									const objectURL = URL.createObjectURL(file); // Tạo liên kết đối tượng (object URL) từ file hình ảnh
+									const imgElement = document.createElement("img");
+									imgElement.src = objectURL;
+									imgElement.style.width = "100px"; // Tùy chỉnh kích thước hiển thị hình ảnh
+									previewMedia.appendChild(imgElement);
+								});
+							});
+
+							const createPostForm = document.getElementById("createPostForm");
+							var id = sessionStorage.getItem("loggedInMember");
+							var mem = JSON.parse(id);
+							var memID = mem.memberId;
+							createPostForm.addEventListener("submit", async (event) => {
+								event.preventDefault();
+
+								const title = document.getElementById("title").value;
+								const description = document.getElementById("description").value;
+								const eventLocation = document.getElementById("eventLocation").value;
+								const eventStartDate = new Date(document.getElementById("eventStartDate").value);
+								const eventEndDate = new Date(document.getElementById("eventEndDate").value);
+								//const memberId = document.getElementById("memberId").value;
+								const memberId = memID;
+								const selectedCategoryIds = Array.from(document.querySelectorAll("#multiComboBox option:checked")).map(option => option.value);
+								const categoryIDs = selectedCategoryIds.map(id => ({ categoryID: id }));
+
+								const mediaLinksInput = document.getElementById("linkMedia");
+								const mediaLinks = mediaLinksInput.files;
+								const media = [];
+
+								// Đưa tệp hình ảnh vào mảng media
+								for (let i = 0; i < mediaLinks.length; i++) {
+									const file = mediaLinks[i];
+									const downloadURL = await uploadImageToStorage(file); // Gọi function uploadImageToStorage để tải hình ảnh lên Firebase Storage
+									media.push({ linkMedia: downloadURL }); // Đưa đường dẫn tải xuống của hình ảnh vào mảng media
+								}
+
+								const isEvent = document.getElementById("isEvent").checked;
+								const postData = {
+									postTitle: title,
+									postDescription: description,
+									postIsEvent: isEvent,
+									eventLocation: isEvent ? eventLocation : "",
+									eventStartDate: isEvent ? eventStartDate.toISOString() : "",
+									eventEndDate: isEvent ? eventEndDate.toISOString() : "",
+									memberId: memberId,
+									categories: categoryIDs,
+									media: media,
+								};
+
+
+								try {
+									const response = await createPost(postData);
+									console.log("Post created successfully:", response);
+									// Do something with the response if needed
+									window.location.href = "index.html";
+								} catch (error) {
+									console.error("Error creating post:", error.message);
+								}
+							});
+
+
+						</script>
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
 	
 	<!-- <div class="new-question-popup">
 		<div class="popup">
@@ -3197,7 +3546,7 @@
 	
 	<script src="js/main.min.js"></script>
 	<script src="js/script.js"></script>
-	
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="module" src="js/profile-info.js"></script>
 </body>	
 </html>
