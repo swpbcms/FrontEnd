@@ -16667,3 +16667,55 @@ button {
     outline: none;
     /* Add more styles here if needed */
 }
+
+.time-event {
+    font-size: 1.5em;
+    margin: 10px 0;
+    padding: 15px;
+    font-family: Arial, sans-serif;
+    border-radius: 8px; /* Adds curvature to your border */
+    border: 2px solid #444; /* Adds a border */
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1); /* Adds a slight shadow for depth */
+  }
+  
+  /* Depending on the status of the event, use different background and text colors */
+  
+  .time-event.upcoming {
+    background-color: #f9f9f9; 
+    color: #ffa500; /* Orange color for upcoming events */
+  }
+  
+  .time-event.ongoing {
+    background-color: #f0fff0;
+    color: #008000; /* Green color for ongoing events */
+  }
+  
+  .time-event.past {
+    background-color: #fff0f0; 
+    color: #ff0000; /* Red color for past events */
+  }
+  
+  .eventStatus {
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 5px;
+  }
+  
+  .eventStatus.upcoming {
+    background-color: #ffcc00;  /* Yellow */
+    color: #000;
+  }
+  
+  .eventStatus.ongoing {
+    background-color: #008000;  /* Green */
+    color: #fff;
+  }
+  
+  .eventStatus.past {
+    background-color: #ff0000;  /* Red */
+    color: #fff;
+  }
+  
+  
