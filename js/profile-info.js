@@ -24,6 +24,7 @@ $(document).ready(function () {
   });
 
 import {getPostsUser} from "./services/post.service.js";
+import { getMemberByID } from "./services/member.service.js"
 
 $(document).ready(function () {
   // Call the getPostsUser function
@@ -422,3 +423,37 @@ $(document).on("submit", ".new-comment form", function (event) {
     });
   }
 });
+
+$(document).ready(function () {
+  var seMemberId = sessionStorage.getItem('loggedInMember');
+  if (seMemberId) {
+    var mem = JSON.parse(seMemberId);
+    var memberId = mem.memberId;
+  }
+  // Call the getPostsUser function
+  getMemberByID(memberId).then(data => {
+    // Once the data is received, pass it to displayData
+    displayInfo(data.data);
+  }).catch(error => {
+    // If there's an error, log it
+    console.error("An error occurred:", error);
+  });
+});
+
+function displayInfo(memInfo){
+  var memFullName = memInfo.memberFullName;
+  var memEmail = memInfo.memberEmail;
+  var memDob = memInfo.memberDob;
+  var memGender = memInfo.memberGender ? 'Nam' : 'Nữ';  // If memGender is true, display 'Nam', else 'Nữ'
+  var memCreate = memInfo.memberCreateAt;
+
+  // Parse the memDob to a date object and format it to only show date, month, and year
+  var date = new Date(memDob);
+  var formattedDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+
+  $(".memFullName").text(memFullName);
+  $(".memberEmail").text(memEmail);
+  $(".memberGender").text(memGender);
+  $(".memberDob").text(formattedDate);
+  $(".memberCreateAt").text(memCreate);
+}
