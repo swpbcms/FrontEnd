@@ -13,38 +13,127 @@ $(document).ready(function() {
     var email = $("#memberEmailInput").val();
     var dob = $("#memberDateOfBirthInput").val();
 
-    // Validate avatar upload
-    var avatarInput = $("#avatarInput")[0];
-    var avatarFile = avatarInput.files[0]; // Get the first selected file
-    var image = ""; // Set the member image value here
+    // Validate all fields are filled
+    if (!username || !password || !confirmPassword || !gender || !fullName || !email || !dob) {
+      // Show validation error using Swal.fire
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Please fill in all the required fields.",
+      });
+      return; // Stop form submission
+    }
 
-    if (avatarFile) {
-      // Read the selected image file using FileReader API
-      var reader = new FileReader();
+    // Check if Password and Confirm Password match
+    if (password !== confirmPassword) {
+      // Show validation error using Swal.fire
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Password and Confirm Password do not match.",
+      });
+      return; // Stop form submission
+    }
 
-      reader.onload = function(event) {
-        // Base64-encoded image data
-        image = event.target.result;
+    // Validate email format
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      // Show validation error using Swal.fire
+      Swal.fire({
+        icon: "error",
+        title: "Validation Error",
+        text: "Please enter a valid email address.",
+      });
+      return; // Stop form submission
+    }
 
-        // Continue with form submission after reading the image
-        submitForm(username, password, confirmPassword, gender, image, fullName, email, dob);
-      };
+// ... (previous code remains the same)
 
-      reader.onerror = function() {
-        // Show error if image reading fails
+// Validate avatar upload
+var avatarInput = $("#avatarInput")[0];
+var avatarFile = avatarInput.files[0]; // Get the first selected file
+var image = ""; // Set the member image value here
+
+if (!avatarFile) {
+  // Show validation error using Swal.fire
+  Swal.fire({
+    icon: "error",
+    title: "Validation Error",
+    text: "Please select an avatar image.",
+  });
+  return; // Stop form submission
+}
+
+// Read the selected image file using FileReader API
+var reader = new FileReader();
+
+reader.onload = function(event) {
+  // Base64-encoded image data
+  image = event.target.result;
+
+  // Continue with form submission after reading the image
+  submitForm(username, password, confirmPassword, gender, image, fullName, email, dob);
+};
+
+reader.onerror = function() {
+  // Show error if image reading fails
+  Swal.fire({
+    icon: "error",
+    title: "Error",
+    text: "Failed to read the selected image file.",
+  });
+};
+
+// Read the image file as data URL (Base64)
+reader.readAsDataURL(avatarFile);
+
+    // Check the existence of username and email in the API
+    $.ajax({
+      url: "https://localhost:7206/api/Member/All-Member",
+      type: "GET",
+      contentType: "application/json",
+      success: function(response) {
+        // Convert the response data to an array of usernames and emails
+        var usernames = response.data.map(function(member) {
+          return member.memberUserName;
+        });
+        var emails = response.data.map(function(member) {
+          return member.memberEmail;
+        });
+
+        // Check if the username or email already exists in the API
+        if (usernames.includes(username)) {
+          // Show validation error using Swal.fire
+          Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Username already exists.",
+          });
+          return; // Stop form submission
+        }
+
+        if (emails.includes(email)) {
+          // Show validation error using Swal.fire
+          Swal.fire({
+            icon: "error",
+            title: "Validation Error",
+            text: "Email already exists.",
+          });
+          return; // Stop form submission
+        }
+
+        // If all validations pass, proceed with form submission
+        submitForm(username, password, confirmPassword, gender, fullName, email, dob);
+      },
+      error: function(error) {
+        // Show error if API request fails
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Failed to read the selected image file.",
+          text: "Failed to check username and email existence in the API.",
         });
-      };
-
-      // Read the image file as data URL (Base64)
-      reader.readAsDataURL(avatarFile);
-    } else {
-      // Continue with form submission without an avatar image
-      submitForm(username, password, confirmPassword, gender, image, fullName, email, dob);
-    }
+      },
+    });
   });
 });
 
@@ -66,18 +155,6 @@ function submitForm(username, password, confirmPassword, gender, image, fullName
       icon: "error",
       title: "Validation Error",
       text: "Password and Confirm Password do not match.",
-    });
-    return; // Stop form submission
-  }
-
-  // Validate email format
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailRegex.test(email)) {
-    // Show validation error using Swal.fire
-    Swal.fire({
-      icon: "error",
-      title: "Validation Error",
-      text: "Please enter a valid email address.",
     });
     return; // Stop form submission
   }
@@ -118,14 +195,6 @@ function submitForm(username, password, confirmPassword, gender, image, fullName
           text: "Đăng ký không thành công",
         });
       }
-    },
-    error: function(error) {
-      // Xử lý khi có lỗi xảy ra trong quá trình gửi yêu cầu
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Đã xảy ra lỗi: " + error,
-      });
     },
   });
 }
