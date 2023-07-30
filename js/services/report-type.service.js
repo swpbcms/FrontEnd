@@ -63,3 +63,8 @@ const updateReportType = async (id, typeName) => {
     return response.json();
   }
 };
+
+export {
+ getReportTypeById,
+ getReportTypes
+};

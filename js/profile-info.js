@@ -1,67 +1,42 @@
-$.ajax({
-  url: "https://localhost:7206/api/Post/get-post",
-  method: "GET",
-  success: function (response) {
-    // Kiểm tra dữ liệu trả về từ API
-    if (response && response.data) {
-      // Lưu các postId vào mảng
-      var postIds = response.data.map(function (post) {
-        return post.postId;
-      });
-
-      // Lưu mảng postIds vào local storage
-      localStorage.setItem("postIds", JSON.stringify(postIds));
-
-      // Hiển thị dữ liệu
-      displayData(response.data);
-      displayRecentPost(response.data);
-    } else {
-      console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
+$(document).ready(function () {
+    var loggedInMember = sessionStorage.getItem("loggedInMember");
+    if (loggedInMember) {
+      var mem = JSON.parse(loggedInMember);
+  
+      var memberFullName = mem.memberFullName;
+      var memberImage = mem.memberImage;
+      var memberEmail = mem.memberEmail;
+      $("#fullname").html(memberFullName);
+      $("#full-name").html(memberFullName);
+      $("#image").attr("src", memberImage);
+      $("#imagev2").attr("src", memberImage);
+      $("#email").html(memberEmail);
     }
-  },
-  error: function () {
-    console.log("Lỗi khi gọi API.");
-  },
-});
-
-//Hàm hiện thị các bài viết gần nhất
-function displayRecentPost(data) {
-  // Sort the data by postCreateAt in descending order (newest to oldest)
-  data.sort((a, b) => new Date(b.postCreateAt) - new Date(a.postCreateAt));
-
-  // Slice the first three elements to get the three most recent posts
-  const recentPosts = data.slice(0, 3);
-
-  let recentPost = ''; // Initialize the variable to store the generated HTML
-
-  // Use $.each() to iterate through the recentPosts
-  $.each(recentPosts, (index, post) => {
-    const postTitle = post.postTitle;
-    const postCreateAt = post.postCreateAt;
-    const linkMedia = post.media[0].linkMedia;
-
-    // Generate the HTML for the current post
-    const postHTML = `
-      <li>
-        <figure>
-          <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
-        </figure>
-        <div class="re-links-meta">
-          <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
-          <span id="postDate">${postCreateAt}</span>
-        </div>
-      </li>
-    `;
-
-    recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+  });
+  
+$(document).ready(function () {
+    $("#logoutButton").click(function () {
+      // Clear the session storage
+      sessionStorage.removeItem("loggedInMember");
+      // Redirect to the login page or perform any other desired action
+      window.location.href = "sign-in.html";
+    });
   });
 
-  // Update the content of the <ul> element with the accumulated HTML
-  const postListElement = $("#postList");
-  postListElement.html(recentPost);
-}
+import {getPostsUser} from "./services/post.service.js";
 
-// Hàm để hiển thị dữ liệu lên trang web
+$(document).ready(function () {
+  // Call the getPostsUser function
+  getPostsUser().then(data => {
+    // Once the data is received, pass it to displayData
+    displayData(data.data);
+  }).catch(error => {
+    // If there's an error, log it
+    console.error("An error occurred:", error);
+  });
+});
+
+
 function displayData(data) {
   // Truy cập phần tử HTML để hiển thị dữ liệu
   var outputElement = $("#userpost");
@@ -73,19 +48,28 @@ function displayData(data) {
   }
 
   // Duyệt qua từng đối tượng dữ liệu và hiển thị lên trang web
+  var sessionMemberId = sessionStorage.getItem('loggedInMember');
+  if (sessionMemberId) {
+    var mem = JSON.parse(sessionMemberId);
+    var memberId = mem.memberId;
+  }
+  
   $.each(data, function (index, item) {
-    var postTitle = item.postTitle;
-    var postDescription = item.postDescription;
-    var memberFullName = item.member.memberFullName;
-    var memberImage = item.member.memberImage;
-    var comments = item.member.comment;
-    var likePost = item.postNumberLike;
-    var postCreateAt = item.postCreateAt;
-    var postId = item.postId;
     var postStatus = item.postStatus;
-    var mediaItems = item.media;
+    var member = item.member;
 
-    if (postStatus === "Thành công") {
+    // Kiểm tra nếu postStatus là "Thành công" và memberId trùng khớp với sessionMemberId
+    if (postStatus === "Thành công" && member && member.memberId === memberId) {
+      var postTitle = item.postTitle;
+      var postDescription = item.postDescription;
+      var memberFullName = member.memberFullName;
+      var memberImage = member.memberImage;
+      var comments = member.comment;
+      var likePost = item.postNumberLike;
+      var postCreateAt = item.postCreateAt;
+      var postId = item.postId;
+      var mediaItems = item.media;
+
       // Tạo HTML để hiển thị thông tin bài viết
       var postHTML = '<div class="main-wraper">';
       postHTML += '<div class="user-post">';
@@ -101,32 +85,32 @@ function displayData(data) {
       postHTML += '    <div class="friend-name">';
       postHTML += '        <div class="more">';
       postHTML += '            <div class="more-post-optns">';
-      postHTML += '                <i class="">';
-      postHTML +=
-        '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
-      postHTML += "                </i>";
-      postHTML += "                <ul>";
-      postHTML += "                    <li>";
-      postHTML +=
-        '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
-      postHTML +=
-        "                        <span>Edit This Post within a Hour</span>";
-      postHTML += "                    </li>";
+      // postHTML += '                <i class="">';
+      // postHTML +=
+      //   '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
+      // postHTML += "                </i>";
+      // postHTML += "                <ul>";
       // postHTML += "                    <li>";
-      // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
-      // postHTML += "                        <span>Hide This Post</span>";
+      // // postHTML +=
+      // //   '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
+      // // postHTML +=
+      // //   "                        <span>Edit This Post within a Hour</span>";
       // postHTML += "                    </li>";
-      postHTML += "                    <li>";
-      postHTML +=
-        '                        <i class="icofont-ui-delete"></i>Delete Post';
-      postHTML +=
-        "                        <span>If inappropriate Post By Mistake</span>";
-      postHTML += "                    </li>";
-      postHTML += "                    <li>";
-      postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
-      postHTML += "                        <span>Inappropriate content</span>";
-      postHTML += "                    </li>";
-      postHTML += "                </ul>";
+      // // postHTML += "                    <li>";
+      // // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
+      // // postHTML += "                        <span>Hide This Post</span>";
+      // // postHTML += "                    </li>";
+      // postHTML += "                    <li>";
+      // postHTML +=
+      //   '                        <i class="icofont-ui-delete"></i>Delete Post';
+      // postHTML +=
+      //   "                        <span>If inappropriate Post By Mistake</span>";
+      // postHTML += "                    </li>";
+      // postHTML += "                    <li>";
+      // postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
+      // postHTML += "                        <span>Inappropriate content</span>";
+      // postHTML += "                    </li>";
+      // postHTML += "                </ul>";
       postHTML += "            </div>";
       postHTML += "        </div>";
       postHTML +=
@@ -205,18 +189,23 @@ function displayData(data) {
       postHTML += '    <div class="we-video-info">';
       postHTML += "        <ul>";
       postHTML += "            <li>";
-      postHTML += '                <span title="views" class="views">';
-      postHTML += "                    <i>";
-      postHTML +=
-        '                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
-      postHTML += "                    </i>";
-      postHTML += "                    <ins>" + likePost + "</ins>";
-      postHTML += "                </span>";
+      // postHTML += '                <span title="views" class="views">';
+      // postHTML += "                    <i>";
+      // postHTML +=
+      //   '                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+      // postHTML += "                    </i>";
+      // postHTML += "                    <ins>" + likePost + "</ins>";
+      // postHTML += "                </span>";
+      postHTML += '<span title="views" class="viewsLike">';
+      postHTML += '  <i class="fas fa-thumbs-up"></i>';
+      postHTML += '  <ins>' + likePost + '</ins>';
+      postHTML += '</span>';
+
       postHTML += "            </li>";
       postHTML += "            <li>";
       postHTML += "        </ul>";
-      postHTML +=
-        '        <a href="post-detail.html" title="" class="reply">Reply <i class="icofont-reply"></i></a>';
+      // postHTML +=
+      //   '        <a href="post-detail.html" title="" class="reply">Reply <i class="icofont-reply"></i></a>';
       postHTML += "    </div>";
       postHTML += "</div>";
       postHTML += '<div class="stat-tools">';
@@ -231,7 +220,7 @@ function displayData(data) {
         '    <button title="" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
       postHTML += '    <button title="" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
       postHTML += "</div>";
-      postHTML += '<div class="new-comment" style="display: none;">';
+      postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
       postHTML += '        <input type="text" class="comment-input" placeholder="write comment">';
       postHTML +=
@@ -274,13 +263,13 @@ function displayData(data) {
                 <span>${commentDateTime}</span>
                 <p>${commentContent}</p>
             </div>
-            <a title="Like" href="#"><i class="icofont-heart"></i></a>
-            <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>
         </li>
     </ul>
     </div>`;
         }
       }
+      // <a title="Like" href="#"><i class="icofont-heart"></i></a>
+      // <a title="Reply" href="#" class="reply-comment"><i class="icofont-reply"></i></a>
       // });
       // postHTML += '    <div class="comments-area">';
       // postHTML += '        <ul>';
@@ -318,6 +307,118 @@ function displayData(data) {
       // Thêm HTML vào phần tử hiển thị
       outputElement.append(postHTML);
     }
-  }
-  )
+  });
 }
+
+  // Bắt sự kiện click cho mỗi nút có class .report-to
+$(document).on("click", ".report-to", function () {
+  var postIdButton = $(this).closest(".user-post").find(".post-id").text();
+
+  // Lưu giá trị vào sessionStorage
+  sessionStorage.setItem('reportedPostId', postIdButton);
+
+  // Chuyển đến trang send-report.html
+  window.location.href = 'send-report.html';
+});
+
+$(document).on("click", ".likeButton", function () {
+  // Get the postId from the hidden element within the post HTML
+  var postId = $(this).closest(".user-post").find(".post-id").text();
+
+  // Get the memberId from the session storage
+  var loggedInMember = sessionStorage.getItem("loggedInMember");
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+    var memberId = mem.memberId;
+
+    // Get the current date and time
+    var dateTime = new Date().toISOString();
+
+    // Check if the post has been liked by the user
+    var likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+    var likedPostIndex = likedPosts.findIndex(function (likedPost) {
+      return likedPost.postId === postId && likedPost.memberId === memberId;
+    });
+    var isLiked = likedPostIndex !== -1;
+
+    // Depending on whether the post has been liked, call the "Like" or "disLike" API
+    var url = isLiked
+      ? "https://localhost:7206/api/Like/disLike"
+      : "https://localhost:7206/api/Like/Like";
+
+    // Create the data object for the API request
+    var likeData = {
+      memberId: memberId,
+      postId: postId,
+      dateTime: dateTime,
+    };
+
+    // Send the AJAX request to the API
+    $.ajax({
+      url: url,
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(likeData),
+      success: function (response) {
+        // Update the list of liked posts in localStorage
+        if (isLiked) {
+          likedPosts.splice(likedPostIndex, 1);
+        } else {
+          likedPosts.push({ postId: postId, memberId: memberId });
+        }
+        localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
+
+        // Handle the success response (if needed)
+        console.log(isLiked ? "disLike successful" : "Like successful");
+        location.reload();
+      },
+      error: function (xhr, status, error) {
+        // Handle the error (if needed)
+        console.log(isLiked ? "Error disliking post" : "Error liking post");
+      },
+    });
+  }
+});
+
+// Comment 
+$(document).on("submit", ".new-comment form", function (event) {
+  // Prevent the form from submitting normally
+  event.preventDefault();
+
+  // Get the postId from the hidden element within the post HTML
+  var postId = $(this).closest(".user-post").find(".post-id").text();
+
+  // Get the memberId from the session storage
+  var loggedInMember = sessionStorage.getItem("loggedInMember");
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+    var memberId = mem.memberId;
+
+    // Get the comment content from the input field
+    var commentContent = $(this).find(".comment-input").val();
+
+    // Create the data object for the "Comment" API request
+    var commentData = {
+      memberId: memberId,
+      postId: postId,
+      commentContent: commentContent
+    };
+
+    // Send the AJAX request to the "Comment" API
+    $.ajax({
+      url: "https://localhost:7206/api/Comment/Comment",
+      type: "POST",
+      contentType: "application/json",
+      data: JSON.stringify(commentData),
+      success: function (response) {
+        // Handle the success response (if needed)
+        console.log("Comment successful");
+        location.reload();
+      },
+      error: function (xhr, status, error) {
+        // Handle the error (if needed)
+        console.log("Error commenting");
+      },
+    });
+  }
+});
