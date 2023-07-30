@@ -16731,3 +16731,35 @@ button {
   }
   
   
+.main-post {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.main-info {
+    color: #333;
+    text-align: center;
+}
+
+.info-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.info-field h5 {
+    font-size: 1.25em;
+    margin: 0;
+    color: #555;
+}
+
+.info-field h6 {
+    font-size: 1em;
+    margin: 0;
+    color: #333;
+}
+
