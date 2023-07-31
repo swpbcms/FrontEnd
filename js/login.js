@@ -103,3 +103,53 @@ $(document).ready(function() {
         });
     }
 });
+
+  $(document).ready(function() {
+    var recentEvents = []; // Mảng lưu trữ 3 sự kiện gần nhất
+
+    function updateEvent(event, index) {
+      $("#eventList .eventImage" + index).attr("src", event.linkMedia);
+      $("#eventList .eventTitle" + index).text(event.postTitle);
+      $("#eventList .eventDescription" + index).text(event.postDescription);
+    }
+
+    function showNextEvent() {
+      var currentIndex = 0;
+      setInterval(function() {
+        updateEvent(recentEvents[currentIndex], 1);
+        updateEvent(recentEvents[(currentIndex + 1) % recentEvents.length], 2);
+        updateEvent(recentEvents[(currentIndex + 2) % recentEvents.length], 3);
+        currentIndex = (currentIndex + 1) % recentEvents.length;
+      }, 5000); // Đổi sự kiện sau mỗi 5 giây (5000 milliseconds)
+
+      // Hiển thị sự kiện đầu tiên
+      updateEvent(recentEvents[currentIndex], 1);
+      updateEvent(recentEvents[(currentIndex + 1) % recentEvents.length], 2);
+      updateEvent(recentEvents[(currentIndex + 2) % recentEvents.length], 3);
+    }
+
+    $.ajax({
+      url: "https://localhost:7206/api/Post/get-post",
+      type: "GET",
+      success: function(response) {
+        var posts = response.data;
+        var events = posts.filter(function(post) {
+          return post.postIsEvent === true;
+        });
+
+        // Sort events by the most recent ones (assuming they have a timestamp property)
+        events.sort(function(a, b) {
+          return new Date(b.timestamp) - new Date(a.timestamp);
+        });
+
+        // Take the first 3 events (most recent ones)
+        recentEvents = events.slice(0, 3);
+
+        // Show the events
+        showNextEvent();
+      },
+      error: function(error) {
+        console.log("Error in fetching post data:", error);
+      }
+    });
+  });
