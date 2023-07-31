@@ -8053,9 +8053,47 @@ input:checked+.switch:active::before {
     width: 100%;
 }
 
-.event-loc>.main-btn {
-    float: right;
+.buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
 }
+
+.main-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.main-btn:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+.dropdown-toggle {
+    appearance: none;
+    outline: none;
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    content: "\25BC";
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+
+
 
 
 /*--- event statics ---*/
@@ -16731,3 +16769,35 @@ button {
   }
   
   
+.main-post {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.main-info {
+    color: #333;
+    text-align: center;
+}
+
+.info-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+}
+
+.info-field h5 {
+    font-size: 1.25em;
+    margin: 0;
+    color: #555;
+}
+
+.info-field h6 {
+    font-size: 1em;
+    margin: 0;
+    color: #333;
+}
+

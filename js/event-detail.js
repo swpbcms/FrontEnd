@@ -158,7 +158,11 @@ $(document).ready(function () {
         // Add event listener for the Join/Unjoin button
         $("#joinButton").on("click", function () {
           // Call the joinEvent or unjoinEvent function based on the event status
-          var memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+          const memId = sessionStorage.getItem("loggedInMember");
+          if (memId) {
+            var mem = JSON.parse(memId);
+            var memberId = mem.memberId;
+          }
           if (isJoined) {
             unjoinEvent(memberId, postId, function () {
               // Callback function after successful unjoin
@@ -244,7 +248,11 @@ function unjoinEvent(memberId, postId, successCallback) {
 // Function to check if the user has already joined the event
 function checkJoinStatus() {
   const postId = getPostIdFromURL();
-  const memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+  const memId = sessionStorage.getItem("loggedInMember");
+  if (memId) {
+    var mem = JSON.parse(memId);
+    var memberId = mem.memberId;
+  }
   const isJoined = sessionStorage.getItem(`joinStatus_${memberId}_${postId}`) === "true";
   return isJoined;
 }
@@ -252,14 +260,22 @@ function checkJoinStatus() {
 // Function to set the join status in localStorage
 function setJoinStatus(isJoined) {
   const postId = getPostIdFromURL();
-  const memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+  const memId = sessionStorage.getItem("loggedInMember");
+  if (memId) {
+    var mem = JSON.parse(memId);
+    var memberId = mem.memberId;
+  }
   sessionStorage.setItem(`joinStatus_${memberId}_${postId}`, isJoined ? "true" : "false");
 }
 
 // Function to handle the Join/Unjoin button click
 function handleJoinButtonClick() {
   var isJoined = checkJoinStatus();
-  var memberId = "Mem7ca5a87"; // Replace this with the actual member ID
+  const memId = sessionStorage.getItem("loggedInMember");
+  if (memId) {
+    var mem = JSON.parse(memId);
+    var memberId = mem.memberId;
+  }
   const postId = getPostIdFromURL();
 
   if (isJoined) {
@@ -291,3 +307,5 @@ $(document).ready(function () {
 });
 
 // Rest of the existing code...
+
+
