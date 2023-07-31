@@ -108,7 +108,7 @@ $(document).ready(function() {
     var recentEvents = []; // Mảng lưu trữ 3 sự kiện gần nhất
 
     function updateEvent(event, index) {
-      $("#eventList .eventImage" + index).attr("src", event.linkMedia);
+      $("#eventList .eventImage" + index).attr("src", event.media[0].linkMedia);
       $("#eventList .eventTitle" + index).text(event.postTitle);
       $("#eventList .eventDescription" + index).text(event.postDescription);
     }
@@ -134,7 +134,7 @@ $(document).ready(function() {
       success: function(response) {
         var posts = response.data;
         var events = posts.filter(function(post) {
-          return post.postIsEvent === true;
+          return post.postIsEvent === true && post.postStatus == "Thành công";
         });
 
         // Sort events by the most recent ones (assuming they have a timestamp property)
