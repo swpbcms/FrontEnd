@@ -106,7 +106,7 @@ $.ajax({
 
       // Hiển thị dữ liệu
       displayData(response.data);
-      displayRecentPost(response.data);
+      displayRecentEvent(response.data);
     } else {
       console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
     }
@@ -117,7 +117,7 @@ $.ajax({
 });
 
 //Hàm hiện thị các bài viết gần nhất
-function displayRecentPost(data) {
+function displayRecentEvent(data) {
   // Sort the data by postCreateAt in descending order (newest to oldest)
   data.sort((a, b) => new Date(b.postCreateAt) - new Date(a.postCreateAt));
 
@@ -132,9 +132,10 @@ function displayRecentPost(data) {
     const postCreateAt = post.postCreateAt;
     const linkMedia = post.media[0].linkMedia;
     const postStatus = post.postStatus; // Assuming the post status is a property of the post object
+    const postIsEvent = post.postIsEvent;
 
     // Only generate HTML for the post if the status is successful
-    if (postStatus === 'Thành công') {
+    if (postStatus === 'Thành công' && postIsEvent === true) {
       // Generate the HTML for the current post
       const postHTML = `
         <li>
@@ -142,7 +143,7 @@ function displayRecentPost(data) {
             <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
           </figure>
           <div class="re-links-meta">
-            <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
+            <h6><a title="" href="" id="postLink">${postTitle}</a></h6>
             <span id="postDate">${postCreateAt}</span>
           </div>
         </li>
@@ -197,32 +198,32 @@ function displayData(data) {
       postHTML += '    <div class="friend-name">';
       postHTML += '        <div class="more">';
       postHTML += '            <div class="more-post-optns">';
-      // postHTML += '                <i class="">';
-      // postHTML +=
-      //   '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
-      // postHTML += "                </i>";
-      // postHTML += "                <ul>";
-      // postHTML += "                    <li>";
-      // // postHTML +=
-      // //   '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
-      // // postHTML +=
-      // //   "                        <span>Edit This Post within a Hour</span>";
+      postHTML += '                <i class="">';
+      postHTML +=
+        '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
+      postHTML += "                </i>";
+      postHTML += "                <ul>";
+      postHTML += "                    <li>";
+      postHTML +=
+        '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
+      postHTML +=
+        "                        <span>Edit This Post within a Hour</span>";
       // postHTML += "                    </li>";
       // // postHTML += "                    <li>";
       // // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
       // // postHTML += "                        <span>Hide This Post</span>";
       // // postHTML += "                    </li>";
       // postHTML += "                    <li>";
-      // postHTML +=
-      //   '                        <i class="icofont-ui-delete"></i>Delete Post';
-      // postHTML +=
-      //   "                        <span>If inappropriate Post By Mistake</span>";
-      // postHTML += "                    </li>";
-      // postHTML += "                    <li>";
-      // postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
-      // postHTML += "                        <span>Inappropriate content</span>";
-      // postHTML += "                    </li>";
-      // postHTML += "                </ul>";
+      postHTML +=
+        '                        <i class="icofont-ui-delete"></i>Delete Post';
+      postHTML +=
+        "                        <span>If inappropriate Post By Mistake</span>";
+      postHTML += "                    </li>";
+      postHTML += "                    <li>";
+      postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
+      postHTML += "                        <span>Inappropriate content</span>";
+      postHTML += "                    </li>";
+      postHTML += "                </ul>";
       postHTML += "            </div>";
       postHTML += "        </div>";
       postHTML +=

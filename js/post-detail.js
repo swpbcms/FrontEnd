@@ -60,6 +60,7 @@ $(document).ready(function () {
             if (response && response.data) {
                 // Hiển thị thông tin chi tiết của event lên trang event-detail.html
                 displayPostDetail(response.data);
+                displayComments(response.data.comment);
             } else {
                 console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
             }
@@ -69,6 +70,7 @@ $(document).ready(function () {
         },
     });
 });
+
 
 function displayPostDetail(postDetail) {
     // Hiển thị thông tin của event lên trang event-detail.html
@@ -99,45 +101,48 @@ function displayPostDetail(postDetail) {
 
 }
 
-import { getCommentsByPost } from "./services/comment.service.js";
-$(document).ready(function() {
-    try {
-        // Gọi API để lấy danh sách comment
-        const response = getCommentsByPost(postId).then;
-        const comments = response.data;
+function displayComments(comments) {
+    var commentsContainer = $(".comment-box");  // Sửa đường dẫn cho phù hợp với trang của bạn
+    commentsContainer.empty(); // Xóa các comment cũ
 
-        // Xóa tất cả comment cũ
-        $(".comment-box").remove();
+    $.each(comments, function(index, commentData) {
+        var commentContent = commentData.commentContent;
+        var memberFullName = commentData.member.memberFullName;
+        var memberImage = commentData.member.memberImage;
+        var commentTime = commentData.dateTime;
 
-        // Duyệt qua từng comment và hiển thị lên trang
-        comments.forEach(function (comment) {
-            const { commentContent, dateTime } = comment;
-            const { memberFullName, memberImage } = comment.member;
-
-            // Tạo một comment box mới
-            const commentBox = $("<div>").addClass("comment-box");
-
-            // Tạo phần thông tin của người comment
-            const commenterPhoto = $("<div>").addClass("commenter-photo")
-                                              .append($("<img>").attr("src", memberImage));
-            const commenterMeta = $("<div>").addClass("commenter-meta");
-            const commentTitles = $("<div>").addClass("comment-titles")
-                                             .append($("<h6>").text(memberFullName))
-                                             .append($("<span>").text(dateTime))
-                                             .append($("<a>").attr("href", "#").addClass("reply").text("reply"));
-            const commentContentElement = $("<p>").text(commentContent);
-
-            commenterMeta.append(commentTitles)
-                         .append(commentContentElement);
-
-            // Thêm thông tin vào comment box
-            commentBox.append(commenterPhoto)
-                      .append(commenterMeta);
-
-            // Thêm comment box vào trang
-            $(".comment-container").append(commentBox);  // replace ".comment-container" with the actual class or id of your comment container
+        // Chuyển đổi commentTime thành định dạng ngày giờ dễ đọc
+        var formattedCommentTime = new Date(commentTime).toLocaleString("en-US", {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            timeZoneName: "short",
+            hour12: true,
         });
-    } catch (error) {
-        console.error("Error when fetching comments: ", error);
-    }
-})
+
+        // Tạo comment HTML
+        var commentHTML = '<li>';
+        commentHTML += '<div class="comment-box">';
+        commentHTML += '<div class="commenter-photo">';
+        commentHTML += '<img alt="" src="' + memberImage + '">';
+        commentHTML += '</div>';
+        commentHTML += '<div class="commenter-meta">';
+        commentHTML += '<div class="comment-titles">';
+        commentHTML += '<h6>' + memberFullName + '</h6>';
+        commentHTML += '<span>' + formattedCommentTime + '</span>';
+        commentHTML += '<a title="" href="#" class="reply">reply</a>';
+        commentHTML += '</div>';
+        commentHTML += '<p>' + commentContent + '</p>';
+        commentHTML += '</div>';
+        commentHTML += '</div>';
+        commentHTML += '</li>';
+
+        // Thêm comment mới vào container
+        commentsContainer.append(commentHTML);
+    });
+}
+
