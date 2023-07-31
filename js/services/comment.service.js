@@ -22,4 +22,4 @@ const getCommentsByPost = async (postId) => {
     }
   };
 
-export { getComments };
+export { getComments, getCommentsByPost };

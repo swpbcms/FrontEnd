@@ -75,7 +75,9 @@ $(document).ready(function () {
     var memberFullName = mem.memberFullName;
     var memberImage = mem.memberImage;
     $("#fullname").html(memberFullName);
+    $("#full-name").html(memberFullName);
     $("#image").attr("src", memberImage);
+    $("#image-profile").attr("src", memberImage);
   }
 });
 
@@ -513,17 +515,15 @@ $(document).on("click", ".likeButton", function () {
     });
   }
 });
+  
 
-
-$("#searchInput").on("keydown", function (event) {
-  if (event.which === 13) {
-    // Kiểm tra nếu phím Enter được nhấn
+$('#searchInput').on('keydown', function (event) {
+  if (event.which === 13) { // Kiểm tra nếu phím Enter được nhấn
     event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter (chuyển trang)
 
     var searchQuery = $(this).val(); // Lấy giá trị tìm kiếm từ ô input
 
-    if (searchQuery.trim() !== "") {
-      // Kiểm tra nếu ô tìm kiếm không trống
+    if (searchQuery.trim() !== '') { // Kiểm tra nếu ô tìm kiếm không trống
       searchAndNavigate(searchQuery);
     }
   }
@@ -532,13 +532,11 @@ $("#searchInput").on("keydown", function (event) {
 function searchAndNavigate(query) {
   // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
   // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
-  var url =
-    "https://localhost:7206/api/Post/search-postuser?search=" +
-    encodeURIComponent(query);
+  var url = 'https://localhost:7206/api/Post/search-postuser?search=' + encodeURIComponent(query);
   var variable = query;
-  localStorage.setItem("myVariable", url);
-  localStorage.setItem("query", variable);
-  window.location.href = "search-result.html";
+  localStorage.setItem('myVariable', url);
+  localStorage.setItem('query', variable);
+  window.location.href = 'search-result.html?search=' + query;
 }
 
 // Comment 
