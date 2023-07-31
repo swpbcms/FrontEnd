@@ -13,7 +13,7 @@ const getComments = async () => {
 
 const getCommentsByPost = async (postId) => {
     const response = await fetch(
-      `${endpoint}/get-comment`
+      `${endpoint}/get-comment-post?postid=${postId}`
     )
     if (!response.ok) {
       throw new Error("Invalid Request");
