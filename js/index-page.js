@@ -133,21 +133,23 @@ function displayRecentEvent(data) {
     const linkMedia = post.media[0].linkMedia;
     const postStatus = post.postStatus; // Assuming the post status is a property of the post object
     const postIsEvent = post.postIsEvent;
+    const postId = post.postId;
 
     // Only generate HTML for the post if the status is successful
     if (postStatus === 'Thành công' && postIsEvent === true) {
       // Generate the HTML for the current post
+      // Generate the HTML for the current post
       const postHTML = `
-        <li>
-          <figure>
-            <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
-          </figure>
-          <div class="re-links-meta">
-            <h6><a title="" href="" id="postLink">${postTitle}</a></h6>
-            <span id="postDate">${postCreateAt}</span>
-          </div>
-        </li>
-      `;
+  <li>
+    <figure>
+    <img alt="${postTitle}" src="${linkMedia}" data-post-id="${post.postId}" class="postImage">
+    </figure>
+    <div class="re-links-meta">
+      <h6><a title="" href="post-detail.html?postId=${postId}" id="postLink">${postTitle}</a></h6>
+      <span id="postDate">${postCreateAt}</span>
+    </div>
+  </li>
+`;
 
       recentPost += postHTML; // Append the current post's HTML to the recentPost variable
     }
@@ -157,6 +159,12 @@ function displayRecentEvent(data) {
   const postListElement = $("#postList");
   postListElement.html(recentPost);
 }
+
+$(document).on('click', '.postImage', function (e) {
+  e.preventDefault();
+  const postId = $(this).data('post-id');
+  window.location.href = `post-detail.html?postId=${postId}`;
+});
 
 // Hàm để hiển thị dữ liệu lên trang web
 function displayData(data) {
@@ -208,12 +216,12 @@ function displayData(data) {
         '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
       postHTML +=
         "                        <span>Edit This Post within a Hour</span>";
-      // postHTML += "                    </li>";
+      postHTML += "                    </li>";
       // // postHTML += "                    <li>";
       // // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
       // // postHTML += "                        <span>Hide This Post</span>";
       // // postHTML += "                    </li>";
-      // postHTML += "                    <li>";
+      postHTML += "                    <li>";
       postHTML +=
         '                        <i class="icofont-ui-delete"></i>Delete Post';
       postHTML +=
@@ -424,7 +432,7 @@ function displayData(data) {
   )
 }
 
-  // Bắt sự kiện click cho mỗi nút có class .report-to
+// Bắt sự kiện click cho mỗi nút có class .report-to
 $(document).on("click", ".report-to", function () {
   var postIdButton = $(this).closest(".user-post").find(".post-id").text();
 
@@ -516,7 +524,7 @@ $(document).on("click", ".likeButton", function () {
     });
   }
 });
-  
+
 
 $('#searchInput').on('keydown', function (event) {
   if (event.which === 13) { // Kiểm tra nếu phím Enter được nhấn
