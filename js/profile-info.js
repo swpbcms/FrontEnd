@@ -86,32 +86,32 @@ function displayData(data) {
       postHTML += '    <div class="friend-name">';
       postHTML += '        <div class="more">';
       postHTML += '            <div class="more-post-optns">';
-      // postHTML += '                <i class="">';
-      // postHTML +=
-      //   '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
-      // postHTML += "                </i>";
-      // postHTML += "                <ul>";
+      postHTML += '                <i class="">';
+      postHTML +=
+        '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
+      postHTML += "                </i>";
+      postHTML += "                <ul>";
+      postHTML += "                    <li>";
+      postHTML +=
+        '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
+      postHTML +=
+        "                        <span>Edit This Post within a Hour</span>";
+      postHTML += "                    </li>";
       // postHTML += "                    <li>";
-      // // postHTML +=
-      // //   '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
-      // // postHTML +=
-      // //   "                        <span>Edit This Post within a Hour</span>";
+      // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
+      // postHTML += "                        <span>Hide This Post</span>";
       // postHTML += "                    </li>";
-      // // postHTML += "                    <li>";
-      // // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
-      // // postHTML += "                        <span>Hide This Post</span>";
-      // // postHTML += "                    </li>";
-      // postHTML += "                    <li>";
-      // postHTML +=
-      //   '                        <i class="icofont-ui-delete"></i>Delete Post';
-      // postHTML +=
-      //   "                        <span>If inappropriate Post By Mistake</span>";
+      postHTML += "                    <li>";
+      postHTML +=
+        '                        <i class="icofont-ui-delete"></i>Delete Post';
+      postHTML +=
+        "                        <span>If inappropriate Post By Mistake</span>";
       // postHTML += "                    </li>";
       // postHTML += "                    <li>";
       // postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
       // postHTML += "                        <span>Inappropriate content</span>";
       // postHTML += "                    </li>";
-      // postHTML += "                </ul>";
+      postHTML += "                </ul>";
       postHTML += "            </div>";
       postHTML += "        </div>";
       postHTML +=
