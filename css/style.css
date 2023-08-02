@@ -13166,7 +13166,7 @@ table.table-default thead th {
 
 table.table.table-default tbody td {
     font-size: 12px;
-    padding: 10px 15px;
+    padding: 15px 20px;
 }
 
 table.table.table-default tbody td a:hover {
@@ -16533,15 +16533,13 @@ button {
     padding: 8px 15px;
     font-size: 14px;
     transition: background-color 0.3s ease;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: #f5f5f5;
-}
+  }
 
-
-/* CSS style for the Like icon */
-
+  /* CSS style for the Like icon */
 .views {
     display: inline-block;
     margin-right: 10px;
@@ -16686,3 +16684,4 @@ select.custom-select option:hover {
     margin: 0;
     color: #333;
 }
+

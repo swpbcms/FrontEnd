@@ -1,8 +1,21 @@
 $(document).ready(function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const memberId = urlParams.get("memberId");
+
+  if (memberId) {
+    // Call the getPostsUser function
+    getMemberByID(memberId).then(data => {
+      // Once the data is received, pass it to displayData
+      displayInfoAva(data.data);
+    }).catch(error => {
+      // If there's an error, log it
+      console.error("An error occurred:", error);
+    });
+  } else {
     var loggedInMember = sessionStorage.getItem("loggedInMember");
     if (loggedInMember) {
       var mem = JSON.parse(loggedInMember);
-  
+
       var memberFullName = mem.memberFullName;
       var memberImage = mem.memberImage;
       var memberEmail = mem.memberEmail;
@@ -12,18 +25,31 @@ $(document).ready(function () {
       $("#imagev2").attr("src", memberImage);
       $("#email").html(memberEmail);
     }
-  });
-  
-$(document).ready(function () {
-    $("#logoutButton").click(function () {
-      // Clear the session storage
-      sessionStorage.removeItem("loggedInMember");
-      // Redirect to the login page or perform any other desired action
-      window.location.href = "sign-in.html";
-    });
-  });
+  }
+});
 
-import {getPostsUser} from "./services/post.service.js";
+$(document).ready(function () {
+  var loggedInMember = sessionStorage.getItem("loggedInMember");
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+
+    var memberFullName = mem.memberFullName;
+    var memberImage = mem.memberImage;
+    $("#fullname").html(memberFullName);
+    $("#image").attr("src", memberImage);
+  }
+})
+
+$(document).ready(function () {
+  $("#logoutButton").click(function () {
+    // Clear the session storage
+    sessionStorage.removeItem("loggedInMember");
+    // Redirect to the login page or perform any other desired action
+    window.location.href = "sign-in.html";
+  });
+});
+
+import { getPostsUser } from "./services/post.service.js";
 import { getMemberByID } from "./services/member.service.js"
 
 $(document).ready(function () {
@@ -38,6 +64,7 @@ $(document).ready(function () {
 });
 
 
+
 function displayData(data) {
   // Truy cập phần tử HTML để hiển thị dữ liệu
   var outputElement = $("#userpost");
@@ -49,17 +76,19 @@ function displayData(data) {
   }
 
   // Duyệt qua từng đối tượng dữ liệu và hiển thị lên trang web
-  var sessionMemberId = sessionStorage.getItem('loggedInMember');
-  if (sessionMemberId) {
-    var mem = JSON.parse(sessionMemberId);
-    var memberId = mem.memberId;
+  const urlParams = new URLSearchParams(window.location.search);
+  const memberId = urlParams.get("memberId");
+
+  // Kiểm tra nếu postId không tồn tại trong URL hoặc giá trị postId không hợp lệ
+  if (!memberId || memberId.trim() === "") {
+    console.log("Không tìm thấy memberId trong URL hoặc memberId không hợp lệ.");
+    return;
   }
-  
+
   $.each(data, function (index, item) {
     var postStatus = item.postStatus;
     var member = item.member;
 
-    // Kiểm tra nếu postStatus là "Thành công" và memberId trùng khớp với sessionMemberId
     if (postStatus === "Thành công" && member && member.memberId === memberId) {
       var postTitle = item.postTitle;
       var postDescription = item.postDescription;
@@ -70,6 +99,10 @@ function displayData(data) {
       var postCreateAt = item.postCreateAt;
       var postId = item.postId;
       var mediaItems = item.media;
+      var likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+      var isLiked = likedPosts.findIndex(function (likedPost) {
+        return likedPost.postId === postId && likedPost.memberId === memberId;
+      }) !== -1;
 
       // Tạo HTML để hiển thị thông tin bài viết
       var postHTML = '<div class="main-wraper">';
@@ -115,9 +148,11 @@ function displayData(data) {
       postHTML += "            </div>";
       postHTML += "        </div>";
       postHTML +=
-        '        <ins><a title="" href="profile.html">' +
-        memberFullName +
-        "</a></ins>";
+      '<ins><a title="" href="" data-member-id="' +
+      item.member.memberId +
+      '" class="member-full-name-link">' +
+      memberFullName +
+      "</a></ins>";
       postHTML +=
         '        <span><i class="icofont-globe"></i>' + postCreateAt + "</span>";
       postHTML += "    </div>";
@@ -134,7 +169,7 @@ function displayData(data) {
           var linkMedia = mediaItems[0].linkMedia;
           postHTML += `
           <figure class="img-full">
-            <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
+            <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}" data-post-id="${postId}">
               <img src="${linkMedia}" alt="Media">
             </a>
           </figure>
@@ -153,7 +188,7 @@ function displayData(data) {
             postHTML += `
             <div class="col-lg-6 col-md-6 col-sm-6">
               <figure>
-                <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
+                <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}" data-post-id="${postId}">
                   <img src="${linkMedia}" alt="Media">
                 </a>
               </figure>
@@ -167,7 +202,7 @@ function displayData(data) {
             postHTML += `
             <div class="col-lg-6 col-md-6 col-sm-6">
               <figure>
-                <a data-toggle="modal" data-target="#img-comt" href="${mediaItems[5].linkMedia}">
+                <a data-toggle="modal" data-target="#img-comt" href="${mediaItems[5].linkMedia}" data-post-id="${postId}">
                   <img src="${mediaItems[5].linkMedia}" alt="More Photos">
                 </a>
                 <div class="more-photos">
@@ -185,7 +220,11 @@ function displayData(data) {
       }
       postHTML += "</div>";
       postHTML +=
-        '<a href="post-detail.html" class="post-title">' + postTitle + "</a>";
+        '<a href="" class="post-title" data-post-id="' +
+        postId +
+        '">' +
+        postTitle +
+        "</a>";
       postHTML += "<p>" + postDescription + "</p>";
       postHTML += '    <div class="we-video-info">';
       postHTML += "        <ul>";
@@ -213,8 +252,10 @@ function displayData(data) {
       postHTML += '<div class="box">';
       postHTML += '    <div class="Like">';
       // postHTML += '        <a class="Like__link"><i class="icofont-like"></i> Like</a>';
-      postHTML +=
-        '        <button class="likeButton"> <i class="icofont-like"></i> Like</button>';
+      // postHTML +=
+      //   '        <button class="likeButton active"> <i class="icofont-like"></i> Like</button>';
+      postHTML += '<button class="likeButton' + (isLiked ? ' active' : '') + '"> <i class="icofont-like"></i> Like</button>';
+
       postHTML += "    </div>";
       postHTML += "</div>";
       postHTML +=
@@ -311,7 +352,7 @@ function displayData(data) {
   });
 }
 
-  // Bắt sự kiện click cho mỗi nút có class .report-to
+// Bắt sự kiện click cho mỗi nút có class .report-to
 $(document).on("click", ".report-to", function () {
   var postIdButton = $(this).closest(".user-post").find(".post-id").text();
 
@@ -371,6 +412,14 @@ $(document).on("click", ".likeButton", function () {
 
         // Handle the success response (if needed)
         console.log(isLiked ? "disLike successful" : "Like successful");
+
+        // Update the class of the button to reflect the current status
+        if (isLiked) {
+          $(this).removeClass('active');
+        } else {
+          $(this).addClass('active');
+        }
+
         location.reload();
       },
       error: function (xhr, status, error) {
@@ -425,22 +474,38 @@ $(document).on("submit", ".new-comment form", function (event) {
 });
 
 $(document).ready(function () {
-  var seMemberId = sessionStorage.getItem('loggedInMember');
-  if (seMemberId) {
-    var mem = JSON.parse(seMemberId);
-    var memberId = mem.memberId;
+  const urlParams = new URLSearchParams(window.location.search);
+  const memberId = urlParams.get("memberId");
+
+  // Kiểm tra nếu postId không tồn tại trong URL hoặc giá trị postId không hợp lệ
+  if (memberId) {
+    // Call the getPostsUser function
+    getMemberByID(memberId).then(data => {
+      // Once the data is received, pass it to displayData
+      displayInfo(data.data);
+    }).catch(error => {
+      // If there's an error, log it
+      console.error("An error occurred:", error);
+    });
+  } else {
+    var seMemberId = sessionStorage.getItem('loggedInMember');
+    if (seMemberId) {
+      var mem = JSON.parse(seMemberId);
+      var myId = mem.memberId;
+    }
+    // Call the getPostsUser function
+    getMemberByID(myId).then(data => {
+      // Once the data is received, pass it to displayData
+      displayInfo(data.data);
+    }).catch(error => {
+      // If there's an error, log it
+      console.error("An error occurred:", error);
+    });
   }
-  // Call the getPostsUser function
-  getMemberByID(memberId).then(data => {
-    // Once the data is received, pass it to displayData
-    displayInfo(data.data);
-  }).catch(error => {
-    // If there's an error, log it
-    console.error("An error occurred:", error);
-  });
+
 });
 
-function displayInfo(memInfo){
+function displayInfo(memInfo) {
   var memFullName = memInfo.memberFullName;
   var memEmail = memInfo.memberEmail;
   var memDob = memInfo.memberDob;
@@ -457,3 +522,25 @@ function displayInfo(memInfo){
   $(".memberDob").text(formattedDate);
   $(".memberCreateAt").text(memCreate);
 }
+
+function displayInfoAva(memAva){
+  var memberFullName = memAva.memberFullName;
+  var memberImage = memAva.memberImage;
+  var memberEmail = memAva.memberEmail;
+  $("#full-name").html(memberFullName);
+  $("#imagev2").attr("src", memberImage);
+  $("#email").html(memberEmail);
+}
+
+$(document).on("click", ".member-full-name-link", function(e) {
+  e.preventDefault(); // Prevent the link from being followed
+  var memberId = $(this).data("member-id"); // Get the member ID from the data attribute
+  // Now you can do whatever you want with the member ID...
+  window.location.href = `profile.html?memberId=${memberId}`;
+});
+
+$(document).on('click', '.post-title, .img-full a, .img-bunch a', function (e) {
+  e.preventDefault();
+  const postId = $(this).data('post-id');
+  window.location.href = `post-detail.html?postId=${postId}`;
+});

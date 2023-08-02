@@ -62,14 +62,13 @@ function displayPostList(posts) {
   for (var i = 0; i < posts.length; i++) {
     var post = posts[i];
     var event = post.postIsEvent ? "Sự kiện" : "Bài viết";
-
-    // Only display the post row if "Sự kiện/Bài viết" is "Bài viết"
+  
     if (post.postIsEvent === false) {
       postListHTML += "<tr>";
       postListHTML += "<td>" + post.postId + "</td>";
-      postListHTML += "<td>" + post.postTitle + "</td>";
+      postListHTML += "<td class='wrap-text'>" + post.postTitle + "</td>";
       postListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
-      postListHTML += "<td>" + post.postDescription + "</td>";
+      postListHTML += "<td class='wrap-text'>" + post.postDescription + "</td>";
       postListHTML += "<td>" + post.postStatus + "</td>";
       postListHTML += "<td>" + post.postNumberLike + "</td>";
       postListHTML += "<td>" + post.postNumberJoin + "</td>";
@@ -83,9 +82,7 @@ function displayPostList(posts) {
       postListHTML += "</tr>";
     }
   }
-
-  postListHTML += "</tbody></table></div>";
-
+  
   $("#components-nav li:nth-child(3)").html(postListHTML);
 
 // Add the "Restore Post" button event listener here
