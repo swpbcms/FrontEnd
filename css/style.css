@@ -13291,7 +13291,7 @@ table.table-default thead th {
 
 table.table.table-default tbody td {
     font-size: 12px;
-    padding: 10px 15px;
+    padding: 15px 20px;
 }
 
 table.table.table-default tbody td a:hover {
@@ -16670,9 +16670,14 @@ button {
     transition: background-color 0.3s ease;
   }
   
-  button:hover {
+  /* button:hover {
     background-color: #f5f5f5;
+  } */
+  button:active {
+    background-color: #cccccc;
+    color: #333333;
   }
+  
 
   /* CSS style for the Like icon */
 .views {
@@ -16801,3 +16806,8 @@ button {
     color: #333;
 }
 
+.wrap-text {
+    white-space: normal;
+    word-wrap: break-word;
+  }
+  
