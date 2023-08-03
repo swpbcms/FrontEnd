@@ -18,7 +18,18 @@ const getBlogById = async (blogId) => {
     }
   };
 
-const createBlog = async (blogData) => {
+const createBlog = async (
+  title,
+  description,
+  managerId,
+  media,
+) => {
+  const model = {
+    blogTitle: title,
+    blogDescription: description,
+    managerId: managerId,
+    media: media,
+  };
   const response = await fetch(`${endpoint}/Insert-blog`, {
     method: "POST",
     headers: {

@@ -46,26 +46,26 @@ $(document).ready(function() {
     memberListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
     memberListHTML += "<thead><tr><th>ID</th><th>Tạo lúc</th><th>Giới tính</th><th>Ảnh</th><th>Họ và tên</th><th>Email</th><th>Ngày sinh</th><th>Trạng thái</th><th>Tên đăng nhập</th><th>Mật khẩu</th><th>Thao tác</th></tr></thead><tbody>";
 
-    for (var i = 0; i < members.length; i++) {
-      var member = members[i];
-      var gender = member.memberGender ? "Nam" : "Nữ";
-      var status = member.memberrStatus ? "Hoạt động" : "Không hoạt động";
+    
+  for (var i = 0; i < members.length; i++) {
+    var member = members[i];
+    var gender = member.memberGender ? "Nam" : "Nữ";
+    var status = member.memberStatus === "Active" ? "Hoạt động" : "Không hoạt động";
 
-      memberListHTML += "<tr>";
-      memberListHTML += "<td>" + member.memberId + "</td>";
-      memberListHTML += "<td>" + member.memberCreateAt + "</td>";
-      memberListHTML += "<td>" + gender + "</td>";
-      memberListHTML += "<td><img src='" + member.memberImage + "' alt='Avatar' class='member-image' /></td>";
-      memberListHTML += "<td>" + member.memberFullName + "</td>";
-      memberListHTML += "<td>" + member.memberEmail + "</td>";
-      memberListHTML += "<td>" + member.memberDob + "</td>";
-      memberListHTML += "<td>" + status + "</td>";
-      memberListHTML += "<td>" + member.memberUserName + "</td>";
-      memberListHTML += "<td>" + member.memberPassword + "</td>";
-      // Add the Delete Member button with the data attribute for member ID
-      memberListHTML += "<td><button class='uk-button uk-button-small uk-button-danger delete-member-btn' data-member-id='" + member.memberId + "'>Delete</button></td>";
-      memberListHTML += "</tr>";
-    }
+    memberListHTML += "<tr>";
+    memberListHTML += "<td>" + member.memberId + "</td>";
+    memberListHTML += "<td>" + member.memberCreateAt + "</td>";
+    memberListHTML += "<td>" + gender + "</td>";
+    memberListHTML += "<td><img src='" + member.memberImage + "' alt='Avatar' class='member-image' /></td>";
+    memberListHTML += "<td>" + member.memberFullName + "</td>";
+    memberListHTML += "<td>" + member.memberEmail + "</td>";
+    memberListHTML += "<td>" + member.memberDob + "</td>";
+    memberListHTML += "<td>" + status + "</td>"; // Display the status here
+    memberListHTML += "<td>" + member.memberUserName + "</td>";
+    memberListHTML += "<td>" + member.memberPassword + "</td>";
+    memberListHTML += "<td><button class='uk-button uk-button-small uk-button-danger delete-member-btn' data-member-id='" + member.memberId + "'>Delete</button></td>";
+    memberListHTML += "</tr>";
+  }
 
     memberListHTML += "</tbody></table></div>";
 
