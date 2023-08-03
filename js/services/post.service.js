@@ -44,6 +44,7 @@ const getPosts = async () => {
   }
 };
 
+
 const getJoinPosts = async (id) => {
   const response = await fetch(`${endpoint}/get-join-post?id=${id}`);
   if (!response.ok) {
@@ -55,6 +56,15 @@ const getJoinPosts = async (id) => {
 
 const getLikePosts = async (id) => {
   const response = await fetch(`${endpoint}/get-like-post?id=${id}`);
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+};
+
+const getPostsId = async (id) => {
+  const response = await fetch(`${endpoint}/get-post-id?id=${id}`);
   if (!response.ok) {
     throw new Error("Invalid Request");
   } else {
@@ -186,5 +196,6 @@ export {
   updatePost,
   deletePost,
   moderatePost,
-  reStatusPost
+  reStatusPost,
+  getPostsId
 };

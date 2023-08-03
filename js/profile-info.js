@@ -49,7 +49,7 @@ $(document).ready(function () {
   });
 });
 
-import { getPostsUser } from "./services/post.service.js";
+import { getPostsUser, deletePost, getPostsId} from "./services/post.service.js";
 import { getMemberByID } from "./services/member.service.js"
 
 $(document).ready(function () {
@@ -140,7 +140,7 @@ function displayData(data) {
         // postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
         // postHTML += "                        <span>Inappropriate content</span>";
         // postHTML += "                    </li>";
-        // postHTML += "                </ul>";
+        postHTML += "                </ul>";
         postHTML += "            </div>";
         postHTML += "        </div>";
         postHTML +=
@@ -811,3 +811,107 @@ $(document).on('click', '.post-title, .img-full a, .img-bunch a', function (e) {
   const postId = $(this).data('post-id');
   window.location.href = `post-detail.html?postId=${postId}`;
 });
+
+$(document).on("click", ".icofont-ui-delete", function () {
+  var postId = $(this).closest(".user-post").find(".post-id").text();
+  var element = this;  // save the reference to 'this' to use in swal callback
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "Bạn có chắc chắn xoá bài viết này?",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      deletePost(postId)
+        .then(() => {
+          // If deletion is successful, remove the post element from the page
+          $(element).closest(".user-post").remove();
+        })
+        .catch((error) => {
+          console.error("Error deleting post:", error);
+        });
+    }
+  });
+});
+
+$(document).on("click", ".icofont-pen-alt-1", function (e) {
+  e.preventDefault();  // Prevent the link from redirecting
+
+  var postElement = $(this).closest(".user-post");
+  var postId = postElement.find(".post-id").text();  // retrieve postId from the DOM
+  var memberId = sessionStorage.getItem("loggedInMember");  // retrieve memberId from session storage
+
+  getPostsId(postId)
+      .then(response => {
+          // post data received successfully
+          var postData = response.data;
+          var postTitle = postData.postTitle;
+          var postDescription = postData.postDescription;
+          var postIsEvent = postData.postIsEvent;
+          var eventLocation = postIsEvent ? postData.eventLocation : "";
+          var eventStartDate = postIsEvent ? new Date(postData.eventStartDate).toLocaleString("en-US") : "";
+          var eventEndDate = postIsEvent ? new Date(postData.eventEndDate).toLocaleString("en-US") : "";
+
+          Swal.fire({
+              title: 'Edit Post',
+              html:
+                  '<input id="swal-input1" class="swal2-input" placeholder="Post Title" title="Post Title" value="' + postTitle + '">' +
+                  '<input id="swal-input2" class="swal2-input" placeholder="Post Description" title="Post Description" value="' + postDescription + '">' +
+                  '<label for="swal-input-event"><input id="swal-input-event" type="checkbox"' + (postIsEvent ? ' checked' : '') + '> Is Event</label>' +
+                  (postIsEvent 
+                      ? ('<input id="swal-input3" class="swal2-input" placeholder="Event Location" title="Event Location" value="' + eventLocation + '">' +
+                         '<input id="swal-input4" class="swal2-input" placeholder="Event Start Date" title="Event Start Date" value="' + eventStartDate + '">' +
+                         '<input id="swal-input5" class="swal2-input" placeholder="Event End Date" title="Event End Date" value="' + eventEndDate + '">')
+                      : ''),
+              showCancelButton: true,
+              confirmButtonText: 'Save',
+              cancelButtonText: 'Cancel',
+              preConfirm: () => {
+                  var newPostTitle = document.getElementById('swal-input1').value;
+                  var newPostDescription = document.getElementById('swal-input2').value;
+                  var newPostIsEvent = document.getElementById('swal-input-event').checked;
+                  var newEventLocation = newPostIsEvent ? document.getElementById('swal-input3').value : null;
+                  var newEventStartDate = newPostIsEvent ? document.getElementById('swal-input4').value : null;
+                  var newEventEndDate = newPostIsEvent ? document.getElementById('swal-input5').value : null;
+
+                  return $.ajax({
+                      url: 'https://localhost:7206/api/Post/update-post',
+                      type: 'PUT',
+                      contentType: 'application/json',
+                      data: JSON.stringify({
+                          postId,
+                          postTitle: newPostTitle,
+                          postDescription: newPostDescription,
+                          postIsEvent: newPostIsEvent,
+                          eventLocation: newEventLocation,
+                          eventStartDate: newEventStartDate,
+                          eventEndDate: newEventEndDate,
+                          memberId
+                      })
+                  })
+                  .done(() => {
+                      // if the update request is successful, resolve the promise with the new post values
+                      return [newPostTitle, newPostDescription, newPostIsEvent, newEventLocation, newEventStartDate, newEventEndDate];
+                  })
+                  .fail((jqXHR, textStatus, error) => {
+                      Swal.showValidationMessage(`Request failed: ${textStatus}`);
+                  });
+              }
+          }).then((result) => {
+              // handle UI updates here
+              if (result.isConfirmed) {
+                location.reload();  // reload the page
+              }
+          });
+      })
+      .catch(err => {
+          // handle error
+      });
+});
+
+
+
+
