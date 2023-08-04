@@ -1,4 +1,5 @@
 import { getMembers, deleteMember } from "./services/member.service.js";
+import { moderateMem } from "./services/manager.service.js";
 
 $(document).ready(function () {
   var loggedInManager = sessionStorage.getItem("loggedInManager");
@@ -44,12 +45,12 @@ $(document).ready(function() {
   function displayMemberList(members) {
     var memberListHTML = "<h2>Danh sách thành viên</h2>";
     memberListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
-    memberListHTML += "<thead><tr><th>ID</th><th>Tạo lúc</th><th>Giới tính</th><th>Ảnh</th><th>Họ và tên</th><th>Email</th><th>Ngày sinh</th><th>Trạng thái</th><th>Tên đăng nhập</th><th>Thao tác</th></tr></thead><tbody>";
+    memberListHTML += "<thead><tr><th>ID</th><th>Tạo lúc</th><th>Giới tính</th><th>Ảnh</th><th>Họ và tên</th><th>Email</th><th>Ngày sinh</th><th>Trạng thái</th><th>Tên đăng nhập</th><th>Số lượng chim</th><th>Thao tác</th></tr></thead><tbody>";
 
     for (var i = 0; i < members.length; i++) {
       var member = members[i];
       var gender = member.memberGender ? "Nam" : "Nữ";
-      var status = member.memberStatus === "Active" ? "Hoạt động" : "Không hoạt động";
+      var status = member.memberStatus === "active" ? "Hoạt động" : "Không hoạt động";
 
       memberListHTML += "<tr>";
       memberListHTML += "<td>" + member.memberId + "</td>";
@@ -61,8 +62,18 @@ $(document).ready(function() {
       memberListHTML += "<td>" + member.memberDob + "</td>";
       memberListHTML += "<td>" + status + "</td>";
       memberListHTML += "<td>" + member.memberUserName + "</td>";
+      memberListHTML += "<td>" + member.numberOfBird + "</td>";
+
       // Add the Delete Member button with the data attribute for member ID
-      memberListHTML += "<td><button class='uk-button uk-button-small uk-button-danger delete-member-btn' data-member-id='" + member.memberId + "'>Delete</button></td>";
+      memberListHTML += `<td>
+      <div class="member-btn-group">
+        <button class="uk-button uk-button-small uk-button-danger delete-member-btn" data-member-id="${member.memberId}">Delete</button>
+      </div>
+      <div class="member-btn-group">
+        <button class="uk-button uk-button-small uk-button-primary moderate-member-btn" data-member-id="${member.memberId}">Moderate</button>
+      </div>
+    </td>`;
+
       memberListHTML += "</tr>";
     }
 
@@ -111,7 +122,32 @@ $(document).ready(function() {
       });
     });
 
+    $(".moderate-member-btn").on("click", function () {
+      const memberId = $(this).data("member-id");
     
+      // Show a confirmation dialog before proceeding with the moderation
+      Swal.fire({
+        title: 'Confirmation',
+        text: 'Are you sure you want to moderate this member?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Moderate',
+        cancelButtonText: 'Cancel',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Call the moderateMem function to moderate the member
+          moderateMem(memberId)
+            .then(() => {
+              // Reload the member list after successful moderation
+              loadMembers();
+            })
+            .catch((error) => {
+              console.error("Error moderating member: ", error);
+              // Handle error if needed
+            });
+        }
+      })
+    });
     function loadMembers() {
       getMembers()
         .then((response) => {

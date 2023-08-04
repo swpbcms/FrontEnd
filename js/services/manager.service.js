@@ -109,6 +109,21 @@ const deleteManager = async (id) => {
   }
 };
 
+const moderateMem = async (id) => {
+  const response = await fetch(`${endpoint}/moderate-mem?memid=${id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ memberId: id }), // Pass the member ID in the request body
+  });
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+};
+
 export {
   getManagers,
   getManagersByName,
@@ -117,4 +132,5 @@ export {
   register,
   updateManager,
   deleteManager,
+  moderateMem,
 };

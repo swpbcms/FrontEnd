@@ -52,7 +52,7 @@ $(document).ready(function() {
     for (var i = 0; i < members.length; i++) {
       var member = members[i];
       var gender = member.memberGender ? "Nam" : "Nữ";
-      var status = member.memberStatus === "Active" ? "Hoạt động" : "Không hoạt động";
+      var status = member.memberStatus === "active" ? "Hoạt động" : "Không hoạt động";
 
       memberListHTML += "<tr>";
       memberListHTML += "<td>" + member.memberId + "</td>";
@@ -64,11 +64,21 @@ $(document).ready(function() {
       memberListHTML += "<td>" + member.memberDob + "</td>";
       memberListHTML += "<td>" + status + "</td>";
       memberListHTML += "<td>" + member.memberUserName + "</td>";
+      memberListHTML += "<td>" + member.numberOfBird + "</td>";
+
       // Add the Delete Member button with the data attribute for member ID
-      memberListHTML += "<td><button class='uk-button uk-button-small uk-button-danger delete-member-btn' data-member-id='" + member.memberId + "'>Delete</button></td>";
+      memberListHTML += `<td>
+      <div class="member-btn-group">
+        <button class="uk-button uk-button-small uk-button-danger delete-member-btn" data-member-id="${member.memberId}">Delete</button>
+      </div>
+      <div class="member-btn-group">
+        <button class="uk-button uk-button-small uk-button-primary moderate-member-btn" data-member-id="${member.memberId}">Moderate</button>
+      </div>
+    </td>`;
+
       memberListHTML += "</tr>";
     }
-
+    
     memberListHTML += "</tbody></table></div>";
 
     $("#components-nav li:first-child").html(memberListHTML);
