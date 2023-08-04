@@ -56,6 +56,7 @@ function displayData(data) {
 
   // Use $.each() to iterate through the data
   $.each(data, (index, post) => {
+    if (post.media && post.media.length > 0) {
       var eventTitle = post.postTitle;
       var eventImage = post.media[0].linkMedia;
       var eventLocation = post.eventLocation;
@@ -126,6 +127,7 @@ function displayData(data) {
     eventPost += eventHTML; 
 
   }
+}
 });
   // Update the content of the <div> container with the accumulated HTML
   const eventContainer = $("#event-container");

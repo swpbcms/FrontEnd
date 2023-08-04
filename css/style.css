@@ -16717,6 +16717,40 @@ select.custom-select option:hover {
     color: #fff;
   }
   
+  .event-chooseB {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around; /* To distribute items evenly in the row */
+    gap: 15px; 
+}
+
+.event-chooseB button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px; 
+    font-size: 16px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.event-chooseB button:hover {
+    background-color: #0056b3;
+}
+
+#chosenBird {
+    font-size: 18px; 
+    color: #333;
+    background-color: #f8f9fa; 
+    padding: 10px;
+    text-align: center; 
+    border-radius: 5px; 
+    flex-grow: 1; /* Allow the paragraph to take up remaining space */
+}
+
+
   
   
   
