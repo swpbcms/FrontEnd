@@ -197,6 +197,27 @@
             </div>
         </section>
         <!-- carousel menu -->
+        <!-- <div class="create-blog-form-container">
+            <div class="blog-new">
+                <div class="blog-newmeta">
+                    <form id="blogForm">>>
+                        <label for="title">Title:</label><br>
+                        <input type="text" id="title" name="title" required><br><br>
+            
+                        <label for="description">Description:</label><br>
+                        <textarea id="description" name="description" rows="4" cols="50" required></textarea><br><br>
+                        <br><br>
+            
+                        <label for="linkMedia">Media </label><br>
+                        <input type="file" id="linkMedia" name="linkMedia" multiple><br><br>
+                        <div id="previewMedia"></div><br>
+            
+                        <input type="submit" value="Create Blog">
+                    </form>
+                </div>
+            </div>
+        </div> -->
+
 
         <section>
             <div class="gap">
@@ -206,7 +227,7 @@
                             <div id="page-contents" class="row merged20">
                                 <div class="col-lg-9">
                                     <div class="main-wraper">
-                                        <div class="main-title">Blog Posts</div>
+                                        <div class="main-title">Blog</div>
                                         <div class="blog-posts">
                                             <!-- <figure><img src="images/resources/blog-list-1.jpg" alt=""></figure>
                                             <div class="blog-post-meta">
@@ -398,7 +419,14 @@
 
     <script src="js/main.min.js"></script>
     <script src="js/script.js"></script>
-    <script src="js/blog.js"></script>
+    <script type="module" src="js/blog.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+
+    <!-- Add Firebase products that you want to use -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage.js"></script>
 
 </body>
 

@@ -125,24 +125,31 @@ function displayComments(comments) {
         });
 
         // Tạo comment HTML
-        var commentHTML = '<li>';
-        commentHTML += '<div class="comment-box">';
-        commentHTML += '<div class="commenter-photo">';
-        commentHTML += '<img alt="" src="' + memberImage + '">';
-        commentHTML += '</div>';
-        commentHTML += '<div class="commenter-meta">';
-        commentHTML += '<div class="comment-titles">';
-        commentHTML += '<h6>' + memberFullName + '</h6>';
-        commentHTML += '<span>' + formattedCommentTime + '</span>';
-        commentHTML += '<a title="" href="#" class="reply">reply</a>';
-        commentHTML += '</div>';
-        commentHTML += '<p>' + commentContent + '</p>';
-        commentHTML += '</div>';
-        commentHTML += '</div>';
-        commentHTML += '</li>';
+      // Tạo comment HTML
+var commentHTML = '<li>';
+commentHTML += '<div class="comment-box">';
+commentHTML += '<div class="commenter-photo">';
+commentHTML += '<img alt="" src="' + memberImage + '">';
+commentHTML += '</div>';
+commentHTML += '<div class="commenter-meta">';
+commentHTML += '<div class="comment-titles">';
+commentHTML += '<h6>' + memberFullName + '</h6>';
+commentHTML += '<span>' + formattedCommentTime + '</span>';
+commentHTML += '<a title="" href="#" class="reply">Reply</a>';
+commentHTML += '</div>';
+commentHTML += '<p>' + commentContent + '</p>';
+commentHTML += '</div>';
+commentHTML += '</div>';
+commentHTML += '<ul class="reply-form" style="display: none;"><li><form><textarea placeholder="Your reply"></textarea><button type="submit">Submit</button></form></li></ul>'; // Add reply form
+commentHTML += '</li>';
+
 
         // Thêm comment mới vào container
         commentsContainer.append(commentHTML);
     });
 }
 
+$(document).on("click", ".reply", function(e) {
+    e.preventDefault(); // Stop the link from redirecting
+    $(this).closest('.comment-box').find('.reply-form').slideToggle(); // Show or hide the reply form
+});
