@@ -43,6 +43,11 @@ $(document).ready(function() {
       console.log(error);
     });
 
+    function formatDate(dateString) {
+      var date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
   // Display member list
   function displayMemberList(members) {
     var memberListHTML = "<h2>Danh sách thành viên</h2>";
@@ -56,12 +61,12 @@ $(document).ready(function() {
 
       memberListHTML += "<tr>";
       memberListHTML += "<td>" + member.memberId + "</td>";
-      memberListHTML += "<td>" + member.memberCreateAt + "</td>";
+      memberListHTML += "<td>" + formatDate(member.memberCreateAt) + "</td>";
       memberListHTML += "<td>" + gender + "</td>";
       memberListHTML += "<td><img src='" + member.memberImage + "' alt='Avatar' class='member-image' /></td>";
       memberListHTML += "<td>" + member.memberFullName + "</td>";
       memberListHTML += "<td>" + member.memberEmail + "</td>";
-      memberListHTML += "<td>" + member.memberDob + "</td>";
+      memberListHTML += "<td>" + formatDate(member.memberDob) + "</td>";
       memberListHTML += "<td>" + status + "</td>";
       memberListHTML += "<td>" + member.memberUserName + "</td>";
       memberListHTML += "<td>" + member.numberOfBird + "</td>";
