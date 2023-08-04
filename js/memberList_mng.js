@@ -41,11 +41,6 @@ $(document).ready(function () {
       console.log(error);
     });
 
-    function formatDate(dateString) {
-      var date = new Date(dateString);
-      return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-    }
-
   // Display member list
   function displayMemberList(members) {
     var memberListHTML = "<h2>Danh sách thành viên</h2>";
@@ -59,12 +54,12 @@ $(document).ready(function () {
 
       memberListHTML += "<tr>";
       memberListHTML += "<td>" + member.memberId + "</td>";
-      memberListHTML += "<td>" + formatDate(member.memberCreateAt) + "</td>";
+      memberListHTML += "<td>" + member.memberCreateAt + "</td>";
       memberListHTML += "<td>" + gender + "</td>";
       memberListHTML += "<td><img src='" + member.memberImage + "' alt='Avatar' class='member-image' /></td>";
       memberListHTML += "<td>" + member.memberFullName + "</td>";
       memberListHTML += "<td>" + member.memberEmail + "</td>";
-      memberListHTML += "<td>" + formatDate(member.memberDob) + "</td>";
+      memberListHTML += "<td>" + member.memberDob + "</td>";
       memberListHTML += "<td>" + status + "</td>";
       memberListHTML += "<td>" + member.memberUserName + "</td>";
       memberListHTML += "<td>" + member.numberOfBird + "</td>";
@@ -128,11 +123,7 @@ $(document).ready(function () {
 
     $(".moderate-member-btn").on("click", function () {
       const memberId = $(this).data("member-id");
-<<<<<<< Updated upstream
-    
-=======
 
->>>>>>> Stashed changes
       // Show a confirmation dialog before proceeding with the moderation
       Swal.fire({
         title: 'Confirmation',
@@ -154,31 +145,8 @@ $(document).ready(function () {
               // Handle error if needed
             });
         }
-<<<<<<< Updated upstream
-      })
-    });
-    function loadMembers() {
-      getMembers()
-        .then((response) => {
-          if (response && response.data) {
-            // Process the member list data and display it on the page
-            var members = response.data;
-    
-            // Display member list
-            displayMemberList(members);
-          } else {
-            console.log("Failed to fetch member list");
-          }
-        })
-        .catch((error) => {
-          console.log("An error occurred while fetching member list: " + error);
-          console.log(error);
-        });
-    }
-=======
       });
     });
->>>>>>> Stashed changes
   }
 
   function loadMembers() {

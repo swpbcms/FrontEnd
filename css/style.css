@@ -16533,13 +16533,15 @@ button {
     padding: 8px 15px;
     font-size: 14px;
     transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #f5f5f5;
-  }
+}
 
-  /* CSS style for the Like icon */
+button:hover {
+    background-color: #f5f5f5;
+}
+
+
+/* CSS style for the Like icon */
+
 .views {
     display: inline-block;
     margin-right: 10px;
@@ -16685,7 +16687,9 @@ select.custom-select option:hover {
     color: #333;
 }
 
+
 /* Replace '.your-button-class' with your desired button style */
+
 .read-more-btn {
     display: inline-block;
     padding: 6px 12px;
@@ -16694,11 +16698,12 @@ select.custom-select option:hover {
     text-decoration: none;
     border-radius: 4px;
     margin-top: 10px;
-  }
-  
-  .read-more-btn:hover {
+}
+
+.read-more-btn:hover {
     background-color: #0056b3;
-  }
+}
+
 
   /* Style for the button groups */
 .member-btn-group {
