@@ -33,8 +33,8 @@
             <div class="user-avatar mobile">
                 <a href="profile.html" title="View Profile"><img alt="" src="images/resources/user.jpg"></a>
                 <div class="name">
-                    <h4>Danial Cardos</h4>
-                    <span>Ontario, Canada</span>
+                    <h4></h4>
+                    <span></span>
                 </div>
             </div>
             <div class="right-compact">
@@ -67,7 +67,7 @@
                         <span class="cancel-search"><i class="icofont-close"></i></span>
                         <div class="recent-search">
                             <h4 class="recent-searches">Your's Recent Search</h4>
-                            <ul class="so-history">
+                            <!-- <ul class="so-history">
                                 <li>
                                     <div class="searched-user">
                                         <figure><img src="i" alt=""></figure>
@@ -103,7 +103,7 @@
                                     </div>
                                     <span class="trash"><i class="icofont-close-circled"></i></span>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                     </form>
                 </div>
@@ -139,10 +139,10 @@
                         </a>
                         <ul class="dropdown">
                             <li><a href="profile.html" title=""><i class="icofont-user-alt-3"></i> Your Profile</a></li>
-                            <li><a href="help-faq.html" title=""><i class="icofont-question-circle"></i> Help</a></li>
-                            <li><a href="settings.html" title=""><i class="icofont-gear"></i> Setting</a></li>
-                            <li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li>
                             <li><a class="dark-mod" href="#" title=""><i class="icofont-moon"></i> Dark Mode</a></li>
+                            <!-- <li><a href="help-faq.html" title=""><i class="icofont-question-circle"></i> Help</a></li> -->
+                            <li><a href="settings.html" title=""><i class="icofont-gear"></i> Setting</a></li>
+                            <!-- <li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li> -->
                             <li class="logout"><a href="sign-in.html" title=""><i class="icofont-power"></i> Logout</a></li>
                         </ul>
                     </li>
@@ -201,6 +201,9 @@
                                     <div class="main-wraper">
                                         <h4 class="main-title"></h4>
                                         <figure class="event-detail-img"><img src="" alt=""></figure>
+                                        <div class="time-event">
+
+                                        </div>
                                         <div class="event-schedule">
                                             <br>
                                             <h6>Schedule</h6>
@@ -218,10 +221,29 @@
                                         </div>
                                         <div class="event-loc">
                                             <h6>Event Location</h6>
-                                            <p><i class="icofont-map-pins"></i> 150 garden town, street 24 ontatio, Canada</p>
+                                            <p><i class="icofont-map-pins"></i></p>
+                                        </div>
+                                        <!-- <div class="join-event">
                                             <button id="joinButton" title="" class="main-btn">Join Event <i class="icofont-arrow-right"></i></button>
                                         </div>
-                                    </div>
+                                        <div class="event-chooseB">
+                                            <button id="selectBird" title="" class="main-btn">Choose Bird</button>
+                                        </div> -->
+                                        <div class="buttons-container">
+                                            <div class="join-event">
+                                                <button id="joinButton" title="" class="main-btn">Join Event <i class="icofont-arrow-right"></i></button>
+                                            </div>
+                                            <div class="event-chooseB">
+                                                <select id="selectBird" class="main-btn dropdown-toggle">
+                                                    <option value="">Choose Bird</option>
+                                                    <option value="bird1">Bird 1</option>
+                                                    <option value="bird2">Bird 2</option>
+                                                    <option value="bird3">Bird 3</option>
+                                                </select>
+                                                <button>Submit Bird</button>
+                                            </div>
+                                        </div>                                        
+                                    </div>                                  
                                 </div>
                             </div>
                         </div>
@@ -287,6 +309,7 @@
 	<script type="module" src="js/event-detail.js"></script>
     <!-- Include SweetAlert library from CDN -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>

@@ -57,32 +57,31 @@ function displayPostList(posts) {
   postListHTML += "<col style='width: 20%'>"; // Tiêu đề column (20% width)
   postListHTML += "<col style='width: 15%'>"; // Ngày tạo column (15% width)
   postListHTML += "<col style='width: 25%'>"; // Mô tả column (25% width)
-  // Add the rest of the columns and adjust their widths as needed
-  postListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Sự kiện/Bài viết</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th><th>Thao tác</th></tr></thead><tbody>";
+  postListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th><th>Thao tác</th></tr></thead><tbody>";
 
   for (var i = 0; i < posts.length; i++) {
     var post = posts[i];
     var event = post.postIsEvent ? "Sự kiện" : "Bài viết";
 
-    postListHTML += "<tr>";
-    postListHTML += "<td>" + post.postId + "</td>";
-    postListHTML += "<td>" + post.postTitle + "</td>";
-    postListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
-    postListHTML += "<td>" + post.postDescription + "</td>";
-    postListHTML += "<td>" + event + "</td>";
-    postListHTML += "<td>" + post.postStatus + "</td>";
-    postListHTML += "<td>" + post.postNumberLike + "</td>";
-    postListHTML += "<td>" + post.postNumberJoin + "</td>";
-    postListHTML += "<td>" + post.eventLocation + "</td>";
-    postListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
-    postListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
-    postListHTML += "<td>" + post.member.memberId + "</td>";
-    postListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-post-btn' data-post-id='" + post.postId + "'>Restore</button>";
-    postListHTML += "<button class='uk-button uk-button-small uk-button-primary agree-post-btn' data-post-id='" + post.postId + "'>Agree</button>";
-    postListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-post-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
-    postListHTML += "</tr>";
-    postListHTML += "</colgroup>";
-
+    // Only display the post row if "Sự kiện/Bài viết" is "Bài viết"
+    if (post.postIsEvent === false) {
+      postListHTML += "<tr>";
+      postListHTML += "<td>" + post.postId + "</td>";
+      postListHTML += "<td>" + post.postTitle + "</td>";
+      postListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
+      postListHTML += "<td>" + post.postDescription + "</td>";
+      postListHTML += "<td>" + post.postStatus + "</td>";
+      postListHTML += "<td>" + post.postNumberLike + "</td>";
+      postListHTML += "<td>" + post.postNumberJoin + "</td>";
+      postListHTML += "<td>" + post.eventLocation + "</td>";
+      postListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
+      postListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
+      postListHTML += "<td>" + post.member.memberId + "</td>";
+      postListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-post-btn' data-post-id='" + post.postId + "'>Restore</button>";
+      postListHTML += "<button class='uk-button uk-button-small uk-button-primary agree-post-btn' data-post-id='" + post.postId + "'>Agree</button>";
+      postListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-post-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
+      postListHTML += "</tr>";
+    }
   }
 
   postListHTML += "</tbody></table></div>";
@@ -246,36 +245,36 @@ function displayEventList(eventPosts) {
   eventListHTML += "<col style='width: 5%'>"; // ID column (5% width)
   eventListHTML += "<col style='width: 20%'>"; // Tiêu đề column (20% width)
   eventListHTML += "<col style='width: 15%'>"; // Ngày tạo column (15% width)
-  eventListHTML += "<col style='width: 25%'>"; // Mô tả column (25% width)  
+  eventListHTML += "<col style='width: 25%'>"; // Mô tả column (25% width)
   eventListHTML += "<thead><tr><th>ID</th><th>Tiêu đề</th><th>Ngày tạo</th><th>Mô tả</th><th>Trạng thái</th><th>Số lượt thích</th><th>Số lượt tham gia</th><th>Địa điểm sự kiện</th><th>Ngày bắt đầu</th><th>Ngày kết thúc</th><th>ID Thành viên</th><th>Thao tác</th></tr></thead><tbody>";
 
   for (var i = 0; i < eventPosts.length; i++) {
     var post = eventPosts[i];
 
-    eventListHTML += "<tr>";
-    eventListHTML += "<td>" + post.postId + "</td>";
-    eventListHTML += "<td>" + post.postTitle + "</td>";
-    eventListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
-    eventListHTML += "<td>" + post.postDescription + "</td>";
-    eventListHTML += "<td>" + post.postStatus + "</td>";
-    eventListHTML += "<td>" + post.postNumberLike + "</td>";
-    eventListHTML += "<td>" + post.postNumberJoin + "</td>";
-    eventListHTML += "<td>" + post.eventLocation + "</td>";
-    eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
-    eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
-    eventListHTML += "<td>" + post.member.memberId + "</td>";
-    eventListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-event-btn' data-post-id='" + post.postId + "'>Restore</button>";
-    eventListHTML += "<td><button class='uk-button uk-button-small uk-button-primary agree-event-btn' data-post-id='" + post.postId + "'>Agree</button>";
-    eventListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-event-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
-    eventListHTML += "</tr>";
-    eventListHTML += "</colgroup>";
-
+    // Only display the event row if "Sự kiện/Bài viết" is "Sự kiện"
+    if (post.postIsEvent === true) {
+      eventListHTML += "<tr>";
+      eventListHTML += "<td>" + post.postId + "</td>";
+      eventListHTML += "<td>" + post.postTitle + "</td>";
+      eventListHTML += "<td>" + formatDate(post.postCreateAt) + "</td>";
+      eventListHTML += "<td>" + post.postDescription + "</td>";
+      eventListHTML += "<td>" + post.postStatus + "</td>";
+      eventListHTML += "<td>" + post.postNumberLike + "</td>";
+      eventListHTML += "<td>" + post.postNumberJoin + "</td>";
+      eventListHTML += "<td>" + post.eventLocation + "</td>";
+      eventListHTML += "<td>" + formatDate(post.eventStartDate) + "</td>";
+      eventListHTML += "<td>" + formatDate(post.eventEndDate) + "</td>";
+      eventListHTML += "<td>" + post.member.memberId + "</td>";
+      eventListHTML += "<td><button class='uk-button uk-button-small uk-button-success restore-event-btn' data-post-id='" + post.postId + "'>Restore</button>";
+      eventListHTML += "<td><button class='uk-button uk-button-small uk-button-primary agree-event-btn' data-post-id='" + post.postId + "'>Agree</button>";
+      eventListHTML += "<button class='uk-button uk-button-small uk-button-danger delete-event-btn' data-post-id='" + post.postId + "'>Delete</button></td>";
+      eventListHTML += "</tr>";
+    }
   }
 
   eventListHTML += "</tbody></table></div>";
 
   $("#components-nav li:nth-child(5)").html(eventListHTML);
-
   // Add the "Restore Event" button event listener here
 $(".restore-event-btn").on("click", function () {
   const postId = $(this).data("post-id");

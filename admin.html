@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.css">
 
-<!-- SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.all.min.js"></script>
 </head>
 
 <body>
@@ -92,10 +92,10 @@
                         </a>
                         <ul class="dropdown">
                             <li><a href="profile.html" title=""><i class="icofont-user-alt-3"></i> Your Profile</a></li>
-                            <li><a href="help-faq.html" title=""><i class="icofont-question-circle"></i> Help</a></li>
-                            <li><a href="settings.html" title=""><i class="icofont-gear"></i> Setting</a></li>
-                            <li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li>
                             <li><a class="dark-mod" href="#" title=""><i class="icofont-moon"></i> Dark Mode</a></li>
+                            <!-- <li><a href="help-faq.html" title=""><i class="icofont-question-circle"></i> Help</a></li> -->
+                            <li><a href="settings.html" title=""><i class="icofont-gear"></i> Setting</a></li>
+                            <!-- <li><a href="privacy-n-policy.html" title=""><i class="icofont-notepad"></i> Privacy</a></li> -->
                             <li id="manager-link" style="display:none;"><a href="manager.html" title=""><i class="icofont-workers-group"></i> Manager</a></li>
                             <li class="logout" id="logoutButton"><a href="sign-in.html" title=""><i class="icofont-power"></i> Logout</a></li>
                         </ul>
@@ -141,8 +141,8 @@
                         <div class="col-lg-9 col-md-9">
                             <div class="main-wraper">
                                 <ul class="uk-switcher pl-lg-3" id="components-nav">
-                                     <!-- View Manager-->
-                                     <li>
+                                    <!-- View Manager-->
+                                    <li>
                                         <div class="mt-4 uk-grid-large" uk-grid>
                                             <div class="uk-width-3-4@s">
                                                 <h2> Danh sách thành viên</h2>
@@ -184,28 +184,35 @@
                                                 <h2> Quản lý Sự Kiện</h2>
                                             </div>
                                         </div>
-                                    </li>                                 
-                                </ul>
+                                    </li>
 
+
+
+
+                                </ul>
+                                <li>
+                                    <a href="signup-manager.html" class="register-manager-btn" title="Register Manager">
+                                        Register Manager
+                                    </a>
+                                </li>
                             </div>
                         </div>
                     </div>
                 </div>
-            <!-- ask question -->
+                <!-- ask question -->
+            </div>
+            <script src="js/main.min.js"></script>
+            <script src="js/uikit.min.js"></script>
+            <script src="js/sparkline.js"></script>
+            <script type="module" src="js/chart.js"></script>
+            <script src="js/script.js"></script>
+            <script type="module" src="js/memberList_adm.js"></script>
+            <script type="module" src="js/reportList_adm.js"></script>
+            <script type="module" src="js/postList_adm.js"></script>
+            <script type="module" src="js/managerList_adm.js"></script>
 
-    </div>
-    <script src="js/main.min.js"></script>
-    <script src="js/uikit.min.js"></script>
-    <script src="js/sparkline.js"></script>
-    <script type="module" src="js/chart.js"></script>
-    <script src="js/script.js"></script>
-    <script type="module" src="js/memberList_adm.js"></script>
-    <script type="module" src="js/reportList_adm.js"></script>
-    <script type="module" src="js/postList_adm.js"></script>
-    <script type="module" src="js/managerList_adm.js"></script>
 
 
-    
 </body>
 
 </html>

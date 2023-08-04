@@ -75,7 +75,9 @@ $(document).ready(function () {
     var memberFullName = mem.memberFullName;
     var memberImage = mem.memberImage;
     $("#fullname").html(memberFullName);
+    $("#full-name").html(memberFullName);
     $("#image").attr("src", memberImage);
+    $("#image-profile").attr("src", memberImage);
   }
 });
 
@@ -84,7 +86,7 @@ $(document).ready(function () {
     // Clear the session storage
     sessionStorage.removeItem("loggedInMember");
     // Redirect to the login page or perform any other desired action
-    window.location.href = "feed.html";
+    window.location.href = "sign-in.html";
   });
 });
 
@@ -104,7 +106,7 @@ $.ajax({
 
       // Hiển thị dữ liệu
       displayData(response.data);
-      displayRecentPost(response.data);
+      displayRecentEvent(response.data);
     } else {
       console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
     }
@@ -115,7 +117,7 @@ $.ajax({
 });
 
 //Hàm hiện thị các bài viết gần nhất
-function displayRecentPost(data) {
+function displayRecentEvent(data) {
   // Sort the data by postCreateAt in descending order (newest to oldest)
   data.sort((a, b) => new Date(b.postCreateAt) - new Date(a.postCreateAt));
 
@@ -130,21 +132,24 @@ function displayRecentPost(data) {
     const postCreateAt = post.postCreateAt;
     const linkMedia = post.media[0].linkMedia;
     const postStatus = post.postStatus; // Assuming the post status is a property of the post object
+    const postIsEvent = post.postIsEvent;
+    const postId = post.postId;
 
     // Only generate HTML for the post if the status is successful
-    if (postStatus === 'Thành công') {
+    if (postStatus === 'Thành công' && postIsEvent === true) {
+      // Generate the HTML for the current post
       // Generate the HTML for the current post
       const postHTML = `
-        <li>
-          <figure>
-            <img alt="${postTitle}" src="${linkMedia}" id="linkMediaImage">
-          </figure>
-          <div class="re-links-meta">
-            <h6><a title="" href="#" id="postLink">${postTitle}</a></h6>
-            <span id="postDate">${postCreateAt}</span>
-          </div>
-        </li>
-      `;
+  <li>
+    <figure>
+    <img alt="${postTitle}" src="${linkMedia}" data-post-id="${post.postId}" class="postImage">
+    </figure>
+    <div class="re-links-meta">
+      <h6><a title="" href="post-detail.html?postId=${postId}" id="postLink">${postTitle}</a></h6>
+      <span id="postDate">${postCreateAt}</span>
+    </div>
+  </li>
+`;
 
       recentPost += postHTML; // Append the current post's HTML to the recentPost variable
     }
@@ -154,6 +159,21 @@ function displayRecentPost(data) {
   const postListElement = $("#postList");
   postListElement.html(recentPost);
 }
+
+$(document).on('click', '.postImage, .post-title, .img-full a, .img-bunch a', function (e) {
+  e.preventDefault();
+  const postId = $(this).data('post-id');
+  window.location.href = `post-detail.html?postId=${postId}`;
+});
+
+$(document).on("click", ".member-full-name-link", function (e) {
+  e.preventDefault(); // Prevent the link from being followed
+  var memberId = $(this).data("member-id"); // Get the member ID from the data attribute
+  // Now you can do whatever you want with the member ID...
+  window.location.href = `profile.html?memberId=${memberId}`;
+});
+
+
 
 // Hàm để hiển thị dữ liệu lên trang web
 function displayData(data) {
@@ -178,6 +198,11 @@ function displayData(data) {
     var postId = item.postId;
     var postStatus = item.postStatus;
     var mediaItems = item.media;
+    var memberId = item.member.memberId;
+    var likedPosts = JSON.parse(localStorage.getItem("likedPosts") || "[]");
+    var isLiked = likedPosts.findIndex(function (likedPost) {
+      return likedPost.postId === postId && likedPost.memberId === memberId;
+    }) !== -1;
 
     if (postStatus === "Thành công") {
       // Tạo HTML để hiển thị thông tin bài viết
@@ -193,40 +218,43 @@ function displayData(data) {
         '        <img alt="" src="' + memberImage + '" id="memberImage">';
       postHTML += "    </figure>";
       postHTML += '    <div class="friend-name">';
-      postHTML += '        <div class="more">';
-      postHTML += '            <div class="more-post-optns">';
+      // postHTML += '        <div class="more">';
+      // postHTML += '            <div class="more-post-optns">';
       // postHTML += '                <i class="">';
       // postHTML +=
       //   '                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>';
       // postHTML += "                </i>";
-      // postHTML += "                <ul>";
-      // postHTML += "                    <li>";
+      // // postHTML += "                <ul>";
+      // // postHTML += "                    <li>";
       // // postHTML +=
       // //   '                        <i href="#" class="icofont-pen-alt-1"></i>Edit Post';
       // // postHTML +=
       // //   "                        <span>Edit This Post within a Hour</span>";
-      // postHTML += "                    </li>";
-      // // postHTML += "                    <li>";
-      // // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
-      // // postHTML += "                        <span>Hide This Post</span>";
       // // postHTML += "                    </li>";
-      // postHTML += "                    <li>";
-      // postHTML +=
-      //   '                        <i class="icofont-ui-delete"></i>Delete Post';
-      // postHTML +=
-      //   "                        <span>If inappropriate Post By Mistake</span>";
-      // postHTML += "                    </li>";
-      // postHTML += "                    <li>";
-      // postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
-      // postHTML += "                        <span>Inappropriate content</span>";
-      // postHTML += "                    </li>";
-      // postHTML += "                </ul>";
-      postHTML += "            </div>";
-      postHTML += "        </div>";
+      // // // postHTML += "                    <li>";
+      // // // postHTML += '                        <i class="icofont-ban"></i>Hide Post';
+      // // // postHTML += "                        <span>Hide This Post</span>";
+      // // // postHTML += "                    </li>";
+      // // postHTML += "                    <li>";
+      // // postHTML +=
+      // //   '                        <i class="icofont-ui-delete"></i>Delete Post';
+      // // postHTML +=
+      // //   "                        <span>If inappropriate Post By Mistake</span>";
+      // // postHTML += "                    </li>";
+      // // postHTML += "                    <li>";
+      // // postHTML += '                        <i class="icofont-flag report" data-id="' + postId + '"></i>Report';
+      // // postHTML += "                        <span>Inappropriate content</span>";
+      // // postHTML += "                    </li>";
+      // // postHTML += "                </ul>";
+      // postHTML += "            </div>";
+      // postHTML += "        </div>";
       postHTML +=
-        '        <ins><a title="" href="profile.html">' +
+        '<ins><a title="" href="" data-member-id="' +
+        item.member.memberId +
+        '" class="member-full-name-link">' +
         memberFullName +
         "</a></ins>";
+
       postHTML +=
         '        <span><i class="icofont-globe"></i>' + postCreateAt + "</span>";
       postHTML += "    </div>";
@@ -242,12 +270,13 @@ function displayData(data) {
         if (mediaItems.length === 1) {
           var linkMedia = mediaItems[0].linkMedia;
           postHTML += `
-          <figure class="img-full">
-            <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
-              <img src="${linkMedia}" alt="Media">
-            </a>
-          </figure>
-        `;
+                      <figure class="img-full">
+                     <a data-toggle="" data-target="#img-comt" href="${linkMedia}" data-post-id="${postId}">
+                  <img src="${linkMedia}" alt="Media">
+                      </a>
+                        </figure>
+`;
+
         } else {
           // Otherwise, display the media items in a grid layout with the "more photos" link
           postHTML += `
@@ -262,7 +291,7 @@ function displayData(data) {
             postHTML += `
             <div class="col-lg-6 col-md-6 col-sm-6">
               <figure>
-                <a data-toggle="modal" data-target="#img-comt" href="${linkMedia}">
+                <a data-toggle="" data-target="#img-comt" href="${linkMedia}" data-post-id="${postId}">
                   <img src="${linkMedia}" alt="Media">
                 </a>
               </figure>
@@ -276,7 +305,7 @@ function displayData(data) {
             postHTML += `
             <div class="col-lg-6 col-md-6 col-sm-6">
               <figure>
-                <a data-toggle="modal" data-target="#img-comt" href="${mediaItems[5].linkMedia}">
+                <a data-toggle="modal" data-target="#img-comt" href="${mediaItems[5].linkMedia}" data-post-id="${postId}">
                   <img src="${mediaItems[5].linkMedia}" alt="More Photos">
                 </a>
                 <div class="more-photos">
@@ -294,7 +323,11 @@ function displayData(data) {
       }
       postHTML += "</div>";
       postHTML +=
-        '<a href="post-detail.html" class="post-title">' + postTitle + "</a>";
+        '<a href="" class="post-title" data-post-id="' +
+        postId +
+        '">' +
+        postTitle +
+        "</a>";
       postHTML += "<p>" + postDescription + "</p>";
       postHTML += '    <div class="we-video-info">';
       postHTML += "        <ul>";
@@ -322,13 +355,15 @@ function displayData(data) {
       postHTML += '<div class="box">';
       postHTML += '    <div class="Like">';
       // postHTML += '        <a class="Like__link"><i class="icofont-like"></i> Like</a>';
-      postHTML +=
-        '        <button class="likeButton"> <i class="icofont-like"></i> Like</button>';
+      // postHTML +=
+      //   '        <button class="likeButton"> <i class="icofont-like"></i> Like</button>';  
+      postHTML += '<button class="likeButton' + (isLiked ? ' active' : '') + '"> <i class="icofont-like"></i> Like</button>';
+
       postHTML += "    </div>";
       postHTML += "</div>";
       postHTML +=
         '    <button title="" class="comment-to"><i class="icofont-comment"></i> Comment</button>';
-      postHTML += '    <button title="" class="report-to" data-id="' + postId + '"><i class="icofont-share-alt"></i> Report</button>';
+      postHTML += '    <button title="" class="report-to"><i class="icofont-share-alt"></i> Report</button>';
       postHTML += "</div>";
       postHTML += '<div class="new-comment" style="display: block;">';
       postHTML += '    <form method="post">';
@@ -421,6 +456,17 @@ function displayData(data) {
   )
 }
 
+// Bắt sự kiện click cho mỗi nút có class .report-to
+$(document).on("click", ".report-to", function () {
+  var postIdButton = $(this).closest(".user-post").find(".post-id").text();
+
+  // Lưu giá trị vào sessionStorage
+  sessionStorage.setItem('reportedPostId', postIdButton);
+
+  // Chuyển đến trang send-report.html
+  window.location.href = 'send-report.html';
+});
+
 
 // Add event listener to the Delete Post button
 $(document).on("click", ".icofont-ui-delete", function () {
@@ -486,8 +532,10 @@ $(document).on("click", ".likeButton", function () {
         // Update the list of liked posts in localStorage
         if (isLiked) {
           likedPosts.splice(likedPostIndex, 1);
+          $(this).removeClass('active');
         } else {
           likedPosts.push({ postId: postId, memberId: memberId });
+          $(this).addClass('active');
         }
         localStorage.setItem("likedPosts", JSON.stringify(likedPosts));
 
@@ -504,15 +552,14 @@ $(document).on("click", ".likeButton", function () {
 });
 
 
-$("#searchInput").on("keydown", function (event) {
-  if (event.which === 13) {
-    // Kiểm tra nếu phím Enter được nhấn
+
+$('#searchInput').on('keydown', function (event) {
+  if (event.which === 13) { // Kiểm tra nếu phím Enter được nhấn
     event.preventDefault(); // Ngăn chặn hành động mặc định của phím Enter (chuyển trang)
 
     var searchQuery = $(this).val(); // Lấy giá trị tìm kiếm từ ô input
 
-    if (searchQuery.trim() !== "") {
-      // Kiểm tra nếu ô tìm kiếm không trống
+    if (searchQuery.trim() !== '') { // Kiểm tra nếu ô tìm kiếm không trống
       searchAndNavigate(searchQuery);
     }
   }
@@ -521,13 +568,11 @@ $("#searchInput").on("keydown", function (event) {
 function searchAndNavigate(query) {
   // Thực hiện xử lý tìm kiếm và chuyển trang tại đây
   // Dựa vào giá trị 'query' để thực hiện tìm kiếm và chuyển trang đến trang kết quả tìm kiếm
-  var url =
-    "https://localhost:7206/api/Post/search-postuser?search=" +
-    encodeURIComponent(query);
+  var url = 'https://localhost:7206/api/Post/search-postuser?search=' + encodeURIComponent(query);
   var variable = query;
-  localStorage.setItem("myVariable", url);
-  localStorage.setItem("query", variable);
-  window.location.href = "search-result.html";
+  localStorage.setItem('myVariable', url);
+  localStorage.setItem('query', variable);
+  window.location.href = 'search-result.html?search=' + query;
 }
 
 // Comment 
@@ -573,35 +618,7 @@ $(document).on("submit", ".new-comment form", function (event) {
   }
 });
 
-$(document).ready(function () {
-  // Bắt sự kiện click cho mỗi nút có class .report
-  // $(".report").each(function() {
-  //     $(this).on("click", function() {
-  //         // Lấy giá trị data-id từ nút được nhấp
-  //         var postId = $(this).data('id');
 
-  //         // Lưu giá trị vào sessionStorage
-  //         sessionStorage.setItem('reportedPostId', postId);
-
-  //         // Chuyển đến trang send-report.html
-  //         window.location.href = 'send-report.html';
-  //     });
-  // });
-
-  // Bắt sự kiện click cho mỗi nút có class .report-to
-  $(".report-to").each(function () {
-    $(this).on("click", function () {
-      // Lấy giá trị data-id từ nút được nhấp
-      var postIdButton = $(this).data('id');
-
-      // Lưu giá trị vào sessionStorage
-      sessionStorage.setItem('reportedPostId', postIdButton);
-
-      // Chuyển đến trang send-report.html
-      window.location.href = 'send-report.html';
-    });
-  });
-});
 
 
 
