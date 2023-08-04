@@ -16699,3 +16699,27 @@ select.custom-select option:hover {
   .read-more-btn:hover {
     background-color: #0056b3;
   }
+
+  /* Style for the button groups */
+.member-btn-group {
+    margin-bottom: 5px; /* Adjust the spacing between buttons */
+  }
+  
+  /* Style for the Delete button */
+  .delete-member-btn {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  /* Style for the Moderate button */
+  .moderate-member-btn {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  
+  
+  
+  
+  
+  
