@@ -165,21 +165,6 @@ function submitForm(username, password, confirmPassword, gender, image, fullName
 }
 
 function validateUsernameAndEmail(username, email, callback) {
-
-  // Tạo đối tượng chứa dữ liệu gửi đi
-  var data = {
-    memberUserName: username,
-    memberPassword: password,
-    memberGender: gender,
-    memberImage: image,
-    memberFullName: fullName,
-    memberEmail: email,
-    memberDob: dob,
-    memberStatus: "pending", // New field to indicate pending approval
-
-  };
-
-  // Gửi yêu cầu AJAX POST đến API
   $.ajax({
     url: "https://localhost:7206/api/Member/All-Member",
     type: "GET",
@@ -196,24 +181,6 @@ function validateUsernameAndEmail(username, email, callback) {
 
       if (usernames.includes(username)) {
         errors.username = "Username already exists.";
-
-      // Xử lý phản hồi từ API
-      if (response.data) {
-        // Xử lý khi đăng ký thành công
-        Swal.fire({
-          icon: "success",
-          title: "Success",
-          text: "Đăng ký thành công. Vui lòng chờ quản lý duyệt tài khoản.",
-        }).then(() => {
-          window.location.href = "sign-in.html"; // Chuyển đến trang đăng nhập sau khi đăng ký thành công
-        });
-      } else {
-        // Xử lý khi đăng ký không thành công
-        Swal.fire({
-          icon: "error",
-          title: "Error",
-          text: "Đăng ký không thành công",
-        });
       }
 
       if (emails.includes(email)) {
