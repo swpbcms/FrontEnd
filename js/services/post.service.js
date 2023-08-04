@@ -44,6 +44,7 @@ const getPosts = async () => {
   }
 };
 
+
 const getJoinPosts = async (id) => {
   const response = await fetch(`${endpoint}/get-join-post?id=${id}`);
   if (!response.ok) {
@@ -55,6 +56,15 @@ const getJoinPosts = async (id) => {
 
 const getLikePosts = async (id) => {
   const response = await fetch(`${endpoint}/get-like-post?id=${id}`);
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+};
+
+const getPostsId = async (id) => {
+  const response = await fetch(`${endpoint}/get-post-id?id=${id}`);
   if (!response.ok) {
     throw new Error("Invalid Request");
   } else {
@@ -128,6 +138,7 @@ const updatePost = async (
   }
 };
 
+
 const deletePost = async (id) => {
   const response = await fetch(`${endpoint}/detele-post?id=${id}`, {
     method: "DELETE",
@@ -142,6 +153,7 @@ const deletePost = async (id) => {
     return response.json();
   }
 };
+
 
 const moderatePost = async (id, option, managerID) => {
   const response = await fetch(`${endpoint}/moderate-post?id=${id}&option=${option}&managerID=${managerID}`, {
@@ -184,5 +196,6 @@ export {
   updatePost,
   deletePost,
   moderatePost,
-  reStatusPost
+  reStatusPost,
+  getPostsId
 };

@@ -46,22 +46,8 @@ const login = async (username, password) => {
   }
 };
 
-const register = async (
-  username,
-  phone,
-  password,
-  imageUrl,
-  fullName,
-  email
-) => {
-  const model = {
-    managerUserName: username,
-    managerPhone: phone,
-    managerPassword: password,
-    managerEmail: email,
-    managerFullName: fullName,
-    managerImage: imageUrl,
-  };
+const register = async (model) => {
+  
   const response = await fetch(`${endpoint}/Register-Manager`, {
     method: "POST",
     headers: {
