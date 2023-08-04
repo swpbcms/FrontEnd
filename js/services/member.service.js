@@ -5,6 +5,7 @@ const getMembers = async () => {
   if (!response.ok) {
     throw new Error("Invalid Request");
   } else {
+    console.log(response.json());
     return response.json();
   }
 };
