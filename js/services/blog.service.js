@@ -60,7 +60,7 @@ const updateBlog = async (blogData) => {
 };
 
 const deleteBlog = async (blogId) => {
-  const response = await fetch(`${endpoint}/Blog-delete?id=${blogId}`, {
+  const response = await fetch(`${endpoint}/Blog-delete?Id=${blogId}`, {
     method: "DELETE",
   });
   if (!response.ok) {

@@ -49,7 +49,7 @@ function displayBlogList(blogs) {
   
   blogListHTML += "</tbody></table></div>";
 
-  $("#components-nav li:nth-child(5)").html(blogListHTML);
+  $("#components-nav li:nth-child(6)").html(blogListHTML);
 
   $(".delete-blog-btn").on("click", function () {
     const blogId = $(this).data("blog-id");

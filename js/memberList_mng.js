@@ -22,13 +22,13 @@ $(document).ready(function () {
   });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
   // Fetch member list using API call from member.service.js
   getMembers()
     .then((response) => {
-      if (response && response.data) {
+      if (response) {
         // Process the member list data and display it on the page
-        var members = response.data;
+        var members = response;
 
         // Display member list
         displayMemberList(members);
@@ -82,11 +82,10 @@ $(document).ready(function() {
     $("#components-nav li:first-child").html(memberListHTML);
 
     // Add the "Delete Member" button event listener here
-    // Add the "Delete Member" button event listener here
     $(".delete-member-btn").on("click", function () {
       const memberId = $(this).data("member-id");
       const status = $(this).closest("tr").find("td:eq(7)").text().trim();
-    
+
       if (status === "Không hoạt động") {
         // Using Swal.fire instead of alert
         Swal.fire({
@@ -97,7 +96,7 @@ $(document).ready(function() {
         });
         return;
       }
-    
+
       // Show a confirmation dialog before proceeding with the deletion
       Swal.fire({
         title: 'Confirmation',
@@ -124,7 +123,7 @@ $(document).ready(function() {
 
     $(".moderate-member-btn").on("click", function () {
       const memberId = $(this).data("member-id");
-    
+
       // Show a confirmation dialog before proceeding with the moderation
       Swal.fire({
         title: 'Confirmation',
@@ -146,25 +145,26 @@ $(document).ready(function() {
               // Handle error if needed
             });
         }
-      })
+      });
     });
-    function loadMembers() {
-      getMembers()
-        .then((response) => {
-          if (response && response.data) {
-            // Process the member list data and display it on the page
-            var members = response.data;
-    
-            // Display member list
-            displayMemberList(members);
-          } else {
-            console.log("Failed to fetch member list");
-          }
-        })
-        .catch((error) => {
-          console.log("An error occurred while fetching member list: " + error);
-          console.log(error);
-        });
-    }
   }
-})
+
+  function loadMembers() {
+    getMembers()
+      .then((response) => {
+        if (response) {
+          // Process the member list data and display it on the page
+          var members = response;
+
+          // Display member list
+          displayMemberList(members);
+        } else {
+          console.log("Failed to fetch member list");
+        }
+      })
+      .catch((error) => {
+        console.log("An error occurred while fetching member list: " + error);
+        console.log(error);
+      });
+  }
+});

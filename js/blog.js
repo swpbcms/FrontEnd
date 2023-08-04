@@ -82,10 +82,10 @@ function displayBlogs(blogs, currentPage = 1, blogsPerPage = 4) {
     for (let i = startIdx; i < endIdx; i++) {
       const blog = blogs[i];
       const media = blog.media[0];
-
+  
       // Check if the blog has media before attempting to access the linkMedia property
       const imageUrl = media ? media.linkMedia : "path-to-default-image.jpg";
-
+  
       output += `
         <div class="blog-posts">
           <h4>${blog.blogTitle}</h4>
@@ -94,7 +94,6 @@ function displayBlogs(blogs, currentPage = 1, blogsPerPage = 4) {
         </div>
       `;
     }
-
     blogContainer.innerHTML = output;
   }
 }
@@ -191,43 +190,3 @@ const redirectToBlogDetail = (blogId) => {
 // Call the loadBlogs function when the page loads
 window.addEventListener("load", loadBlogs);
 
-const handleCreateBlog = async (event) => {
-  event.preventDefault();
-
-  const title = document.getElementById("title").value;
-  const description = document.getElementById("description").value;
-  const mediaLinksInput = document.getElementById("linkMedia");
-  const mediaLinks = mediaLinksInput.files;
-  const media = [];
-
-  // Get media (image) for the blog post
-  for (let i = 0; i < mediaLinks.length; i++) {
-    const file = mediaLinks[i];
-    try {
-      const downloadURL = await uploadImageToStorage(file);
-      media.push({ linkMedia: downloadURL });
-    } catch (error) {
-      console.error("Error uploading image to Firebase Storage:", error);
-      // Handle error if needed
-    }
-  }
-
-  const loggedInManager = JSON.parse(sessionStorage.getItem("loggedInManager"));
-  const blogData = {
-    blogTitle: title,
-    blogDescription: description,
-    managerId: loggedInManager.managerId,
-    media: media,
-    // Add other required data fields for creating a blog post
-  };
-
-  try {
-    const response = await createBlog(blogData);
-    console.log("Blog created successfully:", response);
-    // Do something with the response if needed
-    window.location.href = "index.html"; // Redirect to the desired page after successful creation
-  } catch (error) {
-    console.error("Error creating blog:", error.message);
-    // Handle error if needed
-  }
-};
