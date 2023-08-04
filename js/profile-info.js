@@ -52,7 +52,7 @@ $(document).ready(function () {
 import { getPostsUser, deletePost, getPostsId} from "./services/post.service.js";
 import { getMemberByID } from "./services/member.service.js"
 import { getBirdTypeId} from "./services/birdType.service.js";
-import { getBirds} from "./services/bird.service.js";
+import { getBirds, createBird2} from "./services/bird.service.js";
 
 $(document).ready(function () {
   // Call the getPostsUser function
@@ -64,6 +64,7 @@ $(document).ready(function () {
     console.error("An error occurred:", error);
   });
 });
+
 
 
 

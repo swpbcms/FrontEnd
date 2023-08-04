@@ -130,30 +130,34 @@ function displayRecentEvent(data) {
   $.each(recentPosts, (index, post) => {
     const postTitle = post.postTitle;
     const postCreateAt = post.postCreateAt;
-    const linkMedia = post.media[0].linkMedia;
-    const postStatus = post.postStatus; // Assuming the post status is a property of the post object
+    const postStatus = post.postStatus; 
     const postIsEvent = post.postIsEvent;
     const postId = post.postId;
 
-    // Only generate HTML for the post if the status is successful
-    if (postStatus === 'Thành công' && postIsEvent === true) {
-      // Generate the HTML for the current post
-      // Generate the HTML for the current post
-      const postHTML = `
-  <li>
-    <figure>
-    <img alt="${postTitle}" src="${linkMedia}" data-post-id="${post.postId}" class="postImage">
-    </figure>
-    <div class="re-links-meta">
-      <h6><a title="" href="post-detail.html?postId=${postId}" id="postLink">${postTitle}</a></h6>
-      <span id="postDate">${postCreateAt}</span>
-    </div>
-  </li>
-`;
+    // Check if post.media exists and has at least one element
+    if (post.media && post.media.length > 0) {
+        const linkMedia = post.media[0].linkMedia;
 
-      recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+        // Only generate HTML for the post if the status is successful
+        if (postStatus === 'Thành công' && postIsEvent === true) {
+            // Generate the HTML for the current post
+            const postHTML = `
+            <li>
+                <figure>
+                <img alt="${postTitle}" src="${linkMedia}" data-post-id="${post.postId}" class="postImage">
+                </figure>
+                <div class="re-links-meta">
+                <h6><a title="" href="post-detail.html?postId=${postId}" id="postLink">${postTitle}</a></h6>
+                <span id="postDate">${postCreateAt}</span>
+                </div>
+            </li>
+            `;
+
+            recentPost += postHTML; // Append the current post's HTML to the recentPost variable
+        }
     }
-  });
+});
+
 
   // Update the content of the <ul> element with the accumulated HTML
   const postListElement = $("#postList");

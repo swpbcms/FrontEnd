@@ -1,9 +1,10 @@
 const endpoint = "https://localhost:7206/api/JoinEvent";
 
-const join = async (memberId, postId, isFollow, status) => {
+const join = async (memberId, postId,birdId, isFollow, status) => {
   const model = {
     memberId: memberId,
     postId: postId,
+    birdId: birdId,
     isFollow: isFollow,
     status: status,
   };
@@ -21,14 +22,12 @@ const join = async (memberId, postId, isFollow, status) => {
   }
 };
 
-const follow = async (memberId, postId, isFollow, status) => {
+const joinBird = async (memberId, postId) => {
   const model = {
     memberId: memberId,
     postId: postId,
-    isFollow: isFollow,
-    status: status,
   };
-  const response = await fetch(`${endpoint}/Follow`, {
+  const response = await fetch(`${endpoint}/birdJoin`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -42,10 +41,11 @@ const follow = async (memberId, postId, isFollow, status) => {
   }
 };
 
-const unjoin = async (memberId, postId, isFollow, status) => {
+const unjoin = async (memberId, postId, birdId, isFollow, status) => {
   const model = {
     memberId: memberId,
     postId: postId,
+    birdId: birdId,
     isFollow: isFollow,
     status: status,
   };
@@ -84,4 +84,4 @@ const unfollow = async (memberId, postId, isFollow, status) => {
   }
 };
 
-export { join, follow, unjoin, unfollow };
+export { join, joinBird, unjoin, unfollow };
