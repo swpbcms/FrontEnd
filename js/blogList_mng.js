@@ -1,6 +1,18 @@
 import { getBlogs, deleteBlog, createBlog } from "./services/blog.service.js";
 
 $(document).ready(function () {
+    var loggedInManager = sessionStorage.getItem("loggedInManager");
+    if (loggedInManager) {
+      var manager = JSON.parse(loggedInManager);
+  
+      var managerFullName = manager.managerFullName;
+      var managerImage = manager.managerImage;
+      $('#fullname').html(managerFullName);
+      $('#image').attr('src', managerImage);
+    }
+  });
+
+$(document).ready(function () {
   loadBlogList();
 });
 
@@ -25,6 +37,7 @@ function loadBlogList() {
 
 function displayBlogList(blogs) {
   var blogListHTML = "<h2>Quản lý Blog</h2>";
+  blogListHTML += "<td><button class='uk-button uk-button-medium create-blog-btn'>Create Blog</button></td>";
   blogListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
   blogListHTML += "<colgroup>"; // Add a colgroup to define column widths
   blogListHTML += "<col style='width: 5%'>"; // ID column (5% width)
@@ -42,7 +55,6 @@ function displayBlogList(blogs) {
     blogListHTML += "<td>" + formatDate(blog.datetime) + "</td>";
     blogListHTML += "<td class='wrap-text'>" + blog.blogDescription + "</td>";
     blogListHTML += "<td>" + (blog.status ? "Active" : "Inactive") + "</td>";
-    blogListHTML += "<td><button class='uk-button uk-button-small create-blog-btn'>Create Blog</button></td>";
     blogListHTML += "<td><button class='uk-button uk-button-small uk-button-danger delete-blog-btn' data-blog-id='" + blog.blogId + "'>Delete</button></td>";
     blogListHTML += "</tr>";
   }
@@ -79,17 +91,93 @@ function displayBlogList(blogs) {
   });
 
   $(".create-blog-btn").on("click", function () {
-    // Show the create form
-    showCreateForm();
-  });
+    // Show Swal.fire with the form fields
+    Swal.fire({
+      title: 'Create Blog',
+      html: `
+        <form id="create-blog-form">
+          <div class="uk-margin">
+            <label class="uk-form-label" for="blog-title">Title</label>
+            <input class="uk-input" type="text" id="blog-title" required>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="blog-description">Description</label>
+            <textarea class="uk-textarea" id="blog-description" required></textarea>
+          </div>
+          <div class="uk-margin">
+            <label class="uk-form-label" for="blog-image">Image</label>
+            <input type="file" id="blog-image">
+          </div>
+        </form>
+      `,
+      showCancelButton: true,
+      confirmButtonText: 'Create',
+      cancelButtonText: 'Cancel',
+      preConfirm: () => {
+        // Handle form submission in preConfirm function
+        const blogTitle = $("#blog-title").val();
+        const blogDescription = $("#blog-description").val();
+        var loggedInManager = sessionStorage.getItem("loggedInManager");
+        if (!loggedInManager) {
+          console.error("Manager not logged in.");
+          return;
+        }
+
+        var managerId = JSON.parse(loggedInManager).managerId;
+        // Get the selected image file and convert it to base64
+        const imageFile = $("#blog-image")[0].files[0];
+
+        // Validate if title and description are provided
+        if (!blogTitle || !blogDescription) {
+          Swal.showValidationMessage("Title and Description are required.");
+          return;
+        }
+
+        return new Promise((resolve, reject) => {
+          if (imageFile) {
+            const reader = new FileReader();
+            reader.onloadend = function () {
+              // Convert the image to base64-encoded string
+              const base64Image = reader.result.split(",")[1];
+              resolve({ blogTitle, blogDescription, managerId, media: [{ linkMedia: base64Image }] });
+            };
+            reader.readAsDataURL(imageFile);
+          } else {
+            // If no image is selected, resolve with an empty media value
+            resolve({ blogTitle, blogDescription, managerId, media: [] });
+          }
+        });
+      },
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // Call the createBlog function to create a new blog
+        createBlog(result.value)
+          .then(() => {
+            // Reload the blog list to reflect the changes after successful creation
+            loadBlogList();
+          })
+          .catch((error) => {
+            console.error("Error creating blog: ", error);
+          });
+      }
+    });
+});
+  
 
   $("#create-blog-form").on("submit", function (event) {
     event.preventDefault();
     // Get form data
     const title = $("#blog-title").val();
     const description = $("#blog-description").val();
-    const managerId = ""; // Replace with the managerId (if applicable)
-    const media = ""; // Replace with the media data (if applicable)
+
+    var loggedInManager = sessionStorage.getItem("loggedInManager");
+    if (!loggedInManager) {
+      console.error("Manager not logged in.");
+      return;
+    }
+  
+    var managerId = JSON.parse(loggedInManager).managerId;    
+    const media = $("#blog-image").val(); // Replace with the media data (if applicable)
 
     // Call the createBlog function to create a new blog
     createBlog(title, description, managerId, media)

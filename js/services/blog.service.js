@@ -18,31 +18,20 @@ const getBlogById = async (blogId) => {
     }
   };
 
-const createBlog = async (
-  title,
-  description,
-  managerId,
-  media,
-) => {
-  const model = {
-    blogTitle: title,
-    blogDescription: description,
-    managerId: managerId,
-    media: media,
+  const createBlog = async (model) => {
+    const response = await fetch(`${endpoint}/Insert-blog`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: model ? JSON.stringify(model) : undefined,
+    });
+    if (!response.ok) {
+      throw new Error("Invalid Request");
+    } else {
+      return response.json();
+    }
   };
-  const response = await fetch(`${endpoint}/Insert-blog`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(blogData),
-  });
-  if (!response.ok) {
-    throw new Error("Invalid Request");
-  } else {
-    return response.json();
-  }
-};
 
 const updateBlog = async (blogData) => {
   const response = await fetch(`${endpoint}/Update-Blog`, {
