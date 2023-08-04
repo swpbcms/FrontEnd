@@ -25,6 +25,71 @@
 
     </div>
     <!-- page loader -->
+    <div class="side-slide active">
+		<span class="popup-closed"><i class="icofont-close"></i></span>
+		<div class="slide-meta">
+			<ul class="nav nav-tabs slide-btns">
+				<li class="nav-item"><a class="active" data-toggle="tab">Notifications</a></li>
+			</ul>
+			<div class="tab-content">
+				<div class="tab-pane fade active show" id="notifications">
+					<h4><i class="icofont-bell-alt"></i> Notifications</h4>
+					<ul class="notificationz" id="notificationsList">
+						<!-- Notifications will be dynamically added here -->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		const endpoint4 = "https://localhost:7206/api/Notification/get-noti-user?memberId="; // Replace this with the actual API endpoint
+		var id = sessionStorage.getItem("loggedInMember");
+		var mem = JSON.parse(id);
+		var memID = mem.memberId;
+		// Function to fetch notifications from the API
+		async function fetchNotifications(memID) {
+			try {
+				const response = await fetch(`${endpoint4}${memID}`);
+				const data = await response.json();
+				return data.data;
+			} catch (error) {
+				console.error("Error fetching notifications:", error);
+				return [];
+			}
+		}
+
+		// Function to generate HTML for a single notification
+		function generateNotificationHTML(notification) {
+			const { notificationContent, notificationDateTime } = notification;
+			return `
+			<li>
+			  <div class="mesg-info">
+				<span>${notificationContent}</span>
+				<span>${new Date(notificationDateTime).toLocaleString()}</span>
+			  </div>
+			</li>
+		  `;
+		}
+
+		// Function to display notifications on the page
+		async function displayNotifications() {
+			// Replace this with the actual member ID from the session
+			const notificationsList = document.getElementById("notificationsList");
+			notificationsList.innerHTML = "<li>Loading notifications...</li>";
+
+			const notifications = await fetchNotifications(memID);
+
+			if (notifications.length === 0) {
+				notificationsList.innerHTML = "<li>No notifications found.</li>";
+			} else {
+				const notificationsHTML = notifications.map(generateNotificationHTML).join("");
+				notificationsList.innerHTML = notificationsHTML;
+			}
+		}
+
+		// Call the function to display notifications when the page loads
+		displayNotifications();
+	</script>
     <div class="theme-layout">
 
         <div class="responsive-header">

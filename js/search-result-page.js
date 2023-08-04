@@ -53,19 +53,23 @@ function displayData(data) {
         var postNumberLike = item.postNumberLike;
         var postNumberJoin = item.postNumberJoin;
         var postId = item.postId;
-
-        var postHTML = '<div class="dept-info">';
-        postHTML += '<ul>';
-        postHTML += '<li>'
-        postHTML += '<h4 class="postDetail" data-id="' + postId + '">' + postTitle + '</h4>';
-        postHTML += '<p> Number Like: ' + postNumberLike + '</p>';
-        postHTML += '<p> Number Join: ' + postNumberJoin + '</p>';
-        postHTML += '</li>';
-        postHTML += '</ul>'
-        postHTML += '</div>';
-
-        outputElement.append(postHTML);
+        var postStatus = item.postStatus;
+    
+        if (postStatus === 'Thành công') { // Add this line
+            var postHTML = '<div class="dept-info">';
+            postHTML += '<ul>';
+            postHTML += '<li>'
+            postHTML += '<h4 class="postDetail" data-id="' + postId + '">' + postTitle + '</h4>';
+            postHTML += '<p> Number Like: ' + postNumberLike + '</p>';
+            postHTML += '<p> Number Join: ' + postNumberJoin + '</p>';
+            postHTML += '</li>';
+            postHTML += '</ul>'
+            postHTML += '</div>';
+    
+            outputElement.append(postHTML);
+        }
     });
+    
 
     $('.postDetail').on('click', function () {
         var postId = $(this).data('id');
