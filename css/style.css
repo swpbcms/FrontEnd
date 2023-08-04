@@ -16685,3 +16685,41 @@ select.custom-select option:hover {
     color: #333;
 }
 
+/* Replace '.your-button-class' with your desired button style */
+.read-more-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
+  .read-more-btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Style for the button groups */
+.member-btn-group {
+    margin-bottom: 5px; /* Adjust the spacing between buttons */
+  }
+  
+  /* Style for the Delete button */
+  .delete-member-btn {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  /* Style for the Moderate button */
+  .moderate-member-btn {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  
+  
+  
+  
+  
+  

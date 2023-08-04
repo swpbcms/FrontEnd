@@ -9,6 +9,7 @@ const getMedia = async (postId) => {
   }
 };
 
+
 const createMedia = async (postId, linkMedia, status) => {
   const model = {
     postId: postId,
