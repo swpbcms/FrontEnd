@@ -1,6 +1,5 @@
 // blog.js
 import { getBlogs, createBlog } from "./services/blog.service.js";
-import { getMedia } from "./services/media.service.js"; // Add this line
 // Import the functions you need from the SDKs you need
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"; // Update the version
@@ -30,13 +29,13 @@ $(document).ready(function () {
       $('#image').attr('src', managerImage);
   
       // Show the blog form when the manager is logged in
-      // const blogForm = document.getElementById("blogForm");
-      // blogForm.style.display = "block";
+      const blogForm = document.getElementById("blogForm");
+      blogForm.style.display = "block";
   
-      // // Add event listener for form submission
-      // blogForm.addEventListener("submit", handleCreateBlog);
-      // const createBlogFormContainer = document.querySelector(".create-blog-form-container");
-      // createBlogFormContainer.innerHTML = createBlogFormHTML;
+      // Add event listener for form submission
+      blogForm.addEventListener("submit", handleCreateBlog);
+      const createBlogFormContainer = document.querySelector(".create-blog-form-container");
+      createBlogFormContainer.innerHTML = createBlogFormHTML;
     }
   });
 
@@ -72,58 +71,55 @@ if (blogForm) {
   };
 
 // Function to display the list of blogs on the page
-const displayBlogs = async (blogs) => { // Make the function asynchronous
-  const blogListContainer = document.querySelector(".blog-posts");
-  blogListContainer.innerHTML = ""; // Clear previous blog list
+function displayBlogs(blogs, currentPage = 1, blogsPerPage = 4) {
+  const blogContainer = document.getElementById("blog-posts");
 
-  for (const blog of blogs) { // Use a for...of loop to iterate over blogs
-    // Create HTML elements for each blog
-    const blogDiv = document.createElement("div");
-    blogDiv.classList.add("blog-post"); // Add a new class for each blog post
+  if (blogContainer) {
+    let output = "";
+    const startIdx = (currentPage - 1) * blogsPerPage;
+    const endIdx = Math.min(startIdx + blogsPerPage, blogs.length);
 
-    const figure = document.createElement("figure");
-    const img = document.createElement("img");
+    for (let i = startIdx; i < endIdx; i++) {
+      const blog = blogs[i];
+      const media = blog.media[0];
 
-    try {
-      // Get the media (image) for the current blog post from the API
-      const mediaResponse = await getMedia(blog.blogId);
-      if (mediaResponse.length > 0) {
-        const media = mediaResponse[0]; // Assuming the API returns an array of media, and we take the first item
-        img.setAttribute("src", media.linkMedia);
-        img.setAttribute("alt", blog.blogTitle);
-      } else {
-        // If there is no media for this blog post, you can set a default image
-        img.setAttribute("src", "path/to/default-image.jpg");
-        img.setAttribute("alt", "Default Alt Text");
-      }
-    } catch (error) {
-      console.error("Error fetching media:", error.message);
-      // If there's an error while fetching media, you can set a default image as well
-      img.setAttribute("src", "path/to/default-image.jpg");
-      img.setAttribute("alt", "Default Alt Text");
+      // Check if the blog has media before attempting to access the linkMedia property
+      const imageUrl = media ? media.linkMedia : "path-to-default-image.jpg";
+
+      output += `
+        <div class="blog-posts">
+          <h4>${blog.blogTitle}</h4>
+          <img src="${imageUrl}" alt="Blog Image">
+          <a href="blog-detail.html?id=${blog.blogId}" class="read-more-btn">Xem thêm</a>
+        </div>
+      `;
     }
 
-    figure.appendChild(img);
-
-    const blogPostMeta = document.createElement("div");
-    blogPostMeta.classList.add("blog-post-meta");
-
-    const blogTitle = document.createElement("h4");
-    blogTitle.textContent = blog.blogTitle;
-
-    const readMoreLink = document.createElement("a");
-    readMoreLink.setAttribute("href", `blog-detail.html?id=${blog.blogId}`);
-    readMoreLink.textContent = "Read More";
-
-    blogPostMeta.appendChild(blogTitle);
-    blogPostMeta.appendChild(readMoreLink);
-
-    blogDiv.appendChild(figure);
-    blogDiv.appendChild(blogPostMeta);
-
-    blogListContainer.appendChild(blogDiv);
+    blogContainer.innerHTML = output;
   }
-};
+}
+
+
+function handlePagination(event) {
+  const pageNumber = parseInt(event.target.getAttribute("data-page"));
+  loadBlogs(pageNumber);
+}
+
+// Function to create pagination buttons
+function createPaginationButtons(totalPages) {
+  const paginationContainer = document.getElementById("pagination");
+  if (paginationContainer) {
+    let output = "";
+    for (let i = 1; i <= totalPages; i++) {
+      output += `<li><a href="#" data-page="${i}">${i}</a></li>`;
+    }
+    paginationContainer.innerHTML = output;
+    const paginationLinks = paginationContainer.querySelectorAll("a");
+    paginationLinks.forEach((link) => {
+      link.addEventListener("click", handlePagination);
+    });
+  }
+}
 
 const createBlogFormHTML = `
 <div class="post-new-popup">
@@ -165,15 +161,31 @@ const createBlogFormHTML = `
 `;
 
 // Function to handle the API call and display blogs
-const loadBlogs = async () => {
+const loadBlogs = async (currentPage = 1, blogsPerPage = 4) => {
   try {
+    console.log("Fetching blogs...");
     const response = await getBlogs();
-    const blogs = response.data; // Access the array of blogs from the 'data' property
-    console.log("API Response:", blogs); // Log the API response to the console
-    displayBlogs(blogs);
+    console.log("API Response:", response);
+    const blogs = response.data;
+    const totalBlogs = blogs.length;
+    const totalPages = Math.ceil(totalBlogs / blogsPerPage);
+
+    // Call the displayBlogs function with the current page number
+    displayBlogs(blogs, currentPage, blogsPerPage);
+
+    // Create pagination buttons
+    createPaginationButtons(totalPages);
   } catch (error) {
     console.error("Error fetching blogs:", error.message);
   }
+};
+
+// Call the loadBlogs function when the page loads
+window.addEventListener("load", loadBlogs);
+
+// Function to redirect to the blog detail page when a blog is clicked
+const redirectToBlogDetail = (blogId) => {
+  window.location.href = `blog-detail.html?id=${blogId}`;
 };
 
 // Call the loadBlogs function when the page loads

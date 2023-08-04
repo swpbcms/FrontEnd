@@ -9,6 +9,15 @@ const getMedia = async (postId) => {
   }
 };
 
+const getMediaForBlog = async (blogId) => {
+  const response = await fetch(`${endpoint}/All-media?blogID=${blogId}`);
+  if (!response.ok) {
+    throw new Error("Invalid Request");
+  } else {
+    return response.json();
+  }
+};
+
 const createMedia = async (postId, linkMedia, status) => {
   const model = {
     postId: postId,
