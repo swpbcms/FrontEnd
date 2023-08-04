@@ -44,7 +44,7 @@ $(document).ready(function() {
   function displayMemberList(members) {
     var memberListHTML = "<h2>Danh sách thành viên</h2>";
     memberListHTML += "<div class='table-responsive'><table class='uk-table uk-table-hover uk-table-divider'>";
-    memberListHTML += "<thead><tr><th>ID</th><th>Tạo lúc</th><th>Giới tính</th><th>Ảnh</th><th>Họ và tên</th><th>Email</th><th>Ngày sinh</th><th>Trạng thái</th><th>Tên đăng nhập</th><th>Mật khẩu</th><th>Thao tác</th></tr></thead><tbody>";
+    memberListHTML += "<thead><tr><th>ID</th><th>Tạo lúc</th><th>Giới tính</th><th>Ảnh</th><th>Họ và tên</th><th>Email</th><th>Ngày sinh</th><th>Trạng thái</th><th>Thao tác</th></tr></thead><tbody>";
 
     
   for (var i = 0; i < members.length; i++) {
@@ -61,8 +61,6 @@ $(document).ready(function() {
     memberListHTML += "<td>" + member.memberEmail + "</td>";
     memberListHTML += "<td>" + member.memberDob + "</td>";
     memberListHTML += "<td>" + status + "</td>"; // Display the status here
-    memberListHTML += "<td>" + member.memberUserName + "</td>";
-    memberListHTML += "<td>" + member.memberPassword + "</td>";
     memberListHTML += "<td><button class='uk-button uk-button-small uk-button-danger delete-member-btn' data-member-id='" + member.memberId + "'>Delete</button></td>";
     memberListHTML += "</tr>";
   }
