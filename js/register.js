@@ -168,6 +168,8 @@ function submitForm(username, password, confirmPassword, gender, image, fullName
     memberFullName: fullName,
     memberEmail: email,
     memberDob: dob,
+    memberStatus: "pending", // New field to indicate pending approval
+
   };
 
   // Gửi yêu cầu AJAX POST đến API
@@ -183,7 +185,7 @@ function submitForm(username, password, confirmPassword, gender, image, fullName
         Swal.fire({
           icon: "success",
           title: "Success",
-          text: "Đăng ký thành công",
+          text: "Đăng ký thành công. Vui lòng chờ quản lý duyệt tài khoản.",
         }).then(() => {
           window.location.href = "sign-in.html"; // Chuyển đến trang đăng nhập sau khi đăng ký thành công
         });
