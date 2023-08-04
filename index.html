@@ -587,9 +587,15 @@
 
                                     <label for="eventEndDate">Event End Date:</label><br>
                                     <input type="datetime-local" id="eventEndDate" name="eventEndDate"><br><br>
-                                </div>
 
-                                <label for="categoryID">Category ID :</label><br>
+                                    
+                                </div>
+                                <label for="birdType">Bird Type:</label><br>
+                                    <select id="birdType">
+                                        <!-- Options for bird types will be filled dynamically through JavaScript -->
+                                    </select>
+                                    <br><br>
+                                <label for="categoryID">Category :</label><br>
                                 <select id="multiComboBox" multiple>
                                     <!-- Các tùy chọn sẽ được điền vào đây sau khi lấy dữ liệu -->
                                 </select>
@@ -645,8 +651,37 @@
                                 // Gọi hàm fillMultiComboBox để điền dữ liệu vào MultiComboBox khi trang được load
                                 fillMultiComboBox();
 
+                                const endpointtt = "https://localhost:7206/api/BirdType";
+
+                                // Hàm lấy danh sách category từ API
+                                const getBirdTypes = async () => {
+                                    const response = await fetch(`${endpointtt}/All-bird`);
+                                    if (!response.ok) {
+                                        throw new Error("Invalid Request");
+                                    } else {
+                                        const data = await response.json();
+                                        console.log(data);
+                                        return data.data; // Return the array of bird types directly
+                                    }
+                                };
+                                const fillBirdTypeComboBox = async () => {
+                                    const birdTypeComboBox = document.getElementById("birdType");
+                                    
+                                        const birdTypes = await getBirdTypes();
+                                        birdTypes.forEach(birdType => {
+                                            const option = document.createElement("option");
+                                            option.value = birdType.birdTypeId;
+                                            option.textContent = birdType.birdTypeName;
+                                            birdTypeComboBox.appendChild(option);
+                                        });
+                                    
+                                };
+
+                                fillBirdTypeComboBox();
+
                             </script>
                             <script type="module">
+
                                 // Import the functions you need from the SDKs you need
                                 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
                                 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-analytics.js";
@@ -741,6 +776,10 @@
                                     const selectedCategoryIds = Array.from(document.querySelectorAll("#multiComboBox option:checked")).map(option => option.value);
                                     const categoryIDs = selectedCategoryIds.map(id => ({ categoryID: id }));
 
+                                    const birdTypeSelect = document.getElementById("birdType");
+                                    const selectedBirdTypeIds = Array.from(birdTypeSelect.selectedOptions).map(option => option.value);
+                                    const birdTypeIDs = selectedBirdTypeIds.map(id => ({ birdTypeId: id }));
+
                                     const mediaLinksInput = document.getElementById("linkMedia");
                                     const mediaLinks = mediaLinksInput.files;
                                     const media = [];
@@ -762,6 +801,7 @@
                                         eventEndDate: isEvent ? eventEndDate.toISOString() : "",
                                         memberId: memberId,
                                         categories: categoryIDs,
+                                        birdTypes: birdTypeIDs,
                                         media: media,
                                     };
 
