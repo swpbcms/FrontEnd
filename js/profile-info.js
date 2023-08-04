@@ -51,6 +51,8 @@ $(document).ready(function () {
 
 import { getPostsUser, deletePost, getPostsId} from "./services/post.service.js";
 import { getMemberByID } from "./services/member.service.js"
+import { getBirds, createBird2} from "./services/bird.service.js";
+import { getBirdTypeId } from "./services/birdType.service.js";
 
 $(document).ready(function () {
   // Call the getPostsUser function
@@ -911,6 +913,86 @@ $(document).on("click", ".icofont-pen-alt-1", function (e) {
           // handle error
       });
 });
+
+$(document).ready(function() {
+  var loggedInMember = sessionStorage.getItem("loggedInMember");
+  if (loggedInMember) {
+    var mem = JSON.parse(loggedInMember);
+
+    var memberId = mem.memberId;
+  }
+  if (memberId) {
+      getBirds(memberId).then(function(response) {
+          var data = response.data;
+          $.each(data, function(i, bird) {
+              var birdHtml = 
+                  '<div>' +
+                      '<h4>' + bird.birdName + '</h4>' +
+                      '<img src="' + bird.image + '" alt="' + bird.birdName + '" />' +
+                      '<p>Size: ' + bird.size + ' cm</p>' +
+                      '<p>Weight: ' + bird.weight + ' kg</p>' +
+                      '<p>Age: ' + bird.age + ' months</p>' +
+                  '</div>';
+              $('#birdContainer').append(birdHtml);
+          });
+      });
+  }
+
+  $(".see-all").on("click", function() {
+      getBirdTypeId().then(function(birdTypeResponse) {
+          var birdTypeOptions = birdTypeResponse.data.map(function(birdType) {
+              return '<option value="' + birdType.birdTypeId + '">' + birdType.birdTypeName + '</option>';
+          }).join('');
+
+          Swal.fire({
+              title: 'Add a new bird',
+              html:
+                  '<input id="swal-input1" class="swal2-input" placeholder="Bird Name">' +
+                  '<input id="swal-input2" class="swal2-input" placeholder="Bird Size (cm)">' +
+                  '<input id="swal-input3" class="swal2-input" placeholder="Bird Weight (kg)">' +
+                  '<input id="swal-input4" class="swal2-input" placeholder="Bird Age (months)">' +
+                  '<select id="swal-input5" class="swal2-input">' + birdTypeOptions + '</select>' +
+                  '<input id="swal-input6" type="file" class="swal2-input">',
+              focusConfirm: false,
+              preConfirm: function () {
+                  return new Promise(function(resolve) {
+                      var file = document.getElementById('swal-input6').files[0];
+                      var reader = new FileReader();
+                      reader.onloadend = function() {
+                          resolve([
+                              $('#swal-input1').val(),
+                              $('#swal-input2').val(),
+                              $('#swal-input3').val(),
+                              $('#swal-input4').val(),
+                              $('#swal-input5').val(),
+                              reader.result
+                          ]);
+                      }
+                      reader.readAsDataURL(file);
+                  });
+              }
+          }).then(function (result) {
+              var newBird = {
+                  birdName: result.value[0],
+                  size: result.value[1],
+                  weight: result.value[2],
+                  age: result.value[3],
+                  birdTypeId: result.value[4],
+                  image: result.value[5],
+                  memberId: memberId // assuming this is the correct memberId for the new bird
+              };
+              createBird2(newBird).then(function() {
+                  Swal.fire('Success!', 'New bird has been created.', 'success');
+              }).error(function() {
+                  Swal.fire('Error!', 'An error occurred while creating the bird.', 'error');
+              });
+          });
+      });
+  });
+});
+
+
+
 
 
 
