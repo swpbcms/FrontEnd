@@ -59,15 +59,39 @@ $(document).ready(function () {
     method: "GET",
     success: function (response) {
       if (response && response.data) {
-        // Hiển thị thông tin chi tiết của event lên trang event-detail.html
+        // Display event data...
         displayEventData(response.data);
+        var loggedInMember = sessionStorage.getItem("loggedInMember");
+        if (!loggedInMember) {
+          console.error("Member not logged in.");
+          return;
+        }
+  
+    var memberID = JSON.parse(loggedInMember).memberId;
+        // Here, you get the event creator's ID from your response.data
+        var eventCreatorId = response.post.memberId; // replace eventCreatorId with the correct field in your response data
+
+        // Check if logged in user is the event creator
+        if (memberID === eventCreatorId) {
+          $('#sortMatchButton').show();
+        } else {
+          $('#sortMatchButton').hide();
+        }
+
       } else {
-        console.log("Không có dữ liệu hoặc dữ liệu không hợp lệ từ API.");
+        console.log("No data or invalid data from API.");
       }
     },
     error: function () {
-      console.log("Lỗi khi gọi API.");
+      console.log("API call error.");
     },
+  });
+});
+
+$(document).ready(function () {
+  $("#sortMatchButton").click(function () {
+    // Redirect to the manager-match.html page
+    window.location.href = "manager-match.html";
   });
 });
 
@@ -421,4 +445,14 @@ $(document).ready(function() {
   });
 });
 
+var urlParams = new URLSearchParams(window.location.search);
+var postIdFromUrl = urlParams.get('postId');
+var loggedInMember = JSON.parse(sessionStorage.getItem("loggedInMember"));
+var postIdFromSession = loggedInMember.postId; // Giả sử bạn lưu postId vào session như vậy
+
+// if (postIdFromUrl === postIdFromSession) {
+//   $('#sortMatchButton').show(); // Hiển thị nút Sort Match nếu postId từ URL giống với postId từ phiên
+// } else {
+//   $('#sortMatchButton').hide(); // Ẩn nút Sort Match nếu không
+// }
 
